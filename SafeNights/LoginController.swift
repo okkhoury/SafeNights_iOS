@@ -1,5 +1,5 @@
 //
-//  SignUpController.swift
+//  LoginController.swift
 //  SafeNights
 //
 //  Created by Owen Khoury on 4/5/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpController: UIViewController {
+class LoginController: UIViewController {
     
     @IBOutlet var username: UITextField!
     @IBOutlet var password: UITextField!
@@ -20,6 +20,6 @@ class SignUpController: UIViewController {
         print(username.text!)
     }
     
-
+    
     
 }
