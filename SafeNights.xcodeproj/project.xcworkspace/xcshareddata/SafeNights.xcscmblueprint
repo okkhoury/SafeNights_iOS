@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5CD3FD43A349B11CCE3E1C60B969396A84136B99",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E6F49C8899E3FE119F288D25D58F45BB4568247C" : 9223372036854775807,
+    "5CD3FD43A349B11CCE3E1C60B969396A84136B99" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "4FDC74E3-494B-4178-838E-D416DFE07E1E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E6F49C8899E3FE119F288D25D58F45BB4568247C" : "..",
+    "5CD3FD43A349B11CCE3E1C60B969396A84136B99" : "SafeNights_iOS\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SafeNights",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SafeNights.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/okkhoury\/SafeNights_iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5CD3FD43A349B11CCE3E1C60B969396A84136B99"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/UVaCS4720\/ios-mini-app-s17-blastoise.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E6F49C8899E3FE119F288D25D58F45BB4568247C"
+    }
+  ]
+}
