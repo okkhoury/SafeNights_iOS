@@ -65,11 +65,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XyF-OZ-U2b">
-                                <rect key="frame" x="165" y="506" width="57" height="30"/>
+                                <rect key="frame" x="159" y="502" width="57" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Register"/>
                                 <connections>
-                                    <segue destination="WHq-Q5-rbm" kind="show" id="XVe-hh-Ikl"/>
+                                    <segue destination="WHq-Q5-rbm" kind="show" identifier="loginToRegister" id="XVe-hh-Ikl"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -80,11 +80,39 @@
                         <outlet property="registerButton" destination="XyF-OZ-U2b" id="7Jm-il-OjK"/>
                         <outlet property="submitButton" destination="4ZI-6K-oum" id="329-0Q-LIG"/>
                         <outlet property="username" destination="szf-90-KJ0" id="aGY-qd-WlT"/>
+                        <segue destination="LxG-WA-VtP" kind="show" identifier="loginToHome" id="GcV-ro-Rxi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="55" y="91"/>
+        </scene>
+        <!--Homepage Controller-->
+        <scene sceneID="asp-xk-obH">
+            <objects>
+                <viewController id="LxG-WA-VtP" customClass="HomepageController" customModule="SafeNights" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tIQ-BI-chN"/>
+                        <viewControllerLayoutGuide type="bottom" id="voH-BG-vij"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5HA-Sw-q06">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Home Page" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JmW-lQ-KI9">
+                                <rect key="frame" x="143" y="70" width="89" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xTF-KI-5nc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="59" y="847"/>
         </scene>
         <!--Register Controller-->
         <scene sceneID="PJF-Gl-81u">
@@ -174,6 +202,7 @@
                                 <state key="normal" title="Create Account"/>
                                 <connections>
                                     <action selector="clickCreateAccount:" destination="WHq-Q5-rbm" eventType="touchUpInside" id="hUt-bB-1qn"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="signupToLogin" id="ElV-fP-jhe"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -44,6 +44,8 @@ class RegisterController: UIViewController {
             }
         
         }
+        // Go back to the login page regardless what happens (should change this later)
+        performSegue(withIdentifier: "signupToLogin", sender: nil)
     }
     
     
