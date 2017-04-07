@@ -84,6 +84,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="55" y="91"/>
         </scene>
         <!--Register Controller-->
         <scene sceneID="PJF-Gl-81u">
@@ -171,10 +172,21 @@
                                 <rect key="frame" x="138" y="582" width="107" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Create Account"/>
+                                <connections>
+                                    <action selector="clickCreateAccount:" destination="WHq-Q5-rbm" eventType="touchUpInside" id="hUt-bB-1qn"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="createAccountButton" destination="T9J-es-mbh" id="tsR-GW-76N"/>
+                        <outlet property="emailAddress" destination="D08-dx-Tka" id="PbP-J5-CAM"/>
+                        <outlet property="firstName" destination="bJb-Ay-mxI" id="f5M-jq-3zG"/>
+                        <outlet property="lastName" destination="8nz-0z-TmB" id="Xbp-WP-bUT"/>
+                        <outlet property="password" destination="tfb-G2-x0l" id="cgy-8K-oXD"/>
+                        <outlet property="username" destination="ywB-zD-3Aq" id="h9D-LI-IdH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fP1-g4-AkI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

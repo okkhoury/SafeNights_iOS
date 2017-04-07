@@ -9,15 +9,22 @@
 import Siesta
 
 class MyAPI: Service {
+    
+    
+    
+    
     init() {
         super.init(baseURL: "https://gentle-badlands-54918.herokuapp.com/")
     }
     
     var signin: Resource { return resource("api/v1/signin/") }
-    var items:  Resource { return resource("/items") }
+    var signup:  Resource { return resource("api/v1/signup/") }
     
-    func item(id: String) -> Resource {
-        return items.child(id)
-    }
+    
+    // I dont think this function is doing anything
+    
+//    func item(id: String) -> Resource {
+//        return items.child(id)
+//    }
 }
 

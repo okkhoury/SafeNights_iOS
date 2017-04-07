@@ -18,14 +18,12 @@ class LoginController: UIViewController {
     
     let API = MyAPI()
     
-    
-    // This function seems to be working. It gets the response from the database
-    // The issue is that it always sends back 'n' as the response, even when entering a legit user
-    
     @IBAction func clickSubmit(_ sender: Any) {
         let resource = API.signin
-        let postData = ["username": "zrs", "pwd": "1234"]
-        resource.request(.post, urlEncoded: postData ).onSuccess() { data in
+        //let postData = ["username": "zrs", "pwd": "1234"]
+        let postData = ["username": username.text, "pwd": password.text]
+        resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
+            
             // This code gets the response from the user in the form ["passed": 'y'/'n']
             var response = data.jsonDict
             let loginAnswer = response["passed"]
@@ -37,14 +35,12 @@ class LoginController: UIViewController {
             } else if let loginAnswer = loginAnswer as? String, loginAnswer == "n" {
                 print("Access denied")
             }
-    
-            }.onFailure() {_ in
-                print("you are a failure")
         }
     }
+    
+}
     
    
     
     
-    
-}
+
