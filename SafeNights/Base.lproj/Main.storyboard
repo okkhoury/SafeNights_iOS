@@ -77,6 +77,7 @@
                     </view>
                     <connections>
                         <outlet property="password" destination="eaC-sM-q1F" id="wQ7-Vr-LtS"/>
+                        <outlet property="registerButton" destination="XyF-OZ-U2b" id="7Jm-il-OjK"/>
                         <outlet property="submitButton" destination="4ZI-6K-oum" id="329-0Q-LIG"/>
                         <outlet property="username" destination="szf-90-KJ0" id="aGY-qd-WlT"/>
                     </connections>
@@ -177,7 +178,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fP1-g4-AkI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="841" y="37"/>
+            <point key="canvasLocation" x="852" y="92"/>
         </scene>
     </scenes>
 </document>
