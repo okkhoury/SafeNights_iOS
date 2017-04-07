@@ -25,7 +25,7 @@ class LoginController: UIViewController {
     @IBAction func clickSubmit(_ sender: Any) {
         let resource = API.signin
         let postData = ["username": "zrs", "pwd": "1234"]
-        resource.request(.post, json: postData ).onSuccess() {data in
+        resource.request(.post, urlEncoded: postData ).onSuccess() { data in
             // This code gets the response from the user in the form ["passed": 'y'/'n']
             var response = data.jsonDict
             let loginAnswer = response["passed"]
@@ -41,7 +41,6 @@ class LoginController: UIViewController {
             }.onFailure() {_ in
                 print("you are a failure")
         }
-        
     }
     
    
