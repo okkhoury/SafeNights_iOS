@@ -31,6 +31,10 @@ class LoginController: UIViewController {
             // If the response is a yes, allow access to the next page, otherwise deny access and give message to user
             if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
                 print("Access allowed")
+                
+                // If user signed in correctly, set the global username
+                mainInstance.username = self.username.text!
+                
                 // Go to the home page if the user is in the database
                 self.performSegue(withIdentifier: "loginToHome", sender: nil)
                 
