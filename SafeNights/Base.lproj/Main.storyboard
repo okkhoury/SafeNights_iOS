@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yBC-BK-XHT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -218,6 +218,9 @@
                                 <rect key="frame" x="163" y="591" width="49" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="clickSubmit:" destination="yBC-BK-XHT" eventType="touchUpInside" id="MOR-bb-Pk8"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -227,8 +230,8 @@
                         <outlet property="LiquerTextEdit" destination="YuE-WX-cJL" id="6Op-Tg-loC"/>
                         <outlet property="MoneyTextEdit" destination="Mbh-wv-cBS" id="FFH-eA-e7z"/>
                         <outlet property="ShotsTextEdit" destination="JA7-Ot-Awo" id="7D6-sO-VGy"/>
-                        <outlet property="SubmitButton" destination="xNl-9g-Hdt" id="SqR-No-7dd"/>
                         <outlet property="WineTextEdit" destination="1uv-q6-OdH" id="jWJ-PP-KfO"/>
+                        <outlet property="submitButton" destination="xNl-9g-Hdt" id="G63-32-Xdy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z3L-WH-NYG" userLabel="First Responder" sceneMemberID="firstResponder"/>
