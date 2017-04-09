@@ -32,8 +32,9 @@ class LoginController: UIViewController {
             if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
                 print("Access allowed")
                 
-                // If user signed in correctly, set the global username
+                // If user signed in correctly, set the global username and password
                 mainInstance.username = self.username.text!
+                mainInstance.password = self.password.text!
                 
                 // Go to the home page if the user is in the database
                 self.performSegue(withIdentifier: "loginToHome", sender: nil)

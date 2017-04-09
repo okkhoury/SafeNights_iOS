@@ -16,13 +16,9 @@ class MyAPI: Service {
     
     var signin: Resource { return resource("api/v1/signin/") }
     var signup:  Resource { return resource("api/v1/signup/") }
-    var addDrinks: Resource { return resource("api/v1/adddrinks") }
+    var startNight: Resource { return resource("api/v1/startnight/") }
+    var addDrinks: Resource { return resource("api/v1/adddrinks/") }
     
-    // I dont think this function is doing anything
-    
-//    func item(id: String) -> Resource {
-//        return items.child(id)
-//    }
     
 }
 

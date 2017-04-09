@@ -11,8 +11,14 @@
 
 class Main {
     var username:String
-    init(username:String) {
+    var password:String
+    var nightID:String
+    init(username:String, password:String, nightID:String) {
         self.username = username
+        self.password = password
+        self.nightID = nightID
     }
 }
-var mainInstance = Main(username:"user")
+
+//Not sure if nightID should be given an initial value 
+var mainInstance = Main(username:"user", password:"pwd", nightID:"")
