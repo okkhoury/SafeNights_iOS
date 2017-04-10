@@ -12,38 +12,47 @@ import MapKit
 class MapController: UIViewController, MKMapViewDelegate {
     @IBOutlet var mapView: MKMapView!
     
-    var locationManager = CLLocationManager()
+    let locManager = CLLocationManager()
+    
+    var latitude:CLLocationDegrees = 0
+    var longitude:CLLocationDegrees = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Get user's current latitude and longitude
+        locManager.requestWhenInUseAuthorization()
+        var currentLocation = CLLocation()
+        
+        if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways) {
+        
+            currentLocation = locManager.location!
+            
+            self.latitude = currentLocation.coordinate.latitude
+            self.longitude = currentLocation.coordinate.longitude
+            
+        }
+        
+        print(self.latitude)
+        print(self.longitude)
+        
+        
         mapView.delegate = self
         
-        let sourceLocation = CLLocationCoordinate2D(latitude: 40.759011, longitude: -73.984472)
+        // Set the latitude and longtitude of the locations
+        let sourceLocation = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
         let destinationLocation = CLLocationCoordinate2D(latitude: 40.748441, longitude: -73.985564)
         
+        // Create placemark objects containing the location's coordinates
         let sourcePlacemark = MKPlacemark(coordinate: sourceLocation, addressDictionary: nil)
         let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
         
+        // MKMapitems are used for routing. This class encapsulates information about a specific point on the map
         let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
         let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
         
-        let sourceAnnotation = MKPointAnnotation()
-        sourceAnnotation.title = "Times Square"
-        
-        if let location = sourcePlacemark.location {
-            sourceAnnotation.coordinate = location.coordinate
-        }
-        
-        let destinationAnnotation = MKPointAnnotation()
-        destinationAnnotation.title = "Empire State Building"
-        
-        if let location = destinationPlacemark.location {
-            destinationAnnotation.coordinate = location.coordinate
-        }
-        
-        self.mapView.showAnnotations([sourceAnnotation,destinationAnnotation], animated: true )
-        
+        // The MKDirectionsRequest class is used to compute the route
         let directionRequest = MKDirectionsRequest()
         directionRequest.source = sourceMapItem
         directionRequest.destination = destinationMapItem
@@ -59,7 +68,6 @@ class MapController: UIViewController, MKMapViewDelegate {
                 if let error = error {
                     print("Error: \(error)")
                 }
-                
                 return
             }
             
@@ -71,6 +79,7 @@ class MapController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    // This method return the renderer object which will be used to draw the route on the map. A red color is used with a line thickness of 4.
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = UIColor.red
@@ -78,15 +87,7 @@ class MapController: UIViewController, MKMapViewDelegate {
         
         return renderer
     }
-        
-        
-//        func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
-//            let renderer = MKPolylineRenderer(overlay: overlay)
-//            renderer.strokeColor = UIColor.red
-//            renderer.lineWidth = 4.0
-//            
-//            return renderer
-//        }
+    
         
         
 //        let userLocationCoordinates = CLLocationCoordinate2DMake((locationManager.location?.coordinate.latitude)!, (locationManager.location?.coordinate.longitude)!)
