@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 
 class MapController: UIViewController, MKMapViewDelegate {
+    
     @IBOutlet var mapView: MKMapView!
     
     let locManager = CLLocationManager()
@@ -17,8 +18,22 @@ class MapController: UIViewController, MKMapViewDelegate {
     var latitude:CLLocationDegrees = 0
     var longitude:CLLocationDegrees = 0
     
+    var coordinateTimer: Timer!
+    
+    
+    func runTimedCode() {
+        print("hello")
+    }
+    
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        coordinateTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(runTimedCode), userInfo: nil, repeats: true)
+        
+        
         
         // Get user's current latitude and longitude
         locManager.requestWhenInUseAuthorization()
@@ -87,45 +102,5 @@ class MapController: UIViewController, MKMapViewDelegate {
         
         return renderer
     }
-    
-        
-        
-//        let userLocationCoordinates = CLLocationCoordinate2DMake((locationManager.location?.coordinate.latitude)!, (locationManager.location?.coordinate.longitude)!)
-//        let pinForUserLocation = MKPointAnnotation()
-//        pinForUserLocation.coordinate = userLocationCoordinates
-//        mapView.addAnnotation(pinForUserLocation)
-//        mapView.showAnnotations([pinForUserLocation], animated: true)
-        
-        //Zoom to user location
-//        let noLocation = CLLocationCoordinate2D()
-//        let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 200, 200)
-//        mapView.setRegion(viewRegion, animated: false)
-        
-        
-//        let locManager = CLLocationManager()
-//        locManager.requestWhenInUseAuthorization()
-//        
-//        var currentLocation = CLLocation()
-//        
-//        if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
-//            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways) {
-//            
-//            currentLocation = locManager.location!
-//        }
-//        
-//        let latitude:CLLocationDegrees = currentLocation.coordinate.latitude
-//        let longitude:CLLocationDegrees = currentLocation.coordinate.longitude
-//        
-//        let latDelta:CLLocationDegrees = 0.05
-//        let lonDelta:CLLocationDegrees = 0.05
-//        
-//        let span = MKCoordinateSpanMake(latDelta, lonDelta)
-//        
-//        let location = CLLocationCoordinate2DMake(latitude, longitude)
-//        
-//        let region = MKCoordinateRegionMake(location, span)
-//        
-//        mapView.setRegion(region, animated: false)
-        
     
 }
