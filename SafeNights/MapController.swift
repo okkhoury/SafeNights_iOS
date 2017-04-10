@@ -25,39 +25,39 @@ class MapController: UIViewController, MKMapViewDelegate {
         print("hello")
     }
     
-    
-   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        coordinateTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(runTimedCode), userInfo: nil, repeats: true)
-        
-        
-        
+    func setCoordinates() {
         // Get user's current latitude and longitude
         locManager.requestWhenInUseAuthorization()
         var currentLocation = CLLocation()
         
         if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways) {
-        
+            
             currentLocation = locManager.location!
             
             self.latitude = currentLocation.coordinate.latitude
             self.longitude = currentLocation.coordinate.longitude
             
+            print(self.latitude)
+            print(self.longitude)
         }
+    }
+    
+    
+   
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        print(self.latitude)
-        print(self.longitude)
+        // Timer that gets user coordinates every 5 seconds
+        coordinateTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(setCoordinates), userInfo: nil, repeats: true)
         
+        setCoordinates()
         
         mapView.delegate = self
         
         // Set the latitude and longtitude of the locations
         let sourceLocation = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
-        let destinationLocation = CLLocationCoordinate2D(latitude: 40.748441, longitude: -73.985564)
+        let destinationLocation = CLLocationCoordinate2D(latitude: self.latitude - 0.01, longitude: self.longitude - 0.005)
         
         // Create placemark objects containing the location's coordinates
         let sourcePlacemark = MKPlacemark(coordinate: sourceLocation, addressDictionary: nil)
