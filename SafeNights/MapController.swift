@@ -15,43 +15,14 @@ class MapController: UIViewController, MKMapViewDelegate {
     
     let locManager = CLLocationManager()
     
-    var latitude:CLLocationDegrees = 0
-    var longitude:CLLocationDegrees = 0
+    var latitude = mainInstance.latitude
+    var longitude = mainInstance.longitude
     
     var coordinateTimer: Timer!
-    
-    
-    func runTimedCode() {
-        print("hello")
-    }
-    
-    func setCoordinates() {
-        // Get user's current latitude and longitude
-        locManager.requestWhenInUseAuthorization()
-        var currentLocation = CLLocation()
-        
-        if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
-            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways) {
-            
-            currentLocation = locManager.location!
-            
-            self.latitude = currentLocation.coordinate.latitude
-            self.longitude = currentLocation.coordinate.longitude
-            
-            print(self.latitude)
-            print(self.longitude)
-        }
-    }
-    
     
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Timer that gets user coordinates every 5 seconds
-        coordinateTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(setCoordinates), userInfo: nil, repeats: true)
-        
-        setCoordinates()
         
         mapView.delegate = self
         
