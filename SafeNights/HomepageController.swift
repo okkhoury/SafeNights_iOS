@@ -52,24 +52,40 @@ class HomepageController: UIViewController {
             self.latitude = mainInstance.latitude
             self.longitude = mainInstance.longitude
             
-            print(self.latitude)
-            print(self.longitude)
-            print()
+            // Send these coordinates to the database
+            let resource = API.signin
+            let postData = ["username": mainInstance.username, "pwd": mainInstance.password, "id": mainInstance.nightID, "xcord": String(mainInstance.latitude), "ycord": String(mainInstance.longitude)] as [String : Any]
+            
+            resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
+                
+                // This code gets the response from the user in the form ["passed": 'y'/'n']
+                var response = data.jsonDict
+                let loginAnswer = response["passed"]
+                
+                // If the response is a yes, allow access to the next page, otherwise deny access and give message to user
+                if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
+                    print("succesfully added location")
+                    
+                } else if let loginAnswer = loginAnswer as? String, loginAnswer == "n" {
+                    print("Did not add location")
+                }
+                
+            }
+            
         }
     }
     
-    // This currently links to the map when clicked
+    
+    // Get new night ID. This currently links to the map when clicked
     @IBAction func clickStartNight(_ sender: Any) {
         
         // Set the initial coordinates
         setCoordinates()
         
-        // Begin the async task to collect latitude and longitude
-        performBackgroundTask()
-        
         let resource = API.startNight
         let postData = ["username": self.username, "pwd": self.password]
         
+        // Make request to database to get a new adventureID (I called it a nightID)
         resource.request(.post, urlEncoded: postData).onSuccess() { data in
             
             // This code gets the response from the user in the form ["passed": 'y'/'n']
@@ -84,6 +100,9 @@ class HomepageController: UIViewController {
                 print("night has not started")
             }
         }
+        
+        // Begin the async task to collect latitude and longitude
+        performBackgroundTask()
         
     }
 }
