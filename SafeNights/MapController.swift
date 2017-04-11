@@ -21,14 +21,22 @@ class MapController: UIViewController, MKMapViewDelegate {
     var coordinateTimer: Timer!
     
    
+    // Anytime the user comes back to this view, draw out the route they've taken
     override func viewDidLoad() {
         super.viewDidLoad()
+        drawBetweenPoints(latStart: self.latitude, lonStart: self.longitude, latEnd: self.latitude - 0.01, lonEnd: self.longitude - 0.03)
         
+        drawBetweenPoints(latStart: self.latitude - 0.01, lonStart: self.longitude - 0.03, latEnd: self.latitude + 0.05, lonEnd: self.longitude + 0.05)
+    }
+    
+    
+    
+    func drawBetweenPoints(latStart:CLLocationDegrees, lonStart:CLLocationDegrees, latEnd:CLLocationDegrees, lonEnd:CLLocationDegrees) {
         mapView.delegate = self
         
         // Set the latitude and longtitude of the locations
-        let sourceLocation = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
-        let destinationLocation = CLLocationCoordinate2D(latitude: self.latitude - 0.01, longitude: self.longitude - 0.005)
+        let sourceLocation = CLLocationCoordinate2D(latitude: latStart, longitude: lonStart)
+        let destinationLocation = CLLocationCoordinate2D(latitude: latEnd - 0.01, longitude: lonEnd - 0.005)
         
         // Create placemark objects containing the location's coordinates
         let sourcePlacemark = MKPlacemark(coordinate: sourceLocation, addressDictionary: nil)
@@ -64,6 +72,7 @@ class MapController: UIViewController, MKMapViewDelegate {
             self.mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
         }
     }
+    
     
     // This method return the renderer object which will be used to draw the route on the map. A red color is used with a line thickness of 4.
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {

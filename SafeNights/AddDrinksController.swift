@@ -30,7 +30,6 @@ class AddDrinksController: UIViewController {
     
     //Not sure what to do about the date. what form should it be in
     
-    
    
     @IBAction func clickSubmit(_ sender: Any) {
         let resource = API.addDrinks
