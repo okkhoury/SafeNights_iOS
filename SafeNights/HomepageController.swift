@@ -53,10 +53,25 @@ class HomepageController: UIViewController {
             self.longitude = mainInstance.longitude
             
             // Send these coordinates to the database
-            let resource = API.signin
-            let postData = ["username": mainInstance.username, "pwd": mainInstance.password, "id": mainInstance.nightID, "xcord": String(mainInstance.latitude), "ycord": String(mainInstance.longitude)] as [String : Any]
+            let resource = API.addLoc
             
-            resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
+            print(Double(mainInstance.latitude))
+            print(Double(mainInstance.longitude))
+            
+            var postData = Dictionary<String, String>()
+            
+            postData = ["username": mainInstance.username, "pwd": mainInstance.password, "id": mainInstance.nightID]
+            
+            postData["xcord"] = String(mainInstance.latitude)
+            postData["ycord"] = String(mainInstance.longitude)
+            
+            print(mainInstance.username)
+            print(mainInstance.password)
+            print(mainInstance.nightID)
+            print(mainInstance.latitude)
+            print(mainInstance.longitude)
+            
+            resource.request(.post, urlEncoded: postData ).onSuccess() { data in
                 
                 // This code gets the response from the user in the form ["passed": 'y'/'n']
                 var response = data.jsonDict
@@ -68,8 +83,14 @@ class HomepageController: UIViewController {
                     
                 } else if let loginAnswer = loginAnswer as? String, loginAnswer == "n" {
                     print("Did not add location")
+                } else {
+                    print(data.jsonDict)
                 }
                 
+                
+                
+                }.onFailure{_ in
+                    print("failed")
             }
             
         }

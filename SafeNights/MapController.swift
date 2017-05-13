@@ -26,7 +26,7 @@ class MapController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         drawBetweenPoints(latStart: self.latitude, lonStart: self.longitude, latEnd: self.latitude - 0.01, lonEnd: self.longitude - 0.03)
         
-        drawBetweenPoints(latStart: self.latitude - 0.01, lonStart: self.longitude - 0.03, latEnd: self.latitude + 0.05, lonEnd: self.longitude + 0.05)
+       drawBetweenPoints(latStart: self.latitude - 0.01, lonStart: self.longitude - 0.03, latEnd: self.latitude + 0.05, lonEnd: self.longitude + 0.05)
     }
     
     
@@ -77,8 +77,8 @@ class MapController: UIViewController, MKMapViewDelegate {
     // This method return the renderer object which will be used to draw the route on the map. A red color is used with a line thickness of 4.
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor.red
-        renderer.lineWidth = 4.0
+        renderer.strokeColor = UIColor.orange
+        renderer.lineWidth = 6.0
         
         return renderer
     }
