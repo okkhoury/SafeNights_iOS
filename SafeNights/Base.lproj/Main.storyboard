@@ -404,7 +404,7 @@
                                 </userDefinedRuntimeAttributes>
                             </datePicker>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fc7-oT-kYq">
-                                <rect key="frame" x="160" y="548" width="55" height="30"/>
+                                <rect key="frame" x="160" y="556" width="55" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" label="aslj"/>
                                 <state key="normal" title="Submit"/>
@@ -419,12 +419,28 @@
                                 <color key="textColor" red="0.96078431369999995" green="0.95686274510000002" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="ek5-gF-Qf6">
+                                <rect key="frame" x="128" y="244" width="118" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="sliderMoved:" destination="Wyd-fb-iSo" eventType="primaryActionTriggered" id="Mhp-qZ-cJJ"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Money Spent:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPA-4t-ANn">
+                                <rect key="frame" x="115" y="282" width="177" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.96078431369999995" green="0.95686274510000002" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Add Drinks" id="O23-Va-M5Q"/>
                     <connections>
                         <outlet property="DatePick" destination="e9v-dg-LzR" id="0y1-Zu-x9m"/>
+                        <outlet property="moneyLabel" destination="dPA-4t-ANn" id="ojz-JG-cQO"/>
+                        <outlet property="moneySlider" destination="ek5-gF-Qf6" id="aDw-dw-fSk"/>
                         <outlet property="submitButton" destination="fc7-oT-kYq" id="twF-HU-fsw"/>
                     </connections>
                 </viewController>

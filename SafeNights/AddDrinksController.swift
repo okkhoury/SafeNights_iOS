@@ -12,6 +12,8 @@ class AddDrinksController: UIViewController {
     
     @IBOutlet var DatePick: UIDatePicker!
     @IBOutlet var submitButton: UIButton!
+    @IBOutlet var moneySlider: UISlider!
+    @IBOutlet var moneyLabel: UILabel!
     
     let seekBar1 = CircularSeeker()
     let seekBar2 = CircularSeeker()
@@ -25,6 +27,14 @@ class AddDrinksController: UIViewController {
     
     let date = NSDate()
     let calendar = NSCalendar.current
+    
+    @IBAction func sliderMoved(_ sender: Any) {
+        // Get value from Slider when it is moved.
+        let value = Int(moneySlider.value)
+        
+        // Assign text to string representation of float.
+        moneyLabel.text = "Money Spent: $" + String(value)
+    }
     
     override func viewDidLoad() {
         seekBar1.frame = CGRect(x: 30, y: 300, width: 100, height: 100)
@@ -55,8 +65,9 @@ class AddDrinksController: UIViewController {
         seekBar4.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
         self.view.addSubview(seekBar4)
         
+        // Change the text color of the datePicker to white
         DatePick.setValue(UIColor.white, forKeyPath: "textColor")
-        
+
     }
     
     
