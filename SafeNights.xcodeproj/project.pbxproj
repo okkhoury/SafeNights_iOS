@@ -25,6 +25,7 @@
 		C5F86AC91EC6F41900386404 /* GetStartedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F86AC81EC6F41900386404 /* GetStartedController.swift */; };
 		C5F86ACB1EC6F4D200386404 /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F86ACA1EC6F4D200386404 /* HistoryController.swift */; };
 		C5F86ACD1EC6F4FA00386404 /* LastNightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F86ACC1EC6F4FA00386404 /* LastNightController.swift */; };
+		C5F86ACF1ECA12FE00386404 /* CircularSeeker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F86ACE1ECA12FE00386404 /* CircularSeeker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		C5F86AC81EC6F41900386404 /* GetStartedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStartedController.swift; sourceTree = "<group>"; };
 		C5F86ACA1EC6F4D200386404 /* HistoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
 		C5F86ACC1EC6F4FA00386404 /* LastNightController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastNightController.swift; sourceTree = "<group>"; };
+		C5F86ACE1ECA12FE00386404 /* CircularSeeker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularSeeker.swift; sourceTree = "<group>"; };
 		DAB43022EDCC0D134F9206B0 /* Pods-SafeNights.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeNights.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeNights/Pods-SafeNights.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +117,7 @@
 				C54FC9181E95DCD900C34D3D /* Info.plist */,
 				C574244B1E976628006C6E77 /* HomepageController.swift */,
 				C57424511E9ACC9C006C6E77 /* MapController.swift */,
+				C5F86ACE1ECA12FE00386404 /* CircularSeeker.swift */,
 			);
 			path = SafeNights;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F86ACF1ECA12FE00386404 /* CircularSeeker.swift in Sources */,
 				C57424521E9ACC9C006C6E77 /* MapController.swift in Sources */,
 				C54FC90D1E95DCD900C34D3D /* AppDelegate.swift in Sources */,
 				C5F86ACD1EC6F4FA00386404 /* LastNightController.swift in Sources */,

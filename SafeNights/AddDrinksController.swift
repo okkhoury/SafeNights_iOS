@@ -10,6 +10,67 @@ import UIKit
 
 class AddDrinksController: UIViewController {
     
+    @IBOutlet var DatePick: UIDatePicker!
+    @IBOutlet var submitButton: UIButton!
+    
+    let seekBar1 = CircularSeeker()
+    let seekBar2 = CircularSeeker()
+    let seekBar3 = CircularSeeker()
+    let seekBar4 = CircularSeeker()
+    
+    let API = MyAPI()
+    
+    let username = mainInstance.username
+    let password = mainInstance.password
+    
+    let date = NSDate()
+    let calendar = NSCalendar.current
+    
+    override func viewDidLoad() {
+        seekBar1.frame = CGRect(x: 30, y: 300, width: 100, height: 100)
+        seekBar1.startAngle = 120
+        seekBar1.endAngle = 60
+        seekBar1.currentAngle = 120
+        seekBar1.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
+        self.view.addSubview(seekBar1)
+        
+        seekBar2.frame = CGRect(x: 230, y: 300, width: 100, height: 100)
+        seekBar2.startAngle = 120
+        seekBar2.endAngle = 60
+        seekBar2.currentAngle = 120
+        seekBar2.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
+        self.view.addSubview(seekBar2)
+        
+        seekBar3.frame = CGRect(x: 30, y: 450, width: 100, height: 100)
+        seekBar3.startAngle = 120
+        seekBar3.endAngle = 60
+        seekBar3.currentAngle = 120
+        seekBar3.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
+        self.view.addSubview(seekBar3)
+        
+        seekBar4.frame = CGRect(x: 230, y: 450, width: 100, height: 100)
+        seekBar4.startAngle = 120
+        seekBar4.endAngle = 60
+        seekBar4.currentAngle = 120
+        seekBar4.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
+        self.view.addSubview(seekBar4)
+        
+        DatePick.setValue(UIColor.white, forKeyPath: "textColor")
+        
+    }
+    
+    
+    @IBAction func submit(_ sender: Any) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let selectedDate = dateFormatter.string(from: DatePick.date)
+        
+        // NOTE -- selectedDate comes up in the format above: 2017-05-15, for example
+        
+        print(selectedDate)
+        print(seekBar1.currentAngle)
+    }
+    
 //    @IBOutlet var MoneyTextEdit: UITextField!
 //    @IBOutlet var ShotsTextEdit: UITextField!
 //    @IBOutlet var LiquerTextEdit: UITextField!
