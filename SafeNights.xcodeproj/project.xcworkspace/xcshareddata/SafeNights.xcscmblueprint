@@ -10,7 +10,7 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "4FDC74E3-494B-4178-838E-D416DFE07E1E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "E6F49C8899E3FE119F288D25D58F45BB4568247C" : "..",
-    "5CD3FD43A349B11CCE3E1C60B969396A84136B99" : "SafeNights_iOS\/"
+    "5CD3FD43A349B11CCE3E1C60B969396A84136B99" : "SafeNights\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "SafeNights",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
