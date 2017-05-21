@@ -36,7 +36,10 @@ class AddDrinksController: UIViewController {
         moneyLabel.text = "Money Spent: $" + String(value)
     }
     
+    
+    // This function is putting the circularSeekers on the interface
     override func viewDidLoad() {
+        //Wine
         seekBar1.frame = CGRect(x: 40, y: 355, width: 75, height: 75)
         seekBar1.startAngle = 120
         seekBar1.endAngle = 60
@@ -44,6 +47,7 @@ class AddDrinksController: UIViewController {
         seekBar1.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
         self.view.addSubview(seekBar1)
         
+        //Beer
         seekBar2.frame = CGRect(x: 260, y: 355, width: 75, height: 75)
         seekBar2.startAngle = 120
         seekBar2.endAngle = 60
@@ -51,6 +55,7 @@ class AddDrinksController: UIViewController {
         seekBar2.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
         self.view.addSubview(seekBar2)
         
+        //Liquor
         seekBar3.frame = CGRect(x: 40, y: 465, width: 75, height: 75)
         seekBar3.startAngle = 120
         seekBar3.endAngle = 60
@@ -58,6 +63,7 @@ class AddDrinksController: UIViewController {
         seekBar3.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
         self.view.addSubview(seekBar3)
         
+        //Shots
         seekBar4.frame = CGRect(x: 260, y: 465, width: 75, height: 75)
         seekBar4.startAngle = 120
         seekBar4.endAngle = 60
@@ -81,22 +87,26 @@ class AddDrinksController: UIViewController {
         print(selectedDate)
         print(seekBar1.currentAngle)
         
+        // Siesta requires the post requests data to all be strings
         let wineAmount = String(Int(seekBar1.currentAngle))
         let beerAmount = String(Int(seekBar2.currentAngle))
         let liquorAmount = String(Int(seekBar3.currentAngle))
         let shotsAmount = String(Int(seekBar4.currentAngle))
         let moneyAmount = String(Int(moneySlider.value))
         
+        // Get the API for adding drinks
         let API = MyAPI()
+        let resource = API.addDrinks
         
+        // Get the global values for username and password
         let username = mainInstance.username
         let password = mainInstance.password
         
+        // The data to be entered into the database
         let postData = ["username":username, "pwd":password, "day": selectedDate,
                         "money": moneyAmount,"shots": shotsAmount, "liquor":liquorAmount,
                         "wine": wineAmount, "beer": beerAmount] as [String : Any]
         
-        let resource = API.addDrinks
         
         resource.request(.post, urlEncoded: postData as! [String : String]).onSuccess() { data in
             
@@ -112,73 +122,5 @@ class AddDrinksController: UIViewController {
             }
             
         }
-        
     }
-    
-    //        let postData = ["username":username, "pwd":password, "day": selectedDate, "money": MoneyTextEdit.text!, "shots": ShotsTextEdit.text!, "liquor": LiquerTextEdit.text!, "wine": WineTextEdit.text!, "beer": BeerTextEdit.text!]
-    //
-    //        resource.request(.post, urlEncoded: postData).onSuccess() { data in
-    //
-    //            // This code gets the response from the user in the form ["passed": 'y'/'n']
-    //            var response = data.jsonDict
-    //            let responseAnswer = response["passed"]
-    //
-    //            //startNightAnswer either returns a unique night ID or 'n'(failed)
-    //            if let responseAnswer = responseAnswer as? String, responseAnswer == "y" {
-    //                print("Drinks added")
-    //            } else if let responseAnswer = responseAnswer as? String, responseAnswer == "n" {
-    //                print("Drinks not added")
-    //            }
-    //        }
-    //    }
-    
-//    @IBOutlet var MoneyTextEdit: UITextField!
-//    @IBOutlet var ShotsTextEdit: UITextField!
-//    @IBOutlet var LiquerTextEdit: UITextField!
-//    @IBOutlet var WineTextEdit: UITextField!
-//    @IBOutlet var BeerTextEdit: UITextField!
-//    
-//    @IBOutlet var DateDP: UIDatePicker!
-//    
-//    @IBOutlet var submitButton: UIButton!
-//    
-//    let API = MyAPI()
-//
-//    let username = mainInstance.username
-//    let password = mainInstance.password
-//   
-//    // Get the current day, month, year
-//    let date = NSDate()
-//    let calendar = NSCalendar.current
-//    
-//    //Not sure what to do about the date. what form should it be in
-//    
-//    //yyyy-MM-dd, string for date
-//    
-//   
-//    @IBAction func clickSubmit(_ sender: Any) {
-//        DateDP.datePickerMode = UIDatePickerMode.date
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd"
-//        let selectedDate = dateFormatter.string(from: DateDP.date)
-//        
-//        let resource = API.addDrinks
-//        
-//        // Need to add the rest of the fields
-//        let postData = ["username":username, "pwd":password, "day": selectedDate, "money": MoneyTextEdit.text!, "shots": ShotsTextEdit.text!, "liquor": LiquerTextEdit.text!, "wine": WineTextEdit.text!, "beer": BeerTextEdit.text!]
-//        
-//        resource.request(.post, urlEncoded: postData).onSuccess() { data in
-//            
-//            // This code gets the response from the user in the form ["passed": 'y'/'n']
-//            var response = data.jsonDict
-//            let responseAnswer = response["passed"]
-//            
-//            //startNightAnswer either returns a unique night ID or 'n'(failed)
-//            if let responseAnswer = responseAnswer as? String, responseAnswer == "y" {
-//                print("Drinks added")
-//            } else if let responseAnswer = responseAnswer as? String, responseAnswer == "n" {
-//                print("Drinks not added")
-//            }
-//        }
-//    }
 }
