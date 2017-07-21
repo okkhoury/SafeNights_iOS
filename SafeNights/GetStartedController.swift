@@ -11,16 +11,24 @@ import Siesta
 
 class GetStartedController: UIViewController {
     
+    /** The location you plan at which user plans to end night. */
     @IBOutlet var locationTextField: UITextField!
+    
+    /** Name of person to contact in case of emergency. */
     @IBOutlet var contactTextField: UITextField!
+    
+    /** Email of person to contact in case of emergency. */
     @IBOutlet var emailTextField: UITextField!
     
-    
+    /** Submits contact and location info. */
     @IBOutlet var submitButton: UIButton!
     
     let API = MyAPI()
     
-    
+    /**
+     * Clicking submit sends a post request of username and password
+     * and returns an adventureID if they are valid.
+     */
     @IBAction func submit(_ sender: Any) {
         let username = mainInstance.username
         let password = mainInstance.password
@@ -28,18 +36,18 @@ class GetStartedController: UIViewController {
         let resource = API.startNight
         let postData = ["username": username, "pwd": password]
         
-        // Make request to database to get a new adventureID (I called it a nightID)
         resource.request(.post, urlEncoded: postData).onSuccess() { data in
             
-            // This code gets the response from the user in the form ["passed": 'y'/'n']
             var response = data.jsonDict
             let startNightAnswer = response["passed"]
             
-            //startNightAnswer either returns a unique night ID or 'n'(failed)
             if let startNightAnswer = startNightAnswer as? String, startNightAnswer != "n" {
                 print(startNightAnswer)
                 mainInstance.nightID = startNightAnswer
-            } else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
+                
+                mainInstance.performBackgroundTask()
+            }
+            else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
                 print("night has not started")
             }
         }

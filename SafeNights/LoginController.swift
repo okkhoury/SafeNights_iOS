@@ -11,40 +11,45 @@ import Siesta
 
 class LoginController: UIViewController {
     
+    /** Text field where user enters username. */
     @IBOutlet var username: UITextField!
+    
+    /** Text field where user enters password. */
     @IBOutlet var password: UITextField!
+    
+    /** button used clicked to attempt to login. */
     @IBOutlet var submitButton: UIButton!
+    
+    /** button used to go to the signup page. */
     @IBOutlet var registerButton: UIButton!
     
     let API = MyAPI()
     
-    @IBAction func clickSubmit(_ sender: Any) {
+    /**
+     * When user clicks submit send post request of username and
+     * password. Allow access if response does not equal 'n'.
+     */
+    @IBAction func Login(_ sender: Any) {
         let resource = API.signin
-        //let postData = ["username": "zrs", "pwd": "1234"]
+        
         let postData = ["username": username.text, "pwd": password.text]
         resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
             
-            // This code gets the response from the user in the form ["passed": 'y'/'n']
             var response = data.jsonDict
             let loginAnswer = response["passed"]
             
-            // If the response is a yes, allow access to the next page, otherwise deny access and give message to user
-            if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
-                print("Access allowed")
+            if let loginAnswer = loginAnswer as? String, loginAnswer != "n"{
                 
-                // If user signed in correctly, set the global username and password
                 mainInstance.username = self.username.text!
                 mainInstance.password = self.password.text!
                 
-                // Go to the home page if the user is in the database
-                self.performSegue(withIdentifier: "loginToHome", sender: nil)
-                
-            } else if let loginAnswer = loginAnswer as? String, loginAnswer == "n" {
-                print("Access denied")
+                self.performSegue(withIdentifier: "loginSegue", sender: nil)
+            }
+            else {
+                print("Permission Denied")
             }
         }
     }
-    
 }
     
    

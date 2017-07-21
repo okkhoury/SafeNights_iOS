@@ -20,6 +20,5 @@ class MyAPI: Service {
     var addDrinks: Resource { return resource("api/v1/adddrinks/") }
     var addLoc: Resource { return resource("api/v1/addloc/") }
     
-    
 }
 

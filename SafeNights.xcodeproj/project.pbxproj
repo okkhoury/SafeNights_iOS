@@ -26,6 +26,7 @@
 		C5F86ACB1EC6F4D200386404 /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F86ACA1EC6F4D200386404 /* HistoryController.swift */; };
 		C5F86ACD1EC6F4FA00386404 /* LastNightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F86ACC1EC6F4FA00386404 /* LastNightController.swift */; };
 		C5F86ACF1ECA12FE00386404 /* CircularSeeker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F86ACE1ECA12FE00386404 /* CircularSeeker.swift */; };
+		C9B70FDC56A21789CD7A6945 /* Pods_SafeNights.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62590A7895014C05A93D0A39 /* Pods_SafeNights.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 				C57424541E9ACEFC006C6E77 /* MapKit.framework in Frameworks */,
 				C54D52581E95F77100F3EF41 /* Pods_SafeNights.framework in Frameworks */,
 				C54D52561E95F6FB00F3EF41 /* Siesta.framework in Frameworks */,
+				C9B70FDC56A21789CD7A6945 /* Pods_SafeNights.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +110,7 @@
 				C574244D1E9809F6006C6E77 /* AddDrinksController.swift */,
 				C5F86ACA1EC6F4D200386404 /* HistoryController.swift */,
 				C5F86ACC1EC6F4FA00386404 /* LastNightController.swift */,
+				C57424511E9ACC9C006C6E77 /* MapController.swift */,
 				C54D52591E95FBC600F3EF41 /* MyAPI.swift */,
 				C574244F1E9AA4C2006C6E77 /* Global.swift */,
 				C57424551E9AFFCC006C6E77 /* collectCoordinates.swift */,
@@ -116,7 +119,6 @@
 				C54FC9151E95DCD900C34D3D /* LaunchScreen.storyboard */,
 				C54FC9181E95DCD900C34D3D /* Info.plist */,
 				C574244B1E976628006C6E77 /* HomepageController.swift */,
-				C57424511E9ACC9C006C6E77 /* MapController.swift */,
 				C5F86ACE1ECA12FE00386404 /* CircularSeeker.swift */,
 			);
 			path = SafeNights;
@@ -229,7 +231,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		BBC92D6709DFD8566291A779 /* [CP] Embed Pods Frameworks */ = {

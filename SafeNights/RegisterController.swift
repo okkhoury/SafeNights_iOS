@@ -20,7 +20,6 @@ class RegisterController: UIViewController {
     
     @IBOutlet var createAccountButton: UIButton!
     
-    
     let API = MyAPI()
     
     @IBAction func clickCreateAccount(_ sender: Any) {

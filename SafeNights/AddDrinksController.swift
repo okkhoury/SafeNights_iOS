@@ -36,6 +36,8 @@ class AddDrinksController: UIViewController {
         moneyLabel.text = "Money Spent: $" + String(value)
     }
     
+    // TODO: Figure out way to not hardcode these positions.
+    // or use different UI element. 
     
     // This function is putting the circularSeekers on the interface
     override func viewDidLoad() {
