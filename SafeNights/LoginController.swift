@@ -9,6 +9,9 @@
 import UIKit
 import Siesta
 
+/**
+ * Controller for the user login page.
+ */
 class LoginController: UIViewController {
     
     /** Text field where user enters username. */

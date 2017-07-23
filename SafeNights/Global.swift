@@ -52,14 +52,16 @@ class Main {
             // Send these coordinates to the database
             let resource = API.addLoc
             
-            print(Double(mainInstance.latitude))
-            print(Double(mainInstance.longitude))
+//            print(Double(mainInstance.latitude))
+//            print(Double(mainInstance.longitude))
             
             var postData = Dictionary<String, String>()
             
             postData = ["username": mainInstance.username, "pwd": mainInstance.password,
                         "id": mainInstance.nightID, "xcord": String(mainInstance.latitude),
                         "ycord": String(mainInstance.longitude)]
+            
+            print(postData)
             
             resource.request(.post, urlEncoded: postData ).onSuccess() { data in
                 
@@ -79,8 +81,8 @@ class Main {
                     print(data.jsonDict)
                 }
                 
-                }.onFailure{_ in
-                    print("failed")
+            }.onFailure{_ in
+                print("failed")
             }
         }
     }

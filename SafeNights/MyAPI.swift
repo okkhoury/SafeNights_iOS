@@ -18,7 +18,7 @@ class MyAPI: Service {
     var signup:  Resource { return resource("api/v1/signup/") }
     var startNight: Resource { return resource("api/v1/startnight/") }
     var addDrinks: Resource { return resource("api/v1/adddrinks/") }
-    var addLoc: Resource { return resource("api/v1/addloc/") }
-    
+    var addLoc: Resource { return resource("api/v1/addloc/iOS/") }
+    var getHistory: Resource { return resource("api/v1/gethistory/") }
 }
 
