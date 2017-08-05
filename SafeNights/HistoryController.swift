@@ -29,22 +29,25 @@ class HistoryController: UIViewController {
         let resource = API.getHistory
         
         let postData = ["username": mainInstance.username,
-                        "pwd": mainInstance.password,
-                        "id": mainInstance.nightID]
+                        "pwd": mainInstance.password]
         
         resource.request(.post, urlEncoded: postData).onSuccess() { data in
             
-            var response = data.jsonDict
-            let loginAnswer = response["passed"]
+            //var response = data.jsonDict
+            //let answer = response["passed"]
             
-            if let loginAnswer = loginAnswer as? String, loginAnswer != "n"
-            {
-                print(loginAnswer)
-            }
-            else
-            {
-                print("Permission denied")
-            }
+//            var json: Any?
+//            do {
+//                json = try JSONSerialization.jsonObject(with: data)
+//            } catch {
+//                print(error)
+//            }
+//            guard let item = json?.first as? [String: Any],
+//                let person = item["person"] as? [String: Any],
+//                let age = person["age"] as? Int else {
+//                    return
+//            }
+            
         }
     }
 }
