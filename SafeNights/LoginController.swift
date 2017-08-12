@@ -16,17 +16,17 @@ class LoginController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var usernameLabel: UILabel!
-    
     /** Text field where user enters username. */
     @IBOutlet var username: UITextField!
-    
     @IBOutlet weak var passwordLabel: UILabel!
     /** Text field where user enters password. */
     @IBOutlet var password: UITextField!
     
+    /** Indicator that appears when user hits login. */
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
     /** button used clicked to attempt to login. */
     @IBOutlet var submitButton: UIButton!
-    
     /** button used to go to the signup page. */
     @IBOutlet var registerButton: UIButton!
     
@@ -39,9 +39,14 @@ class LoginController: UIViewController, UITextFieldDelegate {
      * password. Allow access if response does not equal 'n'.
      */
     @IBAction func Login(_ sender: Any) {
-        let resource = API.signin
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimating()
         
-        let postData = ["username": username.text?.trimmingCharacters(in: .whitespacesAndNewlines), "pwd": password.text?.trimmingCharacters(in: .whitespacesAndNewlines)]
+        let resource = API.signin
+        let usernameStr = self.username.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let passwordStr = self.password.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        let postData = ["username": usernameStr, "pwd": passwordStr]
         resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
             
             var response = data.jsonDict
@@ -52,15 +57,29 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 mainInstance.username = self.username.text!
                 mainInstance.password = self.password.text!
                 
+                let names = loginAnswer.components(separatedBy: ",")
+                let fname = names[0]
+                let lname = names[1]
+                
+                _ = self.preferences.set(fname, forKey: "fname")
+                _ = self.preferences.set(lname, forKey: "lname")
+                _ = self.preferences.set(usernameStr, forKey: "username")
+                _ = self.preferences.set(passwordStr, forKey: "password")
+                _ = self.preferences.set("", forKey: "adventureID")
+                
                 _ = self.preferences.set("Logged In", forKey: self.loginKey)
                 
                 //  Save to disk
                 self.preferences.synchronize()
+                //  Stop loading animation
+                self.loadingIndicator.stopAnimating()
                 
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
             }
             else {
                 print("Permission Denied")
+                self.loadingIndicator.stopAnimating()
+                self.loadingIndicator.isHidden = true
             }
         }
     }
@@ -76,6 +95,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         
         usernameLabel.isHidden = true
         passwordLabel.isHidden = true
+        loadingIndicator.isHidden = true
         
         submitButton.layer.borderColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0).cgColor
         submitButton.layer.borderWidth = 2.0

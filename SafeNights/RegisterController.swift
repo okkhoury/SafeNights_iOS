@@ -29,6 +29,10 @@ class RegisterController: UIViewController, UITextFieldDelegate {
     /** Text field where user enters their password.  */
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var password: UITextField!
+    
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
+    
     /** Attempts to create new user account when pressed.  */
     @IBOutlet var createAccountButton: UIButton!
     
@@ -55,7 +59,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
             alert.addAction(OKAction)
             self.present(alert, animated: true, completion: nil)
         } else if validateUsername(enteredUsername: username.text!) {
-            let alert = UIAlertController(title: "Invalid", message: "Username can only contain uppercase/lowercase letters and numbers 0-9!", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Invalid", message: "Username must be multiple characters and can only contain uppercase/lowercase letters and numbers 0-9!", preferredStyle: .alert)
             alert.addAction(OKAction)
             self.present(alert, animated: true, completion: nil)
         } else if (firstName.text?.characters.count)! == 0 {
@@ -63,7 +67,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
             alert.addAction(OKAction)
             self.present(alert, animated: true, completion: nil)
         } else if (firstName.text?.characters.count)! > 20 {
-            let alert = UIAlertController(title: "Invalid", message: "Username must be less than 20 characters", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Invalid", message: "First name must be less than 20 characters", preferredStyle: .alert)
             alert.addAction(OKAction)
             self.present(alert, animated: true, completion: nil)
         } else if (lastName.text?.characters.count)! == 0 {
@@ -71,7 +75,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
             alert.addAction(OKAction)
             self.present(alert, animated: true, completion: nil)
         } else if (lastName.text?.characters.count)! > 20 {
-            let alert = UIAlertController(title: "Invalid", message: "Username must be less than 5 characters", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Invalid", message: "First name must be less than 5 characters", preferredStyle: .alert)
             alert.addAction(OKAction)
             self.present(alert, animated: true, completion: nil)
         } else if (password.text?.characters.count)! == 0 {
@@ -83,20 +87,22 @@ class RegisterController: UIViewController, UITextFieldDelegate {
             alert.addAction(OKAction)
             self.present(alert, animated: true, completion: nil)
         } else if (password.text?.characters.count)! > 20 {
-            let alert = UIAlertController(title: "Invalid", message: "Password must be less than 5 characters", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Invalid", message: "Password must be less than 20 characters", preferredStyle: .alert)
             alert.addAction(OKAction)
             self.present(alert, animated: true, completion: nil)
-//******************** FIX THIS. EMAIL IS NOT WORKING CORRECTLY *******************************
-        } else if validateEmail(enteredEmail: emailAddress.text!) {
+        } else if !(validateEmail(testStr: emailAddress.text!)) {
             let alert = UIAlertController(title: "Invalid", message: "Email Address is Invalid!", preferredStyle: .alert)
             alert.addAction(OKAction)
             self.present(alert, animated: true, completion: nil)
         } else {
-            let postData = ["username": username.text,
-                            "email": emailAddress.text,
-                            "pwd": password.text,
-                            "fname": firstName.text,
-                            "lname": lastName.text]
+            loadingIndicator.isHidden = false
+            loadingIndicator.startAnimating()
+            
+            let postData = ["username": username.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                            "email": emailAddress.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                            "pwd": password.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                            "fname": firstName.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                            "lname": lastName.text?.trimmingCharacters(in: .whitespacesAndNewlines)]
             
             resource.request(.post, urlEncoded: postData as! [String : String]).onSuccess() { data in
                 
@@ -104,14 +110,17 @@ class RegisterController: UIViewController, UITextFieldDelegate {
                 let signupAnswer = response["passed"]
                 
                 if let signupAnswer = signupAnswer as? String, signupAnswer == "y" {
-                    print("User added to database")
-                    
+                    self.loadingIndicator.stopAnimating()
+                    // Go back to the login page regardless what happens (should change this later)
+                    self.performSegue(withIdentifier: "register_To_Login_Segue", sender: nil)
                 } else if let signupAnswer = signupAnswer as? String, signupAnswer == "n" {
-                    print("User not added")
+                    self.loadingIndicator.stopAnimating()
+                    self.loadingIndicator.isHidden = true
+                    let alert = UIAlertController(title: "Invalid", message: "This username is already taken, please choose a different one!", preferredStyle: .alert)
+                    alert.addAction(OKAction)
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
-            // Go back to the login page regardless what happens (should change this later)
-            performSegue(withIdentifier: "signupToLogin", sender: nil)
         }
     }
     
@@ -121,10 +130,12 @@ class RegisterController: UIViewController, UITextFieldDelegate {
         return usernamePredicate.evaluate(with:enteredUsername)
     }
     
-    func validateEmail(enteredEmail:String) -> Bool {
-        let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\[A-Za-z]{2,64}"
-        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailFormat)
-        return emailPredicate.evaluate(with:enteredEmail)
+    func validateEmail(testStr:String) -> Bool {
+        // print("validate calendar: \(testStr)")
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
     }
     
     override func viewDidLoad() {
@@ -144,6 +155,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
         emailAddressLabel.isHidden = true
         usernameLabel.isHidden = true
         passwordLabel.isHidden = true
+        loadingIndicator.isHidden = true
         
         createAccountButton.layer.borderColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0).cgColor
         createAccountButton.layer.borderWidth = 2.0

@@ -122,17 +122,22 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
                                         <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="97G-L9-1pZ">
+                                <rect key="frame" x="177" y="477" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="loadingIndicator" destination="97G-L9-1pZ" id="EEn-jJ-x0L"/>
                         <outlet property="password" destination="eaC-sM-q1F" id="wQ7-Vr-LtS"/>
                         <outlet property="passwordLabel" destination="xgq-5W-4gb" id="bkN-O2-rKV"/>
                         <outlet property="registerButton" destination="XyF-OZ-U2b" id="7Jm-il-OjK"/>
@@ -184,7 +189,6 @@
                                 </state>
                                 <connections>
                                     <action selector="clickCreateAccount:" destination="WHq-Q5-rbm" eventType="touchUpInside" id="hUt-bB-1qn"/>
-                                    <segue destination="BYZ-38-t0r" kind="show" identifier="signupToLogin" id="ElV-fP-jhe"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vnH-xC-7QU">
@@ -211,7 +215,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
                                         <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -294,9 +298,13 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="n8X-aT-ygu"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="register_To_Login_Segue" id="n8X-aT-ygu"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="7cb-OX-1ke">
+                                <rect key="frame" x="176" y="507" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -308,6 +316,7 @@
                         <outlet property="firstNameLabel" destination="lop-xD-hrm" id="pgo-tj-vjt"/>
                         <outlet property="lastName" destination="HOW-OU-u8b" id="xeC-OT-5Kx"/>
                         <outlet property="lastNameLabel" destination="o0o-tR-ZDA" id="JEK-Xr-Ctc"/>
+                        <outlet property="loadingIndicator" destination="7cb-OX-1ke" id="cfx-qv-lru"/>
                         <outlet property="password" destination="GyH-fA-foa" id="QcW-Ys-LWP"/>
                         <outlet property="passwordLabel" destination="eeR-dn-pl3" id="Jat-DM-IEB"/>
                         <outlet property="username" destination="fYz-wN-cBY" id="Xe4-CN-1QL"/>
@@ -412,8 +421,8 @@
         <!--Tutorial Controller-->
         <scene sceneID="eOD-lg-75P">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ayc-wE-Uct" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <pageViewController storyboardIdentifier="TutorialController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="ieA-kx-wM9" customClass="TutorialController" customModule="SafeNights" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ayc-wE-Uct" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="54" y="-639"/>
         </scene>
@@ -567,7 +576,7 @@
         <image name="start" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MIT-kv-iJz"/>
         <segue reference="n8X-aT-ygu"/>
+        <segue reference="MIT-kv-iJz"/>
     </inferredMetricsTieBreakers>
 </document>
