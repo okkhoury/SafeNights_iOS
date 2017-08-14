@@ -27,6 +27,9 @@
                     <date key="date" timeIntervalSinceReferenceDate="524365079.44477803">
                         <!--2017-08-14 00:57:59 +0000-->
                     </date>
+                    <date key="maximumDate" timeIntervalSinceReferenceDate="1138705259">
+                        <!--2037-01-31 11:00:59 +0000-->
+                    </date>
                 </datePicker>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rcd-ja-wrV">
                     <rect key="frame" x="159" y="216" width="56" height="36"/>

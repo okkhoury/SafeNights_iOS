@@ -34,9 +34,7 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
     let seekBar4 = CircularSeeker()
     
     let API = MyAPI()
-    
-    let username = mainInstance.username
-    let password = mainInstance.password
+    let preferences = UserDefaults.standard
     
     var selectedDate = "yyyy-MM-dd"
     let date = NSDate()
@@ -147,11 +145,6 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
     }
     
     @IBAction func submit(_ sender: Any) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        // NOTE -- selectedDate comes up in the format above: 2017-05-15, for example
-      //  let selectedDate = dateFormatter.string(from: DatePick.date)
-        
         // Siesta requires the post requests data to all be strings
         let beerAmount = String(calculateNumberOfDrinks(angle: seekBar1.currentAngle))
         let wineAmount = String(calculateNumberOfDrinks(angle: seekBar2.currentAngle))
@@ -164,19 +157,20 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         let resource = API.addDrinks
         
         // Get the global values for username and password
-        let username = mainInstance.username
-        let password = mainInstance.password
+        let username = self.preferences.string(forKey: "username")!
+        let password = self.preferences.string(forKey: "password")!
         
        // print(selectedDate)
-        print(seekBar1.currentAngle)
-        print(moneyAmount)
-        print(wineAmount)
-        print(beerAmount)
-        print(liquorAmount)
-        print(shotsAmount)
+//        print(username + password + " , " + selectedDate)
+//        print(moneyAmount)
+//        print(wineAmount)
+//        print(beerAmount)
+//        print(liquorAmount)
+//        print(shotsAmount)
         
         // The data to be entered into the database
-        let postData = ["username":username, "pwd":password, "day": "08/02/17",
+        // NOTE -- selectedDate comes up in the format above: 2017-05-15, for example
+        let postData = ["username":username, "pwd":password, "day": selectedDate,
                         "money": moneyAmount,"shots": shotsAmount, "liquor":liquorAmount,
                         "wine": wineAmount, "beer": beerAmount] as [String : Any]
         
@@ -190,8 +184,16 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
             // check if the data was correctly added
             if let responseAnswer = responseAnswer as? String, responseAnswer == "y" {
                 print("Drinks added")
+                // Send them to history
             } else {
                 print("Drinks not added")
+                //Display Error
+                let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
+                    print("There was an error. User recognized")
+                }
+                let alert = UIAlertController(title: "Error", message: "There was a problem uploading your drink recording. Please make sure you have internet access", preferredStyle: .alert)
+                alert.addAction(OKAction)
+                self.present(alert, animated: true, completion: nil)
             }
             
         }

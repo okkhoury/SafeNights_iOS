@@ -51,7 +51,8 @@ class PopDateViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-        
+        // Set maximum date as current date so can't log future
+        datePicker.maximumDate = Date()
         updatePickerCurrentDate()
     }
     

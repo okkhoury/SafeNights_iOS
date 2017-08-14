@@ -22,7 +22,7 @@ class SplashScreenController: UIViewController {
             performSegue(withIdentifier: "TutorialSegue", sender: self)
         } else if (preferences.object(forKey: loginKey) == nil)  {
             //  Doesn't exist
-            performSegue(withIdentifier: "HomeSegue", sender: self)
+            performSegue(withIdentifier: "LoginSegue", sender: self)
         } else {
             //Already has login information
             performSegue(withIdentifier: "HomeSegue", sender: self)

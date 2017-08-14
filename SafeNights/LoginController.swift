@@ -58,8 +58,10 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 let fname = names[0]
                 let lname = names[1]
                 
-                mainInstance.username = self.username.text!
-                mainInstance.password = self.password.text!
+                mainInstance.username = usernameStr!
+                mainInstance.password = passwordStr!
+                _ = self.preferences.set(usernameStr, forKey: "username")
+                _ = self.preferences.set(passwordStr, forKey: "password")
                 _ = self.preferences.set(fname, forKey: "fname")
                 _ = self.preferences.set(lname, forKey: "lname")
                 
