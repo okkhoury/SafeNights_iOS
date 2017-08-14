@@ -8,12 +8,25 @@
 
 import UIKit
 
-class AddDrinksController: UIViewController {
+protocol VcDelegate {
+    func valueChanged(value: Float)
+}
+
+class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextFieldDelegate {
     
-    @IBOutlet var DatePick: UIDatePicker!
+   // @IBOutlet var DatePick: UIDatePicker!
     @IBOutlet var submitButton: UIButton!
     @IBOutlet var moneySlider: UISlider!
     @IBOutlet var moneyLabel: UILabel!
+    
+    @IBOutlet weak var beerLabel: UILabel!
+    @IBOutlet weak var wineLabel: UILabel!
+    @IBOutlet weak var mixedLabel: UILabel!
+    @IBOutlet weak var liquorLabel: UILabel!
+    
+    @IBOutlet weak var calendarBackgroundView: UIView!
+    @IBOutlet weak var dateTextField: UITextField!
+    var popDatePicker : PopDatePicker?
     
     let seekBar1 = CircularSeeker()
     let seekBar2 = CircularSeeker()
@@ -25,6 +38,7 @@ class AddDrinksController: UIViewController {
     let username = mainInstance.username
     let password = mainInstance.password
     
+    var selectedDate = "yyyy-MM-dd"
     let date = NSDate()
     let calendar = NSCalendar.current
     
@@ -41,59 +55,108 @@ class AddDrinksController: UIViewController {
     
     // This function is putting the circularSeekers on the interface
     override func viewDidLoad() {
-        //Wine
-        seekBar1.frame = CGRect(x: 40, y: 355, width: 75, height: 75)
+        //Date Logic
+        let today = Date()
+        selectedDate = dateToString(day: today)!
+        dateTextField.text = dateToString_Short(day: today)!
+        
+        //Send View To Be Background for Calendar Pic
+        view.sendSubview(toBack: calendarBackgroundView)
+        
+        //Beer
+        seekBar1.frame = CGRect(x: (self.view.frame.size.width) * 0.1, y: (self.view.frame.size.height) * 0.4, width: (self.view.frame.size.width) * 0.3, height: (self.view.frame.size.width) * 0.3)
         seekBar1.startAngle = 120
         seekBar1.endAngle = 60
         seekBar1.currentAngle = 120
-        seekBar1.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
+        seekBar1.delegate = self
         self.view.addSubview(seekBar1)
         
-        //Beer
-        seekBar2.frame = CGRect(x: 260, y: 355, width: 75, height: 75)
+        //Wine
+        seekBar2.frame = CGRect(x: (self.view.frame.size.width) * 0.6, y: (self.view.frame.size.height) * 0.4, width: (self.view.frame.size.width) * 0.3, height: (self.view.frame.size.width) * 0.3)
         seekBar2.startAngle = 120
         seekBar2.endAngle = 60
         seekBar2.currentAngle = 120
-        seekBar2.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
+        seekBar2.delegate = self
         self.view.addSubview(seekBar2)
         
         //Liquor
-        seekBar3.frame = CGRect(x: 40, y: 465, width: 75, height: 75)
+        seekBar3.frame = CGRect(x: (self.view.frame.size.width) * 0.1, y: (self.view.frame.size.height) * 0.6, width: (self.view.frame.size.width) * 0.3, height: (self.view.frame.size.width) * 0.3)
         seekBar3.startAngle = 120
         seekBar3.endAngle = 60
         seekBar3.currentAngle = 120
-        seekBar3.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
+        seekBar3.delegate = self
         self.view.addSubview(seekBar3)
         
-        //Shots
-        seekBar4.frame = CGRect(x: 260, y: 465, width: 75, height: 75)
+        //Mixed Drinks
+        seekBar4.frame = CGRect(x: (self.view.frame.size.width) * 0.6, y: (self.view.frame.size.height) * 0.6, width: (self.view.frame.size.width) * 0.3, height: (self.view.frame.size.width) * 0.3)
         seekBar4.startAngle = 120
         seekBar4.endAngle = 60
         seekBar4.currentAngle = 120
-        seekBar4.addTarget(self, action: Selector(("seekBarDidChangeValue:")), for: .valueChanged)
+        seekBar4.delegate = self
         self.view.addSubview(seekBar4)
         
         // Change the text color of the datePicker to white
-        DatePick.setValue(UIColor.white, forKeyPath: "textColor")
-
+        //DatePick.setValue(UIColor.white, forKeyPath: "textColor")
+        
+        //
+        moneySlider.tintColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0)
+        
+        popDatePicker = PopDatePicker(forTextField: dateTextField)
+        dateTextField.delegate = self
+        
+        //Style Submit Button
+        submitButton.layer.borderColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0).cgColor
+        submitButton.layer.borderWidth = 2.0
     }
     
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
+        if (textField === dateTextField) {
+            //Resign fist responder so keyboard doesn't appear
+            dateTextField.resignFirstResponder()
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            let initDate : Date? = formatter.date(from: dateTextField.text!)
+            
+            let dataChangedCallback : PopDatePicker.PopDatePickerCallback = { (newDate : Date, forTextField : UITextField) -> () in
+                // Update Global Var to new date
+                self.selectedDate = (self.dateToString(day: newDate) ?? "?") as String
+                // Update UI
+                forTextField.text = (self.dateToString_Short(day: newDate) ?? "?") as String
+            }
+            
+            popDatePicker!.pick(self, initDate: initDate, dataChanged: dataChangedCallback)
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
+    func dateToString(day : Date) -> String? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: day)
+    }
+    
+    func dateToString_Short(day : Date) -> String? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+        return formatter.string(from: day)
+    }
     
     @IBAction func submit(_ sender: Any) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let selectedDate = dateFormatter.string(from: DatePick.date)
-        
         // NOTE -- selectedDate comes up in the format above: 2017-05-15, for example
-        
-        print(selectedDate)
-        print(seekBar1.currentAngle)
+      //  let selectedDate = dateFormatter.string(from: DatePick.date)
         
         // Siesta requires the post requests data to all be strings
-        let wineAmount = String(Int(seekBar1.currentAngle))
-        let beerAmount = String(Int(seekBar2.currentAngle))
-        let liquorAmount = String(Int(seekBar3.currentAngle))
-        let shotsAmount = String(Int(seekBar4.currentAngle))
+        let beerAmount = String(calculateNumberOfDrinks(angle: seekBar1.currentAngle))
+        let wineAmount = String(calculateNumberOfDrinks(angle: seekBar2.currentAngle))
+        let liquorAmount = String(calculateNumberOfDrinks(angle: seekBar3.currentAngle))
+        let shotsAmount = String(calculateNumberOfDrinks(angle: seekBar4.currentAngle))
         let moneyAmount = String(Int(moneySlider.value))
         
         // Get the API for adding drinks
@@ -104,8 +167,16 @@ class AddDrinksController: UIViewController {
         let username = mainInstance.username
         let password = mainInstance.password
         
+       // print(selectedDate)
+        print(seekBar1.currentAngle)
+        print(moneyAmount)
+        print(wineAmount)
+        print(beerAmount)
+        print(liquorAmount)
+        print(shotsAmount)
+        
         // The data to be entered into the database
-        let postData = ["username":username, "pwd":password, "day": selectedDate,
+        let postData = ["username":username, "pwd":password, "day": "08/02/17",
                         "money": moneyAmount,"shots": shotsAmount, "liquor":liquorAmount,
                         "wine": wineAmount, "beer": beerAmount] as [String : Any]
         
@@ -123,6 +194,21 @@ class AddDrinksController: UIViewController {
                 print("Drinks not added")
             }
             
+        }
+    }
+    
+    func circularSeeker(_ seeker: CircularSeeker, didChangeValue value: Float) {
+        beerLabel.text = String(calculateNumberOfDrinks(angle: seekBar1.currentAngle))
+        wineLabel.text = String(calculateNumberOfDrinks(angle: seekBar2.currentAngle))
+        liquorLabel.text = String(calculateNumberOfDrinks(angle: seekBar3.currentAngle))
+        mixedLabel.text = String(calculateNumberOfDrinks(angle: seekBar4.currentAngle))
+    }
+    
+    func calculateNumberOfDrinks(angle: Float) -> Int {
+        if angle < 120 {
+            return (8 + Int(angle/30.0))
+        } else {
+            return (Int((angle-120.0)/30.0))
         }
     }
 }

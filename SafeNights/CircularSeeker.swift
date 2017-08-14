@@ -57,7 +57,7 @@ class CircularSeeker: UIControl {
         }
     }
     
-    var thumbColor: UIColor = .red {
+    var thumbColor: UIColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0) {
         didSet {
             thumbButton.backgroundColor = thumbColor
             self.setNeedsDisplay()
@@ -258,7 +258,7 @@ class CircularSeeker: UIControl {
             
             return result
         }
-        
+                
         return moveToPoint(point: touch.location(in: self))
     }
     

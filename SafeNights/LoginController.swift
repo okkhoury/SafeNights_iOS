@@ -53,19 +53,15 @@ class LoginController: UIViewController, UITextFieldDelegate {
             let loginAnswer = response["passed"]
             
             if let loginAnswer = loginAnswer as? String, loginAnswer != "n"{
-                
-                mainInstance.username = self.username.text!
-                mainInstance.password = self.password.text!
-                
+
                 let names = loginAnswer.components(separatedBy: ",")
                 let fname = names[0]
                 let lname = names[1]
                 
+                mainInstance.username = self.username.text!
+                mainInstance.password = self.password.text!
                 _ = self.preferences.set(fname, forKey: "fname")
                 _ = self.preferences.set(lname, forKey: "lname")
-                _ = self.preferences.set(usernameStr, forKey: "username")
-                _ = self.preferences.set(passwordStr, forKey: "password")
-                _ = self.preferences.set("", forKey: "adventureID")
                 
                 _ = self.preferences.set("Logged In", forKey: self.loginKey)
                 
