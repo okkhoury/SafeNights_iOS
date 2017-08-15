@@ -487,21 +487,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UkR-RA-Wd4">
-                                <rect key="frame" x="132" y="77" width="111" height="96"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5nl-x3-9KD" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="67" y="269" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Get History"/>
-                                <connections>
-                                    <action selector="getHistory:" destination="icP-tY-onD" eventType="touchDragInside" id="fsJ-ls-Mfe"/>
-                                </connections>
-                            </button>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lLk-7J-slN" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="67" y="437" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="My Legacy" image="history" id="2W9-d8-IaO"/>
                     <connections>
-                        <outlet property="historyButton" destination="UkR-RA-Wd4" id="XPN-dE-PzL"/>
+                        <outlet property="alcoholChartView" destination="lLk-7J-slN" id="Em3-Xh-UlD"/>
+                        <outlet property="moneyChartView" destination="5nl-x3-9KD" id="aM1-TX-q5h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jtY-zT-tRv" userLabel="First Responder" sceneMemberID="firstResponder"/>

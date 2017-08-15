@@ -1,17 +1,22 @@
 PODS:
+  - Charts (3.0.2):
+    - Charts/Core (= 3.0.2)
+  - Charts/Core (3.0.2)
   - JSONHelper (2.2.0)
   - Siesta (1.2.0):
     - Siesta/Core (= 1.2.0)
   - Siesta/Core (1.2.0)
 
 DEPENDENCIES:
+  - Charts
   - JSONHelper
   - Siesta (~> 1.0)
 
 SPEC CHECKSUMS:
+  Charts: 236d6ccdd0ce6feae151d89e829a7397381a21fd
   JSONHelper: 340bf5d996f51fb9a0a001fbce9e27a81216e1a7
   Siesta: 04efdce8976d1c46bb9ca7f265efa81dab24b369
 
-PODFILE CHECKSUM: 0572ca75ec93a591f5cd3b6f83eee3645c0760d9
+PODFILE CHECKSUM: 5b2aedfcc51ec646a3c115ba0988fd21eb1f274a
 
 COCOAPODS: 1.3.1

@@ -8,5 +8,6 @@ target 'SafeNights' do
   # Pods for SafeNights
   pod 'Siesta', '~> 1.0'
   pod "JSONHelper"
+  pod ‘Charts’
 
 end
