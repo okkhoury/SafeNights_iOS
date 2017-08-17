@@ -185,6 +185,7 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
             if let responseAnswer = responseAnswer as? String, responseAnswer == "y" {
                 print("Drinks added")
                 // Send them to history
+                self.tabBarController?.selectedIndex = 2
             } else {
                 print("Drinks not added")
                 //Display Error

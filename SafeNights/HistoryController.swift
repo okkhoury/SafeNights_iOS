@@ -25,6 +25,8 @@ class HistoryController: UIViewController {
     @IBOutlet weak var monthLabel: UILabel!
     
     @IBOutlet weak var monthStepper: UIStepper!
+    @IBOutlet weak var loadingMoneyIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loadingAlcoholIndicator: UIActivityIndicatorView!
     
      let API = MyAPI()
     let preferences = UserDefaults.standard
@@ -51,6 +53,11 @@ class HistoryController: UIViewController {
         self.allData.removeAll()
         self.monthsDictionary.removeAll()
         self.totalSpent = 0
+        //Starts loading indicator while API is called 
+        loadingMoneyIndicator.isHidden = false
+        loadingAlcoholIndicator.isHidden = false
+        loadingMoneyIndicator.startAnimating()
+        loadingAlcoholIndicator.startAnimating()
         // Sets up all the styling for the graph
         styling()
         // Calls API to get the information. Only needs once, it is parsed so can just update dictionary array in future
@@ -146,6 +153,11 @@ class HistoryController: UIViewController {
         self.displayYear = components.year!
         todayKey = String(components.month!) + String(components.year!)
         monthLabel.text = getMonthFromInt(month: components.month!)
+        //Stop the loading animation. Update graph takes less that 1 second and so can do this now
+        loadingMoneyIndicator.stopAnimating()
+        loadingAlcoholIndicator.stopAnimating()
+        loadingMoneyIndicator.isHidden = true
+        loadingAlcoholIndicator.isHidden = true
         // This should only be called once, so we now update the Graph.
         // Note- update graph will be called again every other time when Month is updated
         updateGraph()
