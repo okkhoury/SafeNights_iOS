@@ -9,5 +9,7 @@ target 'SafeNights' do
   pod 'Siesta', '~> 1.0'
   pod "JSONHelper"
   pod ‘Charts’
+  pod 'GoogleMaps'
+  pod 'GooglePlacePicker’
 
 end

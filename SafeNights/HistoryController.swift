@@ -28,7 +28,7 @@ class HistoryController: UIViewController {
     @IBOutlet weak var loadingMoneyIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingAlcoholIndicator: UIActivityIndicatorView!
     
-     let API = MyAPI()
+    let API = MyAPI()
     let preferences = UserDefaults.standard
     
     var allData : [Fields] = []

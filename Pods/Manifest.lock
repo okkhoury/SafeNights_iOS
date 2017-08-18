@@ -2,6 +2,16 @@ PODS:
   - Charts (3.0.2):
     - Charts/Core (= 3.0.2)
   - Charts/Core (3.0.2)
+  - GoogleMaps (2.4.0):
+    - GoogleMaps/Maps (= 2.4.0)
+  - GoogleMaps/Base (2.4.0)
+  - GoogleMaps/Maps (2.4.0):
+    - GoogleMaps/Base
+  - GooglePlacePicker (2.4.0):
+    - GoogleMaps (= 2.4.0)
+    - GooglePlaces (= 2.4.0)
+  - GooglePlaces (2.4.0):
+    - GoogleMaps/Base (= 2.4.0)
   - JSONHelper (2.2.0)
   - Siesta (1.2.0):
     - Siesta/Core (= 1.2.0)
@@ -9,14 +19,19 @@ PODS:
 
 DEPENDENCIES:
   - Charts
+  - GoogleMaps
+  - GooglePlacePicker
   - JSONHelper
   - Siesta (~> 1.0)
 
 SPEC CHECKSUMS:
   Charts: 236d6ccdd0ce6feae151d89e829a7397381a21fd
+  GoogleMaps: 8436ab5d1c25e36915b2f7416d0c8e3fa2e76c61
+  GooglePlacePicker: 755f10343d71280c7b016823e73fbae9625dfa8a
+  GooglePlaces: aafe5990fa7951e98e078761bbdaaf236d7e0c65
   JSONHelper: 340bf5d996f51fb9a0a001fbce9e27a81216e1a7
   Siesta: 04efdce8976d1c46bb9ca7f265efa81dab24b369
 
-PODFILE CHECKSUM: 5b2aedfcc51ec646a3c115ba0988fd21eb1f274a
+PODFILE CHECKSUM: 02a6141b8fdecce5bc591decd719f68935d25604
 
 COCOAPODS: 1.3.1

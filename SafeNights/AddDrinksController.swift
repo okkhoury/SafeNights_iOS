@@ -93,10 +93,7 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         seekBar4.delegate = self
         self.view.addSubview(seekBar4)
         
-        // Change the text color of the datePicker to white
-        //DatePick.setValue(UIColor.white, forKeyPath: "textColor")
-        
-        //
+        // Change slider color to the theme accent
         moneySlider.tintColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0)
         
         popDatePicker = PopDatePicker(forTextField: dateTextField)

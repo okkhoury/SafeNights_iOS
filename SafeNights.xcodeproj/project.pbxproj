@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7353CFA71F451CFA006AAA92 /* LastNightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353CFA61F451CFA006AAA92 /* LastNightController.swift */; };
+		7353CFAA1F45258C006AAA92 /* Locationtable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353CFA81F45258C006AAA92 /* Locationtable.swift */; };
+		7353CFAB1F45258C006AAA92 /* LocFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353CFA91F45258C006AAA92 /* LocFields.swift */; };
 		73A691C11F3E0DF200348D16 /* SplashScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A691C01F3E0DF200348D16 /* SplashScreenController.swift */; };
 		73A691C51F3E0F7A00348D16 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73A691C41F3E0F7A00348D16 /* Tutorial.storyboard */; };
 		73A691C71F3E0FF200348D16 /* TutorialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A691C61F3E0FF200348D16 /* TutorialController.swift */; };
@@ -15,6 +18,7 @@
 		73AA909C1F412E830004C849 /* PopDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AA909B1F412E830004C849 /* PopDateViewController.swift */; };
 		73DBECDD1F439F740010DA48 /* Alcoholtable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DBECDB1F439F740010DA48 /* Alcoholtable.swift */; };
 		73DBECDE1F439F740010DA48 /* Fields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DBECDC1F439F740010DA48 /* Fields.swift */; };
+		73E1ECA11F466CD7006CB12A /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = 73F9E45D1F4628B60034D4E0 /* style.json */; };
 		C51667991F302D5B00271CC0 /* JSONHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C51667981F302D5B00271CC0 /* JSONHelper.framework */; };
 		C54D52561E95F6FB00F3EF41 /* Siesta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C54D52551E95F6FB00F3EF41 /* Siesta.framework */; };
 		C54D52581E95F77100F3EF41 /* Pods_SafeNights.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C54D52571E95F77100F3EF41 /* Pods_SafeNights.framework */; };
@@ -27,7 +31,6 @@
 		C54FC9231E95F16D00C34D3D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54FC9221E95F16D00C34D3D /* LoginController.swift */; };
 		C574244E1E9809F6006C6E77 /* AddDrinksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C574244D1E9809F6006C6E77 /* AddDrinksController.swift */; };
 		C57424501E9AA4C2006C6E77 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = C574244F1E9AA4C2006C6E77 /* Global.swift */; };
-		C57424521E9ACC9C006C6E77 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57424511E9ACC9C006C6E77 /* MapController.swift */; };
 		C57424541E9ACEFC006C6E77 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C57424531E9ACEFC006C6E77 /* MapKit.framework */; };
 		C5F86AC91EC6F41900386404 /* GetStartedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F86AC81EC6F41900386404 /* GetStartedController.swift */; };
 		C5F86ACB1EC6F4D200386404 /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F86ACA1EC6F4D200386404 /* HistoryController.swift */; };
@@ -38,6 +41,9 @@
 /* Begin PBXFileReference section */
 		48F085B45E70CF48635816CE /* Pods-SafeNights.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeNights.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeNights/Pods-SafeNights.release.xcconfig"; sourceTree = "<group>"; };
 		62590A7895014C05A93D0A39 /* Pods_SafeNights.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeNights.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7353CFA61F451CFA006AAA92 /* LastNightController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastNightController.swift; sourceTree = "<group>"; };
+		7353CFA81F45258C006AAA92 /* Locationtable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Locationtable.swift; path = ../../../../../Downloads/codegen_5994ede7a5b3a/Locationtable.swift; sourceTree = "<group>"; };
+		7353CFA91F45258C006AAA92 /* LocFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocFields.swift; path = ../../../../../Downloads/codegen_5994ede7a5b3a/LocFields.swift; sourceTree = "<group>"; };
 		73A691C01F3E0DF200348D16 /* SplashScreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenController.swift; sourceTree = "<group>"; };
 		73A691C41F3E0F7A00348D16 /* Tutorial.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Tutorial.storyboard; sourceTree = "<group>"; };
 		73A691C61F3E0FF200348D16 /* TutorialController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialController.swift; sourceTree = "<group>"; };
@@ -46,6 +52,7 @@
 		73AA909B1F412E830004C849 /* PopDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopDateViewController.swift; sourceTree = "<group>"; };
 		73DBECDB1F439F740010DA48 /* Alcoholtable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alcoholtable.swift; path = ../../../../../Downloads/codegen_599366d833f22/Alcoholtable.swift; sourceTree = "<group>"; };
 		73DBECDC1F439F740010DA48 /* Fields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fields.swift; path = ../../../../../Downloads/codegen_599366d833f22/Fields.swift; sourceTree = "<group>"; };
+		73F9E45D1F4628B60034D4E0 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		C51667981F302D5B00271CC0 /* JSONHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONHelper.framework; path = "../../Library/Developer/Xcode/DerivedData/SafeNights-djdztaoobrrhwlebpzjfrzfvgrpv/Build/Products/Debug-iphonesimulator/JSONHelper/JSONHelper.framework"; sourceTree = "<group>"; };
 		C54D52551E95F6FB00F3EF41 /* Siesta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Siesta.framework; path = "../../../../Library/Developer/Xcode/DerivedData/SafeNights-gufakrydpxokzcfhnbmwstaslkfc/Build/Products/Debug-iphonesimulator/Siesta/Siesta.framework"; sourceTree = "<group>"; };
 		C54D52571E95F77100F3EF41 /* Pods_SafeNights.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_SafeNights.framework; path = "Pods/../build/Debug-iphoneos/Pods_SafeNights.framework"; sourceTree = "<group>"; };
@@ -60,7 +67,6 @@
 		C54FC9221E95F16D00C34D3D /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		C574244D1E9809F6006C6E77 /* AddDrinksController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDrinksController.swift; sourceTree = "<group>"; };
 		C574244F1E9AA4C2006C6E77 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
-		C57424511E9ACC9C006C6E77 /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		C57424531E9ACEFC006C6E77 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C5F86AC81EC6F41900386404 /* GetStartedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetStartedController.swift; sourceTree = "<group>"; };
 		C5F86ACA1EC6F4D200386404 /* HistoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
@@ -129,16 +135,19 @@
 				C5F86AC81EC6F41900386404 /* GetStartedController.swift */,
 				C574244D1E9809F6006C6E77 /* AddDrinksController.swift */,
 				C5F86ACA1EC6F4D200386404 /* HistoryController.swift */,
-				73DBECDB1F439F740010DA48 /* Alcoholtable.swift */,
-				73DBECDC1F439F740010DA48 /* Fields.swift */,
-				C57424511E9ACC9C006C6E77 /* MapController.swift */,
+				7353CFA61F451CFA006AAA92 /* LastNightController.swift */,
 				C54D52591E95FBC600F3EF41 /* MyAPI.swift */,
 				C574244F1E9AA4C2006C6E77 /* Global.swift */,
-				C5F86ACE1ECA12FE00386404 /* CircularSeeker.swift */,
 				C54FC9181E95DCD900C34D3D /* Info.plist */,
 				73AA90971F412CE60004C849 /* PopDateViewController.xib */,
 				73AA90991F412E4D0004C849 /* PopDatePicker.swift */,
 				73AA909B1F412E830004C849 /* PopDateViewController.swift */,
+				C5F86ACE1ECA12FE00386404 /* CircularSeeker.swift */,
+				73DBECDB1F439F740010DA48 /* Alcoholtable.swift */,
+				73DBECDC1F439F740010DA48 /* Fields.swift */,
+				7353CFA81F45258C006AAA92 /* Locationtable.swift */,
+				7353CFA91F45258C006AAA92 /* LocFields.swift */,
+				73F9E45D1F4628B60034D4E0 /* style.json */,
 			);
 			path = SafeNights;
 			sourceTree = "<group>";
@@ -217,6 +226,7 @@
 				C54FC9171E95DCD900C34D3D /* LaunchScreen.storyboard in Resources */,
 				C54FC9141E95DCD900C34D3D /* Assets.xcassets in Resources */,
 				73A691C51F3E0F7A00348D16 /* Tutorial.storyboard in Resources */,
+				73E1ECA11F466CD7006CB12A /* style.json in Resources */,
 				C54FC9121E95DCD900C34D3D /* Main.storyboard in Resources */,
 				73AA90981F412CE60004C849 /* PopDateViewController.xib in Resources */,
 			);
@@ -231,9 +241,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SafeNights/Pods-SafeNights-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -288,17 +303,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5F86ACF1ECA12FE00386404 /* CircularSeeker.swift in Sources */,
-				C57424521E9ACC9C006C6E77 /* MapController.swift in Sources */,
 				C54FC90D1E95DCD900C34D3D /* AppDelegate.swift in Sources */,
 				C54FC9231E95F16D00C34D3D /* LoginController.swift in Sources */,
 				73DBECDD1F439F740010DA48 /* Alcoholtable.swift in Sources */,
 				C5F86AC91EC6F41900386404 /* GetStartedController.swift in Sources */,
 				73AA909A1F412E4D0004C849 /* PopDatePicker.swift in Sources */,
+				7353CFA71F451CFA006AAA92 /* LastNightController.swift in Sources */,
+				7353CFAA1F45258C006AAA92 /* Locationtable.swift in Sources */,
 				73AA909C1F412E830004C849 /* PopDateViewController.swift in Sources */,
 				C54D525A1E95FBC600F3EF41 /* MyAPI.swift in Sources */,
 				C574244E1E9809F6006C6E77 /* AddDrinksController.swift in Sources */,
 				C5F86ACB1EC6F4D200386404 /* HistoryController.swift in Sources */,
 				C54FC9211E95E75C00C34D3D /* RegisterController.swift in Sources */,
+				7353CFAB1F45258C006AAA92 /* LocFields.swift in Sources */,
 				73A691C11F3E0DF200348D16 /* SplashScreenController.swift in Sources */,
 				C57424501E9AA4C2006C6E77 /* Global.swift in Sources */,
 				73DBECDE1F439F740010DA48 /* Fields.swift in Sources */,
