@@ -27,62 +27,44 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     @IBOutlet var submitButton: UIButton!
     
     let API = MyAPI()
+    let preferences = UserDefaults.standard
+    
+    // Global Var
+    var destinationAddress : String = ""
+    var contactNames : [String] = []
+    var contactNumbers = [CNPhoneNumber]()
     
     //MARK:- CNContactPickerDelegate Method
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
+        self.contactNames.removeAll()
+        self.contactNumbers.removeAll()
         contacts.forEach { contact in
             for number in contact.phoneNumbers {
-                let phoneNumber = number.value
-                print("number is = \(phoneNumber)")
+                let contactName = contact.givenName
+                let contactNumber = number.value
+                if number.label == CNLabelPhoneNumberMobile {
+                    self.contactNames.append(contactName)
+                    self.contactNumbers.append(contactNumber)
+                    print("name is = \(contactName)")
+                    print("number is = \(contactNumber)")
+                }
             }
         }
     }
+    
     func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
         print("Cancel Contact Picker")
     }
     
+    // Pick place starts GMSPlacePicker
+    
     @IBAction func pickPlace(_ sender: Any) {
-//        let config = GMSPlacePickerConfig(viewport: nil)
-//        let placePicker = GMSPlacePickerViewController(config: config)
-//        
-//        present(placePicker, animated: true, completion: nil)
-//        let config = GMSPlacePickerConfig(viewport: nil)
-//        let placePicker = GMSPlacePicker(config: config)
-//        
-//        placePicker.pickPlace(callback: {(place, error) -> Void in
-//            if let error = error {
-//                print("Pick Place error: \(error.localizedDescription)")
-//                return
-//            }
-//            
-//            if let place = place {
-//                print(place.name)
-//                print(place.formattedAddress?.components(separatedBy: ", ")
-//                    .joined(separator: "\n"))
-//            } else {
-//                print("No place selected")
-//                print("")
-//            }
-//        })
-    }
-    
-    // To receive the results from the place picker 'self' will need to conform to
-    // GMSPlacePickerViewControllerDelegate and implement this code.
-    func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
-        // Dismiss the place picker, as it cannot dismiss itself.
-        viewController.dismiss(animated: true, completion: nil)
+        let config = GMSPlacePickerConfig(viewport: nil)
+        let placePicker = GMSPlacePickerViewController(config: config)
+        placePicker.delegate = self
         
-        print("Place name \(place.name)")
-        print("Place address \(place.formattedAddress)")
-        print("Place attributions \(place.attributions)")
-    }
-    
-    func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
-        // Dismiss the place picker, as it cannot dismiss itself.
-        viewController.dismiss(animated: true, completion: nil)
-        
-        print("No place selected")
+        present(placePicker, animated: true, completion: nil)
     }
     
     @IBAction func contactAction(_ sender: Any) {
@@ -97,8 +79,9 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
      * and returns an adventureID if they are valid.
      */
     @IBAction func submit(_ sender: Any) {
-        let username = mainInstance.username
-        let password = mainInstance.password
+        // Get the global values for username and password
+        let username = self.preferences.string(forKey: "username")!
+        let password = self.preferences.string(forKey: "password")!
         
         let resource = API.startNight
         let postData = ["username": username, "pwd": password]
@@ -110,7 +93,8 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
             
             if let startNightAnswer = startNightAnswer as? String, startNightAnswer != "n" {
                 print(startNightAnswer)
-                mainInstance.nightID = startNightAnswer
+                _ = self.preferences.set(startNightAnswer, forKey: "adventureID")
+//                mainInstance.nightID = startNightAnswer
                 
                 mainInstance.performBackgroundTask()
             }
@@ -119,5 +103,29 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
             }
         }
         
+        
+        
+    }
+}
+
+extension GetStartedController: GMSPlacePickerViewControllerDelegate {
+    // To receive the results from the place picker 'self' will need to conform to
+    // GMSPlacePickerViewControllerDelegate and implement this code.
+    func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
+        // Dismiss the place picker, as it cannot dismiss itself.
+        viewController.dismiss(animated: true, completion: nil)
+        
+        self.destinationAddress = place.formattedAddress!
+        
+        print("Place name \(place.name)")
+        print("Place address \(place.formattedAddress)")
+        print("Place attributions \(place.attributions)")
+    }
+    
+    func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
+        // Dismiss the place picker, as it cannot dismiss itself.
+        viewController.dismiss(animated: true, completion: nil)
+        
+        print("No place selected")
     }
 }

@@ -19,6 +19,7 @@ class Main {
     
     
     let API = MyAPI()
+    let preferences = UserDefaults.standard
     
     let locManager = CLLocationManager()
     var coordinateTimer: Timer!
@@ -57,8 +58,12 @@ class Main {
             
             var postData = Dictionary<String, String>()
             
-            postData = ["username": mainInstance.username, "pwd": mainInstance.password,
-                        "id": mainInstance.nightID, "xcord": String(mainInstance.latitude),
+            let username = self.preferences.string(forKey: "username")!
+            let password = self.preferences.string(forKey: "password")!
+            let adventureID = self.preferences.string(forKey: "adventureID")!
+            
+            postData = ["username": username, "pwd": password,
+                        "id": adventureID, "xcord": String(mainInstance.latitude),
                         "ycord": String(mainInstance.longitude)]
             
             print(postData)

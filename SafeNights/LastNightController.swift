@@ -34,23 +34,22 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated) // No need for semicolon
         // Do any additional setup after the view appears
-        callLastNightAPI()
-    }
-    
-    func setUpMap(mapView: GMSMapView!) {
-        
-        //Style the map
+        // Style the map
         do {
             // Set the map style by passing the URL of the local file.
             if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
-                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+                self.viewMap.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
             } else {
                 NSLog("Unable to find style.json")
             }
         } catch {
             NSLog("One or more of the map styles failed to load. \(error)")
         }
-        
+        // Call API
+        callLastNightAPI()
+    }
+    
+    func setUpMap(mapView: GMSMapView!) {
         // Location Coordinate for later
         var lastLat : Double = 0.0
         var lastLon : Double = 0.0
@@ -129,7 +128,7 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
         // Get the global values for username and password
         let username = self.preferences.string(forKey: "username")!
         let password = self.preferences.string(forKey: "password")!
-        let adventureID = "db8a2ff4-99c1-423a-8dda-6a633336b279"
+        let adventureID = self.preferences.string(forKey: "adventureID") ?? ""
         
         let postData = ["username": username,
                         "pwd": password, "id": adventureID]
