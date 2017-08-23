@@ -33,6 +33,8 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     
     // Global Var
     var destinationAddress : String = ""
+    var destinationLatitude : Double = 0.0
+    var destinationLongitude : Double = 0.0
     var contactNames : [String] = []
     var contactNumbers = [String]()
     
@@ -83,9 +85,14 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
         
         // Set global values for the service to use
         _ = self.preferences.set(destinationAddress, forKey: "finalAddress")
+        _ = self.preferences.set(destinationLatitude, forKey: "finalLatitude")
+        _ = self.preferences.set(destinationLongitude, forKey: "finalLongitude")
         _ = self.preferences.set(contactNames, forKey: "contactNames")
         _ = self.preferences.set(contactNumbers, forKey: "contactNumbers")
+        
         print(destinationAddress)
+        print(destinationLatitude)
+        print(destinationLongitude)
         print(contactNames)
         print(contactNumbers)
         
@@ -118,10 +125,13 @@ extension GetStartedController: GMSPlacePickerViewControllerDelegate {
         viewController.dismiss(animated: true, completion: nil)
         
         self.destinationAddress = place.formattedAddress!
+        self.destinationLatitude = place.coordinate.latitude
+        self.destinationLongitude = place.coordinate.longitude
         
         print("Place name \(place.name)")
         print("Place address \(place.formattedAddress)")
         print("Place attributions \(place.attributions)")
+        print("Place attributions \(place.coordinate)")
     }
     
     func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
