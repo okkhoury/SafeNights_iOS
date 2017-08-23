@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5CD3FD43A349B11CCE3E1C60B969396A84136B99",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "5A3B8206A77B427C55C80F965489B8E3E4412623" : 9223372036854775807,
+    "5CD3FD43A349B11CCE3E1C60B969396A84136B99" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9B410E36-4C59-4051-B109-EECD3AF10E22",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "5A3B8206A77B427C55C80F965489B8E3E4412623" : "..\/Project-Ina-iOS",
+    "5CD3FD43A349B11CCE3E1C60B969396A84136B99" : "SafeNights_iOS\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SafeNights",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SafeNights.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/zskemp\/Project-Ina-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5A3B8206A77B427C55C80F965489B8E3E4412623"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/okkhoury\/SafeNights_iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5CD3FD43A349B11CCE3E1C60B969396A84136B99"
+    }
+  ]
+}
