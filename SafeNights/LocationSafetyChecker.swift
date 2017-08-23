@@ -6,14 +6,18 @@
 //  Copyright © 2017 SafeNights. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class LocationSafetyChecker {
     
     let preferences = UserDefaults.standard
     
-    @objc func checkSafety() {
+    
+    
+    // Check that the user ended up in their expected ending location.
+    func endedUpInRightPlace() -> Bool {
         
+        // Get these two values from self.preferences.
         let finalLat = 255.0
         let finalLong = 347.6
         
@@ -22,13 +26,17 @@ class LocationSafetyChecker {
         let latLocations = self.preferences.value(forKey: "latLocations") as! [Double]
         let longLocations = self.preferences.value(forKey:"longLocations") as! [Double]
         
-        if (hour >= 2 && hour <= 7 &&
-            isInSameLocation(latLocations: latLocations, longLocations: longLocations)) &&
+        return hour >= 2 && hour <= 7 &&
+            isInSameLocation(latLocations: latLocations, longLocations: longLocations) &&
             !inRangeOfExpectedLocations(myLat: latLocations[0], myLong: longLocations[0],
                                        finalLat: finalLat, finalLong: finalLong)
-        {
-            // Send text to guardians.
-        }
+    }
+    
+    // Check if the phone battery is below 1 percent.
+    func batteryIsLow() -> Bool {
+        UIDevice.current.isBatteryMonitoringEnabled = true
+        
+        return UIDevice.current.batteryLevel < 1
     }
     
     // Check that the user has been in the same area for a while.
