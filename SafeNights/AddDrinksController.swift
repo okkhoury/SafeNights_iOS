@@ -62,7 +62,10 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         view.sendSubview(toBack: calendarBackgroundView)
         
         //Beer
-        seekBar1.frame = CGRect(x: (self.view.frame.size.width) * 0.1, y: (self.view.frame.size.height) * 0.4, width: (self.view.frame.size.width) * 0.3, height: (self.view.frame.size.width) * 0.3)
+        seekBar1.frame = CGRect(x: (self.view.frame.size.width) * 0.1,
+                                y: (self.view.frame.size.height) * 0.4,
+                                width: (self.view.frame.size.width) * 0.3,
+                                height: (self.view.frame.size.width) * 0.3)
         seekBar1.startAngle = 120
         seekBar1.endAngle = 60
         seekBar1.currentAngle = 120
@@ -70,7 +73,10 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         self.view.addSubview(seekBar1)
         
         //Wine
-        seekBar2.frame = CGRect(x: (self.view.frame.size.width) * 0.6, y: (self.view.frame.size.height) * 0.4, width: (self.view.frame.size.width) * 0.3, height: (self.view.frame.size.width) * 0.3)
+        seekBar2.frame = CGRect(x: (self.view.frame.size.width) * 0.6,
+                                y: (self.view.frame.size.height) * 0.4,
+                                width: (self.view.frame.size.width) * 0.3,
+                                height: (self.view.frame.size.width) * 0.3)
         seekBar2.startAngle = 120
         seekBar2.endAngle = 60
         seekBar2.currentAngle = 120
@@ -78,7 +84,10 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         self.view.addSubview(seekBar2)
         
         //Liquor
-        seekBar3.frame = CGRect(x: (self.view.frame.size.width) * 0.1, y: (self.view.frame.size.height) * 0.6, width: (self.view.frame.size.width) * 0.3, height: (self.view.frame.size.width) * 0.3)
+        seekBar3.frame = CGRect(x: (self.view.frame.size.width) * 0.1,
+                                y: (self.view.frame.size.height) * 0.6,
+                                width: (self.view.frame.size.width) * 0.3,
+                                height: (self.view.frame.size.width) * 0.3)
         seekBar3.startAngle = 120
         seekBar3.endAngle = 60
         seekBar3.currentAngle = 120
@@ -86,7 +95,10 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         self.view.addSubview(seekBar3)
         
         //Mixed Drinks
-        seekBar4.frame = CGRect(x: (self.view.frame.size.width) * 0.6, y: (self.view.frame.size.height) * 0.6, width: (self.view.frame.size.width) * 0.3, height: (self.view.frame.size.width) * 0.3)
+        seekBar4.frame = CGRect(x: (self.view.frame.size.width) * 0.6,
+                                y: (self.view.frame.size.height) * 0.6,
+                                width: (self.view.frame.size.width) * 0.3,
+                                height: (self.view.frame.size.width) * 0.3)
         seekBar4.startAngle = 120
         seekBar4.endAngle = 60
         seekBar4.currentAngle = 120

@@ -101,9 +101,6 @@ class HistoryController: UIViewController {
         }
     }
     
-    
-    
-    
     func callGetHistoryAPI() {
         let resource = API.getHistory
         

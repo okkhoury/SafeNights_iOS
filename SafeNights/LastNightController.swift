@@ -145,5 +145,4 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
             self.setUpMap(mapView: self.viewMap)
         }
     }
-    
 }

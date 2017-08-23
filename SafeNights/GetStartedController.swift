@@ -16,7 +16,6 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     /** The location you plan at which user plans to end night. */
     @IBOutlet weak var placeButton: UIButton!
     
-    
     @IBOutlet weak var contactButton: UIButton!
     
     /** Submits contact and location info. */

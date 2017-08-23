@@ -8,11 +8,38 @@
 
 import UIKit
 
+/**
+ * Class to check if the user has successfully made it back to
+ * their intended location.
+ */
 class LocationSafetyChecker {
     
+    // Used to strore global values.
     let preferences = UserDefaults.standard
     
+    var timer: Timer!
     
+    // Background task to continually get latitude and longitude every 5 seconds.
+    func performBackgroundTask() {
+        DispatchQueue.global(qos: .background).async {
+            //Check every 10 minutes if something has gone wrong.
+            DispatchQueue.main.async {
+                self.timer = Timer.scheduledTimer(timeInterval: 600,
+                    target: self, selector: #selector(self.sendTextIfInTrouble),
+                    userInfo: nil, repeats: true)
+            }
+        }
+    }
+    
+    // Send a text to a guardian if the user did not end up in the right place or 
+    // their phone is about to die.
+    @objc func sendTextIfInTrouble() {
+        if (!endedUpInRightPlace() || batteryIsLow()) {
+            // Code to send text
+            
+            //TODO: Add the code to send a text to a user.
+        }
+    }
     
     // Check that the user ended up in their expected ending location.
     func endedUpInRightPlace() -> Bool {
@@ -32,11 +59,11 @@ class LocationSafetyChecker {
                                        finalLat: finalLat, finalLong: finalLong)
     }
     
-    // Check if the phone battery is below 1 percent.
+    // Check if the phone battery is below 5 percent.
     func batteryIsLow() -> Bool {
         UIDevice.current.isBatteryMonitoringEnabled = true
         
-        return UIDevice.current.batteryLevel < 1
+        return UIDevice.current.batteryLevel < 5
     }
     
     // Check that the user has been in the same area for a while.
@@ -58,6 +85,7 @@ class LocationSafetyChecker {
         
         let gpsDistance = 0.0015; //.001 = 111m difference
         
+        // Distance formula between current location and intended endpoint.
         return sqrt((myLat - finalLat) * (myLat - finalLat) +
             (myLong - finalLong) * (myLong - finalLong)) < gpsDistance
     }
