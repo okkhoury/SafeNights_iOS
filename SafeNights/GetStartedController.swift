@@ -14,14 +14,10 @@ import GooglePlacePicker
 class GetStartedController: UIViewController, CNContactPickerDelegate {
     
     /** The location you plan at which user plans to end night. */
-    @IBOutlet var locationTextField: UITextField!
+    @IBOutlet weak var placeButton: UIButton!
     
-    /** Name of person to contact in case of emergency. */
-    @IBOutlet var contactTextField: UITextField!
     
     @IBOutlet weak var contactButton: UIButton!
-    /** Email of person to contact in case of emergency. */
-    @IBOutlet var emailTextField: UITextField!
     
     /** Submits contact and location info. */
     @IBOutlet var submitButton: UIButton!
@@ -38,10 +34,19 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     var contactNames : [String] = []
     var contactNumbers = [String]()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        //Style Submit Button
+        submitButton.layer.borderColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0).cgColor
+        submitButton.layer.borderWidth = 2.0
+    }
+
     //MARK:- CNContactPickerDelegate Method
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         self.contactNames.removeAll()
         self.contactNumbers.removeAll()
+        var newTitle : String = ""
         contacts.forEach { contact in
             for number in contact.phoneNumbers {
                 let contactName = contact.givenName
@@ -49,9 +54,16 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                 if number.label == CNLabelPhoneNumberMobile {
                     self.contactNames.append(contactName)
                     self.contactNumbers.append(contactNumber)
+                    //Build the string to change the label
+                    if( newTitle == "") {
+                        newTitle += contactName
+                    } else {
+                        newTitle += ", " + contactName
+                    }
                 }
             }
         }
+        self.contactButton.setTitle(newTitle, for: .normal)
     }
     
     func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
@@ -127,6 +139,8 @@ extension GetStartedController: GMSPlacePickerViewControllerDelegate {
         self.destinationAddress = place.formattedAddress!
         self.destinationLatitude = place.coordinate.latitude
         self.destinationLongitude = place.coordinate.longitude
+        
+        self.placeButton.setTitle(place.name, for: .normal)
         
         print("Place name \(place.name)")
         print("Place address \(place.formattedAddress)")
