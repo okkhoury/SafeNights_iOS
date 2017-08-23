@@ -32,7 +32,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     // Global Var
     var destinationAddress : String = ""
     var contactNames : [String] = []
-    var contactNumbers = [CNPhoneNumber]()
+    var contactNumbers = [String]()
     
     //MARK:- CNContactPickerDelegate Method
     
@@ -42,12 +42,10 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
         contacts.forEach { contact in
             for number in contact.phoneNumbers {
                 let contactName = contact.givenName
-                let contactNumber = number.value
+                let contactNumber = (number.value).stringValue
                 if number.label == CNLabelPhoneNumberMobile {
                     self.contactNames.append(contactName)
                     self.contactNumbers.append(contactNumber)
-                    print("name is = \(contactName)")
-                    print("number is = \(contactNumber)")
                 }
             }
         }
@@ -82,6 +80,14 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
         // Get the global values for username and password
         let username = self.preferences.string(forKey: "username")!
         let password = self.preferences.string(forKey: "password")!
+        
+        // Set global values for the service to use
+        _ = self.preferences.set(destinationAddress, forKey: "finalAddress")
+        _ = self.preferences.set(contactNames, forKey: "contactNames")
+        _ = self.preferences.set(contactNumbers, forKey: "contactNumbers")
+        print(destinationAddress)
+        print(contactNames)
+        print(contactNumbers)
         
         let resource = API.startNight
         let postData = ["username": username, "pwd": password]
