@@ -15,6 +15,9 @@ class TrackingLocation {
     let locManager = CLLocationManager()
     var coordinateTimer: Timer!
     
+    var latLocations = Array(repeating: 0.0, count: 4)
+    var longLocations = Array(repeating: 0.0, count: 4)
+    
     // Function get user's current latitude and longitude
     @objc func setCoordinates() {
         locManager.requestWhenInUseAuthorization()
@@ -28,6 +31,27 @@ class TrackingLocation {
             // Set the global values for lat and lon
             let latitude = currentLocation.coordinate.latitude
             let longitude = currentLocation.coordinate.longitude
+            
+            // Store the
+            latLocations[3] = latLocations[2]
+            latLocations[2] = latLocations[1]
+            latLocations[1] = latLocations[0]
+            latLocations[0] = latitude
+            
+            // Store the 4 most recent longitudes
+            longLocations[3] = longLocations[2]
+            longLocations[2] = longLocations[1]
+            longLocations[1] = longLocations[0]
+            longLocations[0] = longitude
+            
+            print("Latitudes:")
+            print(latLocations)
+            
+            print("Longitudes")
+            print(longLocations)
+            
+            _ = self.preferences.set(latLocations, forKey: "latLocations")
+            _ = self.preferences.set(longLocations, forKey: "longLocations")
             
             // Send these coordinates to the database
             let resource = API.addLoc

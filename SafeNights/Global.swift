@@ -19,6 +19,8 @@ class Main {
     var finalDestLatitude:Double
     var finalDestLongitdue:Double
     
+    var locations = Array(repeating: 0.0, count: 4)
+    
     let API = MyAPI()
     let preferences = UserDefaults.standard
     
