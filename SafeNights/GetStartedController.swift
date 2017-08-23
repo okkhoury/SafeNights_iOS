@@ -26,6 +26,8 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     /** Submits contact and location info. */
     @IBOutlet var submitButton: UIButton!
     
+    let trackingLocation = TrackingLocation()
+    
     let API = MyAPI()
     let preferences = UserDefaults.standard
     
@@ -35,7 +37,6 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     var contactNumbers = [String]()
     
     //MARK:- CNContactPickerDelegate Method
-    
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         self.contactNames.removeAll()
         self.contactNumbers.removeAll()
@@ -56,7 +57,6 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     }
     
     // Pick place starts GMSPlacePicker
-    
     @IBAction func pickPlace(_ sender: Any) {
         let config = GMSPlacePickerConfig(viewport: nil)
         let placePicker = GMSPlacePickerViewController(config: config)
@@ -100,17 +100,13 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
             if let startNightAnswer = startNightAnswer as? String, startNightAnswer != "n" {
                 print(startNightAnswer)
                 _ = self.preferences.set(startNightAnswer, forKey: "adventureID")
-//                mainInstance.nightID = startNightAnswer
-                
-                mainInstance.performBackgroundTask()
+
+                self.trackingLocation.performBackgroundTask()
             }
             else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
                 print("night has not started")
             }
         }
-        
-        
-        
     }
 }
 
