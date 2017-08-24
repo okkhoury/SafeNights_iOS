@@ -7,6 +7,7 @@
 //
 
 import MapKit
+import GoogleMaps
 
 class TrackingLocation {
     let API = MyAPI()
@@ -31,6 +32,10 @@ class TrackingLocation {
             // Set the global values for lat and lon
             let latitude = currentLocation.coordinate.latitude
             let longitude = currentLocation.coordinate.longitude
+            
+            getAddress(lat: latitude, lon: longitude) { (returnAddress) in
+                _ = self.preferences.set("\(returnAddress)", forKey: "currentAddress")
+            }
             
             // Store the
             latLocations[3] = latLocations[2]
@@ -97,6 +102,22 @@ class TrackingLocation {
             
             DispatchQueue.main.async {
                 self.coordinateTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.setCoordinates), userInfo: nil, repeats: true)
+            }
+        }
+    }
+    
+    func getAddress(lat: Double, lon: Double, currentAdd : @escaping ( _ returnAddress :String)->Void){
+        let geocoder = GMSGeocoder()
+        let coordinate = CLLocationCoordinate2DMake(lat, lon)
+
+        var currentAddress = String()
+
+        geocoder.reverseGeocodeCoordinate(coordinate) { response , error in
+            if let address = response?.firstResult() {
+                let lines = address.lines! as [String]
+
+                currentAddress = lines[0]
+                currentAdd(currentAddress)
             }
         }
     }

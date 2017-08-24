@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import MessageUI
 
 /**
  * Class to check if the user has successfully made it back to
  * their intended location.
  */
 class LocationSafetyChecker {
+    
+    var messageType = ""
+    
+    let API = MyAPI()
     
     // Used to strore global values.
     let preferences = UserDefaults.standard
@@ -35,9 +40,35 @@ class LocationSafetyChecker {
     // their phone is about to die.
     @objc func sendTextIfInTrouble() {
         if (!endedUpInRightPlace() || batteryIsLow()) {
-            // Code to send text
             
             //TODO: Add the code to send a text to a user.
+            let resource = API.safetyAlert
+            
+            let contactNumbers = self.preferences.value(forKey: "contactNumbers") as! [String]
+            let contactNames = self.preferences.value(forKey: "contactNames") as! [String]
+            
+            let username = self.preferences.value(forKey: "usernameStr")
+            let password = self.preferences.value(forKey: "passwordStr")
+            let firstName = self.preferences.value(forKey: "fname")
+            let lastName = self.preferences.value(forKey: "lname")
+            
+            let adventureID = self.preferences.value(forKey: "adventureID")
+            
+            let finalAddress = self.preferences.value(forKey: "finalAddress")
+            
+            let currentAddress = self.preferences.value(forKey: "currentAddress")
+            
+            // THE CODE TO SET THE MESSAGE TYPE HASN'T BEEN ADDED YET. MESSAGE TYPE TELLS THE WEB SIDE WHAT KIND
+            // OF MESSAGE TO SEND.
+            
+            let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
+                            "username": username, "password": password, "firstName": firstName,
+                            "lastName": lastName, "adventureID": adventureID, "finalAddress": finalAddress,
+                            "currentAddress": currentAddress, "messageType": messageType]
+            
+            resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
+                // Add check for if post request succeeded.
+            }
         }
     }
     
