@@ -13,6 +13,9 @@ class TrackingLocation {
     let API = MyAPI()
     let preferences = UserDefaults.standard
     
+    //For Testing - Zach
+    let locationChecker = LocationSafetyChecker()
+    
     let locManager = CLLocationManager()
     var coordinateTimer: Timer!
     
@@ -98,6 +101,9 @@ class TrackingLocation {
     
     // Background task to continually get latitude and longitude every 5 seconds
     func performBackgroundTask() {
+        self.locationChecker.performBackgroundTask()
+        print("I tried")
+        
         DispatchQueue.global(qos: .background).async {
             
             DispatchQueue.main.async {

@@ -26,10 +26,11 @@ class LocationSafetyChecker {
     
     // Background task to continually get latitude and longitude every 5 seconds.
     func performBackgroundTask() {
+        print("Did I work")
         DispatchQueue.global(qos: .background).async {
             //Check every 10 minutes if something has gone wrong.
             DispatchQueue.main.async {
-                self.timer = Timer.scheduledTimer(timeInterval: 600,
+                self.timer = Timer.scheduledTimer(timeInterval: 10,
                     target: self, selector: #selector(self.sendTextIfInTrouble),
                     userInfo: nil, repeats: true)
             }
@@ -39,16 +40,19 @@ class LocationSafetyChecker {
     // Send a text to a guardian if the user did not end up in the right place or 
     // their phone is about to die.
     @objc func sendTextIfInTrouble() {
-        if (!endedUpInRightPlace() || batteryIsLow()) {
+        //!endedUpInRightPlace() || batteryIsLow()
+        if (true) {
             
             //TODO: Add the code to send a text to a user.
             let resource = API.safetyAlert
             
-            let contactNumbers = self.preferences.value(forKey: "contactNumbers") as! [String]
-            let contactNames = self.preferences.value(forKey: "contactNames") as! [String]
+            let contactNumbersArray = self.preferences.value(forKey: "contactNumbers") as! [String]
+            let contactNumbers = contactNumbersArray.joined(separator: ",")
+            let contactNamesArray = self.preferences.value(forKey: "contactNames") as! [String]
+            let contactNames = contactNamesArray.joined(separator: ",")
             
-            let username = self.preferences.value(forKey: "usernameStr")
-            let password = self.preferences.value(forKey: "passwordStr")
+            let username = self.preferences.value(forKey: "username")
+            let password = self.preferences.value(forKey: "password")
             let firstName = self.preferences.value(forKey: "fname")
             let lastName = self.preferences.value(forKey: "lname")
             
@@ -60,14 +64,19 @@ class LocationSafetyChecker {
             
             // THE CODE TO SET THE MESSAGE TYPE HASN'T BEEN ADDED YET. MESSAGE TYPE TELLS THE WEB SIDE WHAT KIND
             // OF MESSAGE TO SEND.
+            let messageType = "23"
             
             let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
                             "username": username, "password": password, "firstName": firstName,
                             "lastName": lastName, "adventureID": adventureID, "finalAddress": finalAddress,
                             "currentAddress": currentAddress, "messageType": messageType]
             
+            print(postData)
+            
             resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
                 // Add check for if post request succeeded.
+                var response = data.jsonDict
+                print(response)
             }
         }
     }
