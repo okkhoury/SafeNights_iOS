@@ -67,6 +67,8 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 
                 _ = self.preferences.set("Logged In", forKey: self.loginKey)
                 
+                _ = self.preferences.set("0", forKey: "messageType")
+                
                 //  Save to disk
                 self.preferences.synchronize()
                 //  Stop loading animation

@@ -117,12 +117,71 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
             
             if let startNightAnswer = startNightAnswer as? String, startNightAnswer != "n" {
                 print(startNightAnswer)
-                _ = self.preferences.set(startNightAnswer, forKey: "adventureID")
+                self.preferences.set(startNightAnswer, forKey: "adventureID")
+                
+                // Let guardians know that user successfully started night
+                self.preferences.set("0", forKey: "messageType")
+                self.sendTextToGuardians();
+                
 
                 self.trackingLocation.performBackgroundTask()
             }
             else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
                 print("night has not started")
+            }
+        }
+    }
+    
+    func sendTextToGuardians() -> Void {
+        
+        let messageType = self.preferences.value(forKey: "messageType")
+        
+        let contactNumbersArray = self.preferences.value(forKey: "contactNumbers") as! [String]
+        let contactNumbers = contactNumbersArray.joined(separator: ",")
+        let contactNamesArray = self.preferences.value(forKey: "contactNames") as! [String]
+        let contactNames = contactNamesArray.joined(separator: ",")
+        
+        let username = self.preferences.value(forKey: "username")
+        let password = self.preferences.value(forKey: "password")
+        let firstName = self.preferences.value(forKey: "fname")
+        let lastName = self.preferences.value(forKey: "lname")
+        
+        let adventureID = self.preferences.value(forKey: "adventureID")
+        let finalAddress = self.preferences.value(forKey: "finalAddress")
+        
+        self.preferences.set("Home", forKey: "currentAddress")
+        
+        let currentAddress = self.preferences.value(forKey: "currentAddress")
+        
+//        let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
+//                        "username": username, "password": password, "firstName": firstName,
+//                        "lastName": lastName, "adventureID": adventureID, "finalAddress": finalAddress,
+//                        "currentAddress": currentAddress, "messageType": messageType]
+        
+        let postData = ["contactNumbers": "7034016163", "contactNames": "Zachary",
+                        "username": "zrs", "password": "123456", "firstName": "zach",
+                        "lastName": "zzz", "adventureID": "48a50e06-8401-43ee-99dc-7eee3e3cea76", "finalAddress": "112 Dunova",
+                        "currentAddress": "McDonalds", "messageType": "2"]
+        
+        print(postData)
+        
+        let resource = API.safetyAlert
+        
+        resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
+            
+            var response = data.jsonDict
+            let loginAnswer = response["passed"]
+            
+            print("Response")
+            print(response)
+            
+            if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
+                print("successfully sent text.")
+            }
+            else {
+                print("failed to send text.")
+                
+                // TODO: give user notification that text did not go through
             }
         }
     }
