@@ -10,6 +10,7 @@ import UIKit
 import Siesta
 import ContactsUI
 import GooglePlacePicker
+import CZPicker
 
 class GetStartedController: UIViewController, CNContactPickerDelegate {
     @IBOutlet weak var startAdventureLabel: UILabel!
@@ -35,8 +36,13 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     var contactNames : [String] = []
     var contactNumbers = [String]()
     
+    var fruits = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fruits = ["Apple", "Banana", "Grape", "Watermelon", "Lychee"]
+        self.title = "CZPicker"
 
         //Style Submit Button
         submitButton.layer.borderColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0).cgColor
@@ -73,6 +79,14 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     
     // Pick place starts GMSPlacePicker
     @IBAction func pickPlace(_ sender: Any) {
+        let picker = CZPickerView(headerTitle: "Fruits", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+        picker?.delegate = self
+        picker?.dataSource = self
+        picker?.needFooterView = true
+        picker?.show()
+    }
+    
+    func startPlacePicker() {
         let config = GMSPlacePickerConfig(viewport: nil)
         let placePicker = GMSPlacePickerViewController(config: config)
         placePicker.delegate = self
@@ -257,5 +271,36 @@ extension GetStartedController: GMSPlacePickerViewControllerDelegate {
         viewController.dismiss(animated: true, completion: nil)
         
         print("No place selected")
+    }
+}
+
+extension GetStartedController: CZPickerViewDelegate, CZPickerViewDataSource {
+    func czpickerView(_ pickerView: CZPickerView!, imageForRow row: Int) -> UIImage! {
+        return nil
+    }
+    
+    func numberOfRows(in pickerView: CZPickerView!) -> Int {
+        return fruits.count
+    }
+    
+    func czpickerView(_ pickerView: CZPickerView!, titleForRow row: Int) -> String! {
+        return fruits[row]
+    }
+    
+    func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
+        print(fruits[row])
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func czpickerViewDidClickCancelButton(_ pickerView: CZPickerView!) {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    private func czpickerView(pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
+        for row in rows {
+            if let row = row as? Int {
+                print(fruits[row])
+            }
+        }
     }
 }

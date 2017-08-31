@@ -126,7 +126,7 @@ class LocationSafetyChecker {
         print("battery level:")
         print(UIDevice.current.batteryLevel)
         
-        return UIDevice.current.batteryLevel < 0.98
+        return UIDevice.current.batteryLevel < 0.1
     }
     
     // ADD ANOTHER CHECK TO SEE IF THE APP IS DESTROYED.
