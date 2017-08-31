@@ -32,6 +32,8 @@ class LocationSafetyChecker {
     let preferences = UserDefaults.standard
     
     var timer: Timer!
+    var sentLowBatWarning : Bool = false
+    var sentWrongLocWarning : Bool = false
     
     // Background task to continually get latitude and longitude every 5 seconds.
     func performBackgroundTask() {
@@ -60,6 +62,8 @@ class LocationSafetyChecker {
         //DispatchQueue.cancelPreviousPerformRequests(withTarget: <#T##Any#>, selector: <#T##Selector#>, object: <#T##Any?#>)
         timer.invalidate()
         timer = nil
+        self.sentLowBatWarning = false
+        self.sentWrongLocWarning = false
         
         print("INSIDE THIS FUNCTION")
     }
@@ -78,17 +82,19 @@ class LocationSafetyChecker {
         print("batteryLife:")
         print(batteryIsLow())
         
-        if ((!endedUpInRightPlace() && hour > 2 && hour < 7) || batteryIsLow()) {
+        if ( ((!endedUpInRightPlace() && !sentWrongLocWarning) && hour > 2 && hour < 7) || (batteryIsLow() && !sentLowBatWarning) ) {
             
             print("inside here")
             
             if (batteryIsLow()) {
                 self.preferences.set("3", forKey: MESSAGE_TYPE)
+                self.sentLowBatWarning = true
             }
             
             // Takes priority over low battery message.
             if (!endedUpInRightPlace()) {
                 self.preferences.set("2", forKey: MESSAGE_TYPE)
+                self.sentWrongLocWarning = true
             }
             
             //TODO: Add the code to send a text to a user.
