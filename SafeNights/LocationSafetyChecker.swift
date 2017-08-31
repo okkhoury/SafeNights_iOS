@@ -20,6 +20,7 @@ class LocationSafetyChecker {
     // 2 -> Did not successfully get home.
     // 3 -> Battery low.
     // 4 -> app shutdown/crash
+    // 5 -> I'm feeling lucky
     
     let API = MyAPI()
     

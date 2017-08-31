@@ -92,7 +92,6 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
      * and returns an adventureID if they are valid.
      */
     @IBAction func submit(_ sender: Any) {
-
         if(!(self.destinationAddress == "" || self.destinationLongitude == 0.0 || self.destinationLatitude == 0.0 || self.contactNames.count == 0 || contactNames.isEmpty)) {
             if(!nightHasStarted) {
                 // Get the global values for username and password
@@ -130,7 +129,8 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
 
                         self.trackingLocation.performBackgroundTask()
                         
-                        self.submitButton.titleLabel?.text = "FINISH"
+                        self.submitButton.setTitle("FINISH", for: .normal)
+                        self.submitButton.titleLabel?.textAlignment = NSTextAlignment.center
                         self.startAdventureLabel.text = "You're On Your Way!"
                         self.nightHasStarted = true
                     }
@@ -150,6 +150,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                 
                 // Clear Labels
                 self.submitButton.setTitle("SET OFF", for: .normal)
+                self.submitButton.titleLabel?.textAlignment = NSTextAlignment.center
                 self.startAdventureLabel.text = "Start Adventure!"
                 self.placeButton.setTitle("My Strongholds", for: .normal)
                 self.contactButton.setTitle("My Guardian Angels", for: .normal)
