@@ -9,17 +9,14 @@
 import UIKit
 import Siesta
 
-/**
- * Controller for the user login page.
- */
 class LoginController: UIViewController, UITextFieldDelegate {
     
-    
     @IBOutlet weak var usernameLabel: UILabel!
-    /** Text field where user enters username. */
+    
     @IBOutlet var username: UITextField!
+    
     @IBOutlet weak var passwordLabel: UILabel!
-    /** Text field where user enters password. */
+    
     @IBOutlet var password: UITextField!
     
     /** Indicator that appears when user hits login. */
@@ -78,10 +75,20 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
             }
             else {
-                print("Permission Denied")
+                //print("Permission Denied")
+                // Display alert to screen to let user know error
+                let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
+                    print("Login request failed")
+                }
+                let alert = UIAlertController(title: "Warning", message: "Invalid username or password", preferredStyle: .alert)
+                alert.addAction(OKAction)
+                self.present(alert, animated: true, completion: nil)
+                
                 self.loadingIndicator.stopAnimating()
                 self.loadingIndicator.isHidden = true
             }
+        }.onFailure { _ in
+            
         }
     }
     

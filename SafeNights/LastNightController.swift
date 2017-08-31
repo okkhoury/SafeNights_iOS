@@ -47,6 +47,7 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
         }
         // Call API
         callLastNightAPI()
+        
     }
     
     func setUpMap(mapView: GMSMapView!) {
@@ -93,6 +94,8 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
             // Update lastLat and lastLon for camera at end
             lastLat = lat!
             lastLon = lon!
+            
+            
         }
         
         // Color Polyline
