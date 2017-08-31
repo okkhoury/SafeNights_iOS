@@ -21,6 +21,8 @@ class LocationSafetyChecker {
     // 3 -> Battery low.
     // 4 -> app shutdown/crash
     
+    //UIDevice.current.isBatteryMonitoringEnabled = true
+    
     let API = MyAPI()
     
     let MESSAGE_TYPE = "messageType";
@@ -35,6 +37,8 @@ class LocationSafetyChecker {
         print("Did I work")
         DispatchQueue.global(qos: .background).async {
             
+            UIDevice.current.isBatteryMonitoringEnabled = true
+            
 //            OperationQueue.main.addOperation {
 //                self.timer = Timer.scheduledTimer(timeInterval: 10,
 //                                                  target: self, selector: #selector(self.sendTextIfInTrouble),
@@ -43,6 +47,7 @@ class LocationSafetyChecker {
             
             //Check every 10 minutes if something has gone wrong.
             DispatchQueue.main.async {
+                UIDevice.current.isBatteryMonitoringEnabled = true
                 self.timer = Timer.scheduledTimer(timeInterval: 10,
                     target: self, selector: #selector(self.sendTextIfInTrouble),
                     userInfo: nil, repeats: true)
@@ -61,6 +66,8 @@ class LocationSafetyChecker {
     // Send a text to a guardian if the user did not end up in the right place or 
     // their phone is about to die.
     @objc func sendTextIfInTrouble() {
+        
+        UIDevice.current.isBatteryMonitoringEnabled = true
         
         let hour = Calendar.current.component(.hour, from: Date())
         
