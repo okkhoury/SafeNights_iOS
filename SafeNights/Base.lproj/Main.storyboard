@@ -642,6 +642,7 @@
                     <connections>
                         <outlet property="contactButton" destination="HU8-Ph-MQF" id="3V1-SO-ZQw"/>
                         <outlet property="placeButton" destination="dSq-pc-Srj" id="fDG-pe-Aze"/>
+                        <outlet property="startAdventureLabel" destination="Md1-ZA-FdS" id="vgo-7N-xn8"/>
                         <outlet property="submitButton" destination="icY-C8-IKY" id="kNa-xk-xwC"/>
                     </connections>
                 </viewController>

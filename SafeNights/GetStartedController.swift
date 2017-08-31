@@ -12,6 +12,7 @@ import ContactsUI
 import GooglePlacePicker
 
 class GetStartedController: UIViewController, CNContactPickerDelegate {
+    @IBOutlet weak var startAdventureLabel: UILabel!
     
     /** The location you plan at which user plans to end night. */
     @IBOutlet weak var placeButton: UIButton!
@@ -27,6 +28,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     let preferences = UserDefaults.standard
     
     // Global Var
+    var nightHasStarted : Bool = false
     var destinationAddress : String = ""
     var destinationLatitude : Double = 0.0
     var destinationLongitude : Double = 0.0
@@ -90,40 +92,78 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
      * and returns an adventureID if they are valid.
      */
     @IBAction func submit(_ sender: Any) {
-        // Get the global values for username and password
-        let username = self.preferences.string(forKey: "username")!
-        let password = self.preferences.string(forKey: "password")!
-        
-        // Set global values for the service to use
-        _ = self.preferences.set(destinationAddress, forKey: "finalAddress")
-        _ = self.preferences.set(destinationLatitude, forKey: "finalLatitude")
-        _ = self.preferences.set(destinationLongitude, forKey: "finalLongitude")
-        _ = self.preferences.set(contactNames, forKey: "contactNames")
-        _ = self.preferences.set(contactNumbers, forKey: "contactNumbers")
-        
-        print(destinationAddress)
-        print(destinationLatitude)
-        print(destinationLongitude)
-        print(contactNames)
-        print(contactNumbers)
-        
-        let resource = API.startNight
-        let postData = ["username": username, "pwd": password]
-        
-        resource.request(.post, urlEncoded: postData).onSuccess() { data in
-            
-            var response = data.jsonDict
-            let startNightAnswer = response["passed"]
-            
-            if let startNightAnswer = startNightAnswer as? String, startNightAnswer != "n" {
-                print(startNightAnswer)
-                _ = self.preferences.set(startNightAnswer, forKey: "adventureID")
+        if(self.destinationAddress == "" || self.destinationLongitude == 0.0 || self.destinationLatitude == 0.0 || self.contactNames.count == 0) {
+            if(!nightHasStarted) {
+                // Get the global values for username and password
+                let username = self.preferences.string(forKey: "username")!
+                let password = self.preferences.string(forKey: "password")!
+                
+                // Set global values for the service to use
+                _ = self.preferences.set(destinationAddress, forKey: "finalAddress")
+                _ = self.preferences.set(destinationLatitude, forKey: "finalLatitude")
+                _ = self.preferences.set(destinationLongitude, forKey: "finalLongitude")
+                _ = self.preferences.set(contactNames, forKey: "contactNames")
+                _ = self.preferences.set(contactNumbers, forKey: "contactNumbers")
+                
+                print(destinationAddress)
+                print(destinationLatitude)
+                print(destinationLongitude)
+                print(contactNames)
+                print(contactNumbers)
+                
+                let resource = API.startNight
+                let postData = ["username": username, "pwd": password]
+                
+                resource.request(.post, urlEncoded: postData).onSuccess() { data in
+                    
+                    var response = data.jsonDict
+                    let startNightAnswer = response["passed"]
+                    
+                    if let startNightAnswer = startNightAnswer as? String, startNightAnswer != "n" {
+                        print(startNightAnswer)
+                        _ = self.preferences.set(startNightAnswer, forKey: "adventureID")
 
-                self.trackingLocation.performBackgroundTask()
+                        self.trackingLocation.performBackgroundTask()
+                        
+                        self.submitButton.titleLabel?.text = "FINISH"
+                        self.startAdventureLabel.text = "You're On Your Way!"
+                        self.nightHasStarted = true
+                    }
+                    else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
+                        // Display alert to screen to let user know error
+                        let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
+                            print("night has not started")
+                        }
+                        let alert = UIAlertController(title: "Error", message: "There was an error starting your night! Please try again :)", preferredStyle: .alert)
+                        alert.addAction(OKAction)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            } else {
+                // Flip Bool
+                self.nightHasStarted = false
+                
+                // Clear Labels
+                self.submitButton.setTitle("SET OFF", for: .normal)
+                self.startAdventureLabel.text = "Start Adventure!"
+                self.placeButton.setTitle("My Strongholds", for: .normal)
+                self.contactButton.setTitle("My Guardian Angels", for: .normal)
+                
+                // Clear Variables
+                self.destinationAddress = ""
+                self.destinationLatitude = 0.0
+                self.destinationLongitude = 0.0
+                self.contactNames.removeAll()
+                self.contactNumbers.removeAll()
             }
-            else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
+        } else {
+            // Display alert to screen to let user know error
+            let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
                 print("night has not started")
             }
+            let alert = UIAlertController(title: "Warning", message: "You must give all fields before starting your night!", preferredStyle: .alert)
+            alert.addAction(OKAction)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }

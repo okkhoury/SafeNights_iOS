@@ -11,5 +11,6 @@ target 'SafeNights' do
   pod ‘Charts’
   pod 'GoogleMaps'
   pod 'GooglePlacePicker’
+  pod 'CZPicker'
 
 end
