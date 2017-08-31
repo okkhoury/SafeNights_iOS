@@ -125,7 +125,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                 
                         // Let guardians know that user successfully started night
                         self.preferences.set("0", forKey: "messageType")
-                        self.sendTextToGuardians();
+                        self.sendTextToGuardians()
 
                         self.trackingLocation.performBackgroundTask()
                         
@@ -177,7 +177,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     
     func sendTextToGuardians() -> Void {
         
-        _ = self.preferences.value(forKey: "messageType")
+        let messageType = self.preferences.value(forKey: "messageType")
         
         let contactNumbersArray = self.preferences.value(forKey: "contactNumbers") as! [String]
         let contactNumbers = contactNumbersArray.joined(separator: ",")
@@ -199,7 +199,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
         let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
                         "username": username, "pwd": password, "fname": firstName,
                         "lname": lastName, "id": adventureID, "finalAddress": finalAddress,
-                        "currentAddress": currentAddress, "messageType": "3"]
+                        "currentAddress": currentAddress, "messageType": messageType]
         
         print(postData)
         

@@ -82,7 +82,7 @@ class LocationSafetyChecker {
         print("batteryLife:")
         print(batteryIsLow())
         
-        if ( ((!endedUpInRightPlace() && !sentWrongLocWarning) && hour > 2 && hour < 7) || (batteryIsLow() && !sentLowBatWarning) ) {
+        if ( ((endedUpInWrongPlace() && !sentWrongLocWarning) && hour > 2 && hour < 7) || (batteryIsLow() && !sentLowBatWarning) ) {
             
             print("inside here")
             
@@ -92,55 +92,18 @@ class LocationSafetyChecker {
             }
             
             // Takes priority over low battery message.
-            if (!endedUpInRightPlace()) {
+            if (endedUpInWrongPlace()) {
                 self.preferences.set("2", forKey: MESSAGE_TYPE)
                 self.sentWrongLocWarning = true
             }
             
-            //TODO: Add the code to send a text to a user.
-            let resource = API.safetyAlert
-            
-            let messageType = self.preferences.value(forKey: "messageType")
-            
-            let contactNumbersArray = self.preferences.value(forKey: "contactNumbers") as! [String]
-            let contactNumbers = contactNumbersArray.joined(separator: ",")
-            let contactNamesArray = self.preferences.value(forKey: "contactNames") as! [String]
-            let contactNames = contactNamesArray.joined(separator: ",")
-            
-            let username = self.preferences.value(forKey: "username")
-            let password = self.preferences.value(forKey: "password")
-            let firstName = self.preferences.value(forKey: "fname")
-            let lastName = self.preferences.value(forKey: "lname")
-            
-            let adventureID = self.preferences.value(forKey: "adventureID")
-            let finalAddress = self.preferences.value(forKey: "finalAddress")
-            let currentAddress = self.preferences.value(forKey: "currentAddress")
-            
-            let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
-                            "username": username, "pwd": password, "fname": firstName,
-                            "lname": lastName, "id": adventureID, "finalAddress": finalAddress,
-                            "currentAddress": currentAddress, "messageType": messageType]
-            
-            print(postData)
-            
-            resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
-                var response = data.jsonDict
-                let loginAnswer = response["passed"]
-                
-                if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
-                    print("successfully sent text.")
-                }
-                else {
-                    print("failed to send text.")
-                    
-                    // TODO: give user notification that text did not go through
-                }
-            }
+            // Call send text based on preferences above
+            sendTextToGuardians()
         }
     }
     
     // Check that the user ended up in their expected ending location.
-    func endedUpInRightPlace() -> Bool {
+    func endedUpInWrongPlace() -> Bool {
         
         // Get these two values from self.preferences.
         let finalLat = self.preferences.value(forKey: "finalLatitude") as! Double
@@ -149,9 +112,11 @@ class LocationSafetyChecker {
         let latLocations = self.preferences.value(forKey: "latLocations") as! [Double]
         let longLocations = self.preferences.value(forKey:"longLocations") as! [Double]
         
-        return isInSameLocation(latLocations: latLocations, longLocations: longLocations) &&
-            inRangeOfExpectedLocations(myLat: latLocations[0], myLong: longLocations[0],
-                                       finalLat: finalLat, finalLong: finalLong)
+        print(isInSameLocation(latLocations: latLocations, longLocations: longLocations))
+        print(inRangeOfExpectedLocations(myLat: latLocations[0], myLong: longLocations[0], finalLat: finalLat, finalLong: finalLong))
+        
+        return (isInSameLocation(latLocations: latLocations, longLocations: longLocations) &&
+            inRangeOfExpectedLocations(myLat: latLocations[0], myLong: longLocations[0], finalLat: finalLat, finalLong: finalLong))
     }
     
     // Check if the phone battery is below 5 percent.
@@ -161,7 +126,7 @@ class LocationSafetyChecker {
         print("battery level:")
         print(UIDevice.current.batteryLevel)
         
-        return UIDevice.current.batteryLevel < 0.05
+        return UIDevice.current.batteryLevel < 0.98
     }
     
     // ADD ANOTHER CHECK TO SEE IF THE APP IS DESTROYED.
@@ -188,5 +153,54 @@ class LocationSafetyChecker {
         // Distance formula between current location and intended endpoint.
         return sqrt((myLat - finalLat) * (myLat - finalLat) +
             (myLong - finalLong) * (myLong - finalLong)) < gpsDistance
+    }
+    
+    func sendTextToGuardians() -> Void {
+        
+        let messageType = self.preferences.value(forKey: "messageType")
+        
+        let contactNumbersArray = self.preferences.value(forKey: "contactNumbers") as! [String]
+        let contactNumbers = contactNumbersArray.joined(separator: ",")
+        let contactNamesArray = self.preferences.value(forKey: "contactNames") as! [String]
+        let contactNames = contactNamesArray.joined(separator: ",")
+        
+        let username = self.preferences.value(forKey: "username")
+        let password = self.preferences.value(forKey: "password")
+        let firstName = self.preferences.value(forKey: "fname")
+        let lastName = self.preferences.value(forKey: "lname")
+        
+        let adventureID = self.preferences.value(forKey: "adventureID")
+        let finalAddress = self.preferences.value(forKey: "finalAddress")
+        
+        self.preferences.set("Home", forKey: "currentAddress")
+        
+        let currentAddress = self.preferences.value(forKey: "currentAddress")
+        
+        let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
+                        "username": username, "pwd": password, "fname": firstName,
+                        "lname": lastName, "id": adventureID, "finalAddress": finalAddress,
+                        "currentAddress": currentAddress, "messageType": messageType]
+        
+        print(postData)
+        
+        let resource = API.safetyAlert
+        
+        resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
+            
+            var response = data.jsonDict
+            let loginAnswer = response["passed"]
+            
+            print("Response")
+            print(response)
+            
+            if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
+                print("successfully sent text.")
+            }
+            else {
+                print("failed to send text.")
+                
+                // TODO: give user notification that text did not go through
+            }
+        }
     }
 }
