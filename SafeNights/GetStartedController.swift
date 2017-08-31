@@ -160,6 +160,8 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                 self.destinationLongitude = 0.0
                 self.contactNames.removeAll()
                 self.contactNumbers.removeAll()
+                
+                stopBackgroundThreads()
             }
         } else {
             // Display alert to screen to let user know error

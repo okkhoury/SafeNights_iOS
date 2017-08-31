@@ -34,6 +34,13 @@ class LocationSafetyChecker {
     func performBackgroundTask() {
         print("Did I work")
         DispatchQueue.global(qos: .background).async {
+            
+//            OperationQueue.main.addOperation {
+//                self.timer = Timer.scheduledTimer(timeInterval: 10,
+//                                                  target: self, selector: #selector(self.sendTextIfInTrouble),
+//                                                  userInfo: nil, repeats: true)
+//            }
+            
             //Check every 10 minutes if something has gone wrong.
             DispatchQueue.main.async {
                 self.timer = Timer.scheduledTimer(timeInterval: 10,
@@ -44,7 +51,11 @@ class LocationSafetyChecker {
     }
     
     func stopBackgroundTask() {
-        self.timer.invalidate()
+        //DispatchQueue.cancelPreviousPerformRequests(withTarget: <#T##Any#>, selector: <#T##Selector#>, object: <#T##Any?#>)
+        timer.invalidate()
+        timer = nil
+        
+        print("INSIDE THIS FUNCTION")
     }
     
     // Send a text to a guardian if the user did not end up in the right place or 
