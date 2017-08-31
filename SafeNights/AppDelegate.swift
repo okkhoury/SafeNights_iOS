@@ -47,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         self.preferences.set("4", forKey: "messageType")
         
+        let messageType = self.preferences.value(forKey: "messageType")
+        
         let contactNumbersArray = self.preferences.value(forKey: "contactNumbers") as! [String]
         let contactNumbers = contactNumbersArray.joined(separator: ",")
         let contactNamesArray = self.preferences.value(forKey: "contactNames") as! [String]
@@ -62,9 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let currentAddress = self.preferences.value(forKey: "currentAddress")
         
         let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
-                        "username": username, "password": password, "firstName": firstName,
-                        "lastName": lastName, "adventureID": adventureID, "finalAddress": finalAddress,
-                        "currentAddress": currentAddress, "messageType": self.preferences.value(forKey: "messageType")]
+                        "username": username, "pwd": password, "fname": firstName,
+                        "lname": lastName, "id": adventureID, "finalAddress": finalAddress,
+                        "currentAddress": currentAddress, "messageType": messageType]
         
         let API = MyAPI()
         let resource = API.safetyAlert

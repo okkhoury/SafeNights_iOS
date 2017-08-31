@@ -71,6 +71,8 @@ class LocationSafetyChecker {
             //TODO: Add the code to send a text to a user.
             let resource = API.safetyAlert
             
+            let messageType = self.preferences.value(forKey: "messageType")
+            
             let contactNumbersArray = self.preferences.value(forKey: "contactNumbers") as! [String]
             let contactNumbers = contactNumbersArray.joined(separator: ",")
             let contactNamesArray = self.preferences.value(forKey: "contactNames") as! [String]
@@ -85,13 +87,10 @@ class LocationSafetyChecker {
             let finalAddress = self.preferences.value(forKey: "finalAddress")
             let currentAddress = self.preferences.value(forKey: "currentAddress")
             
-            // THE CODE TO SET THE MESSAGE TYPE HASN'T BEEN ADDED YET. MESSAGE TYPE TELLS THE WEB SIDE WHAT KIND
-            // OF MESSAGE TO SEND.
-            
             let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
-                            "username": username, "password": password, "firstName": firstName,
-                            "lastName": lastName, "adventureID": adventureID, "finalAddress": finalAddress,
-                            "currentAddress": currentAddress, "messageType": self.preferences.value(forKey: MESSAGE_TYPE)]
+                            "username": username, "pwd": password, "fname": firstName,
+                            "lname": lastName, "id": adventureID, "finalAddress": finalAddress,
+                            "currentAddress": currentAddress, "messageType": messageType]
             
             print(postData)
             
