@@ -15,9 +15,15 @@ import MessageUI
  */
 class LocationSafetyChecker {
     
-    var messageType = ""
+    // 0 -> Started night.
+    // 1 -> Successfully got home.
+    // 2 -> Did not successfully get home.
+    // 3 -> Battery low.
+    // 4 -> app shutdown/crash
     
     let API = MyAPI()
+    
+    let MESSAGE_TYPE = "messageType";
     
     // Used to strore global values.
     let preferences = UserDefaults.standard
@@ -40,8 +46,27 @@ class LocationSafetyChecker {
     // Send a text to a guardian if the user did not end up in the right place or 
     // their phone is about to die.
     @objc func sendTextIfInTrouble() {
-        //!endedUpInRightPlace() || batteryIsLow()
-        if (true) {
+        
+        let hour = Calendar.current.component(.hour, from: Date())
+        
+        print("hour:")
+        print(hour)
+        
+        print("batteryLife:")
+        print(batteryIsLow())
+        
+        if ((!endedUpInRightPlace() && hour > 2 && hour < 7) /* || batteryIsLow() */) {
+            
+            print("inside here")
+            
+            if (batteryIsLow()) {
+                self.preferences.set("3", forKey: MESSAGE_TYPE)
+            }
+            
+            // Takes priority over low battery message.
+            if (!endedUpInRightPlace()) {
+                self.preferences.set("2", forKey: MESSAGE_TYPE)
+            }
             
             //TODO: Add the code to send a text to a user.
             let resource = API.safetyAlert
@@ -57,26 +82,31 @@ class LocationSafetyChecker {
             let lastName = self.preferences.value(forKey: "lname")
             
             let adventureID = self.preferences.value(forKey: "adventureID")
-            
             let finalAddress = self.preferences.value(forKey: "finalAddress")
-            
             let currentAddress = self.preferences.value(forKey: "currentAddress")
             
             // THE CODE TO SET THE MESSAGE TYPE HASN'T BEEN ADDED YET. MESSAGE TYPE TELLS THE WEB SIDE WHAT KIND
             // OF MESSAGE TO SEND.
-            let messageType = "23"
             
             let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
                             "username": username, "password": password, "firstName": firstName,
                             "lastName": lastName, "adventureID": adventureID, "finalAddress": finalAddress,
-                            "currentAddress": currentAddress, "messageType": messageType]
+                            "currentAddress": currentAddress, "messageType": self.preferences.value(forKey: MESSAGE_TYPE)]
             
             print(postData)
             
             resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
-                // Add check for if post request succeeded.
                 var response = data.jsonDict
-                print(response)
+                let loginAnswer = response["passed"]
+                
+                if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
+                    print("successfully sent text.")
+                }
+                else {
+                    print("failed to send text.")
+                    
+                    // TODO: give user notification that text did not go through
+                }
             }
         }
     }
@@ -88,14 +118,11 @@ class LocationSafetyChecker {
         let finalLat = 255.0
         let finalLong = 347.6
         
-        let hour = Calendar.current.component(.hour, from: Date())
-        
         let latLocations = self.preferences.value(forKey: "latLocations") as! [Double]
         let longLocations = self.preferences.value(forKey:"longLocations") as! [Double]
         
-        return hour >= 2 && hour <= 7 &&
-            isInSameLocation(latLocations: latLocations, longLocations: longLocations) &&
-            !inRangeOfExpectedLocations(myLat: latLocations[0], myLong: longLocations[0],
+        return isInSameLocation(latLocations: latLocations, longLocations: longLocations) &&
+            inRangeOfExpectedLocations(myLat: latLocations[0], myLong: longLocations[0],
                                        finalLat: finalLat, finalLong: finalLong)
     }
     
@@ -103,8 +130,13 @@ class LocationSafetyChecker {
     func batteryIsLow() -> Bool {
         UIDevice.current.isBatteryMonitoringEnabled = true
         
-        return UIDevice.current.batteryLevel < 5
+        print("battery level:")
+        print(UIDevice.current.batteryLevel)
+        
+        return UIDevice.current.batteryLevel < 0.05
     }
+    
+    // ADD ANOTHER CHECK TO SEE IF THE APP IS DESTROYED.
     
     // Check that the user has been in the same area for a while.
     func isInSameLocation(latLocations: [Double], longLocations:[Double]) -> Bool {
