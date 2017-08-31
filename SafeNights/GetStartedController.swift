@@ -93,7 +93,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
      */
     @IBAction func submit(_ sender: Any) {
 
-        if(self.destinationAddress == "" || self.destinationLongitude == 0.0 || self.destinationLatitude == 0.0 || self.contactNames.count == 0) {
+        if(!(self.destinationAddress == "" || self.destinationLongitude == 0.0 || self.destinationLatitude == 0.0 || self.contactNames.count == 0 || contactNames.isEmpty)) {
             if(!nightHasStarted) {
                 // Get the global values for username and password
                 let username = self.preferences.string(forKey: "username")!
