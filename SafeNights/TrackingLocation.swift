@@ -107,9 +107,16 @@ class TrackingLocation {
         DispatchQueue.global(qos: .background).async {
             
             DispatchQueue.main.async {
-                self.coordinateTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.setCoordinates), userInfo: nil, repeats: true)
+                self.coordinateTimer = Timer.scheduledTimer(timeInterval: 5, target: self,
+                    selector: #selector(self.setCoordinates), userInfo: nil, repeats: true)
             }
         }
+    }
+    
+    // Stop collecting locations and checking for safety
+    func stopBackgroundTask() {
+        self.coordinateTimer.invalidate()
+        self.locationChecker.stopBackgroundTask();
     }
     
     func getAddress(lat: Double, lon: Double, currentAdd : @escaping ( _ returnAddress :String)->Void){

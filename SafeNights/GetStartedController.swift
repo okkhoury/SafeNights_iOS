@@ -220,6 +220,10 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
             }
         }
     }
+    
+    func stopBackgroundThreads() {
+        trackingLocation.stopBackgroundTask()
+    }
 }
 
 extension GetStartedController: GMSPlacePickerViewControllerDelegate {
