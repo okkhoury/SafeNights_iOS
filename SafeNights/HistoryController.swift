@@ -112,6 +112,7 @@ class HistoryController: UIViewController {
                         "pwd": password]
         
         resource.request(.post, urlEncoded: postData).onSuccess() { data in
+            
             var response = data.jsonDict
             let answer = response["alcoholtable"] as! NSArray!
             
@@ -123,6 +124,15 @@ class HistoryController: UIViewController {
             
             // Then we parse months. Should only do this once, so after this we can update graph
             self.parseDataByMonths()
+            
+        }.onFailure { _ in
+            // Display alert to screen to let user know error
+            let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
+                print("Request failed")
+            }
+            let alert = UIAlertController(title: "Warning", message: "Something went wrong :( Make sure you have internet access", preferredStyle: .alert)
+            alert.addAction(OKAction)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

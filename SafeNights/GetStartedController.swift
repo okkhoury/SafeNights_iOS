@@ -168,6 +168,14 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                             alert.addAction(OKAction)
                             self.present(alert, animated: true, completion: nil)
                         }
+                    }.onFailure { _ in
+                            // Display alert to screen to let user know error
+                            let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
+                                print("Request failed")
+                            }
+                            let alert = UIAlertController(title: "Warning", message: "Something went wrong! :( Make sure you have internet access", preferredStyle: .alert)
+                            alert.addAction(OKAction)
+                            self.present(alert, animated: true, completion: nil)
                     }
                 } else {
                     // Flip Bool
@@ -259,6 +267,8 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                 
                 // TODO: give user notification that text did not go through
             }
+        }.onFailure { _ in
+            
         }
     }
     

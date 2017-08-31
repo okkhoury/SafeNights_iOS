@@ -23,7 +23,6 @@ class TutorialController: UIPageViewController, UIPageViewControllerDelegate, UI
             direction: .forward,
             animated: true,
             completion: nil)
-        
     }
     
     func pageViewController(_ pageViewController: UIPageViewController,
@@ -67,5 +66,4 @@ class TutorialController: UIPageViewController, UIPageViewControllerDelegate, UI
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 }

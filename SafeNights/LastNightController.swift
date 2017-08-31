@@ -121,7 +121,6 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
         }
     }
     
-    
     func callLastNightAPI() {
         let resource = API.getLastNight
         
@@ -134,15 +133,19 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
                         "pwd": password, "id": adventureID]
         
         resource.request(.post, urlEncoded: postData).onSuccess() { data in
+            
             var response = data.jsonDict
             let answer = response["locationtable"] as! NSArray!
-            
+          
             let arr = Locationtable.modelsFromDictionaryArray(array: answer!)
             
             for item in arr {
                 self.allData.append(item.fields!)
             }
             self.setUpMap(mapView: self.viewMap)
+            
+        }.onFailure { _ in
+            
         }
     }
 }
