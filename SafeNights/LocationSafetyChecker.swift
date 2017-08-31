@@ -137,8 +137,8 @@ class LocationSafetyChecker {
     func endedUpInRightPlace() -> Bool {
         
         // Get these two values from self.preferences.
-        let finalLat = 255.0
-        let finalLong = 347.6
+        let finalLat = self.preferences.value(forKey: "finalLatitude") as! Double
+        let finalLong = self.preferences.value(forKey: "finalLongitude") as! Double
         
         let latLocations = self.preferences.value(forKey: "latLocations") as! [Double]
         let longLocations = self.preferences.value(forKey:"longLocations") as! [Double]
