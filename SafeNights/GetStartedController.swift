@@ -177,7 +177,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     
     func sendTextToGuardians() -> Void {
         
-        let messageType = self.preferences.value(forKey: "messageType")
+        _ = self.preferences.value(forKey: "messageType")
         
         let contactNumbersArray = self.preferences.value(forKey: "contactNumbers") as! [String]
         let contactNumbers = contactNumbersArray.joined(separator: ",")

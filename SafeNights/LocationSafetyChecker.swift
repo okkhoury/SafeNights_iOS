@@ -78,7 +78,7 @@ class LocationSafetyChecker {
         print("batteryLife:")
         print(batteryIsLow())
         
-        if ((!endedUpInRightPlace() && hour > 2 && hour < 7) /* || batteryIsLow() */) {
+        if ((!endedUpInRightPlace() && hour > 2 && hour < 7) || batteryIsLow()) {
             
             print("inside here")
             
