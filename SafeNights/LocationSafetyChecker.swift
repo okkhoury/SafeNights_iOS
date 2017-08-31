@@ -40,14 +40,6 @@ class LocationSafetyChecker {
         print("Did I work")
         DispatchQueue.global(qos: .background).async {
             
-            UIDevice.current.isBatteryMonitoringEnabled = true
-            
-//            OperationQueue.main.addOperation {
-//                self.timer = Timer.scheduledTimer(timeInterval: 10,
-//                                                  target: self, selector: #selector(self.sendTextIfInTrouble),
-//                                                  userInfo: nil, repeats: true)
-//            }
-            
             //Check every 10 minutes if something has gone wrong.
             DispatchQueue.main.async {
                 UIDevice.current.isBatteryMonitoringEnabled = true
@@ -72,8 +64,6 @@ class LocationSafetyChecker {
     // their phone is about to die.
     @objc func sendTextIfInTrouble() {
         
-        UIDevice.current.isBatteryMonitoringEnabled = true
-        
         let hour = Calendar.current.component(.hour, from: Date())
         
         print("hour:")
@@ -82,7 +72,12 @@ class LocationSafetyChecker {
         print("batteryLife:")
         print(batteryIsLow())
         
-        if ( ((endedUpInWrongPlace() && !sentWrongLocWarning) && hour > 2 && hour < 7) || (batteryIsLow() && !sentLowBatWarning) ) {
+        if (self.preferences.value(forKey: "finalAddress") as! String == "I'm Feeling Lucky ;)" && hour > 2 && hour < 7) {
+            // Let guardians know that user made it back home
+            self.preferences.set("5", forKey: "messageType")
+            self.sendTextToGuardians()
+        }
+        else if (((endedUpInWrongPlace() && !sentWrongLocWarning) && hour > 2 && hour < 7) || (batteryIsLow() && !sentLowBatWarning)) {
             
             print("inside here")
             
@@ -92,7 +87,7 @@ class LocationSafetyChecker {
             }
             
             // Takes priority over low battery message.
-            if (endedUpInWrongPlace()) {
+            if (endedUpInWrongPlace() && !sentWrongLocWarning) {
                 self.preferences.set("2", forKey: MESSAGE_TYPE)
                 self.sentWrongLocWarning = true
             }
