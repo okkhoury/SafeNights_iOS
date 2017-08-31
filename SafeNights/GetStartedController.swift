@@ -36,17 +36,24 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     var contactNames : [String] = []
     var contactNumbers = [String]()
     
-    var fruits = [String]()
+    var storedLocationNames = [String]()
+    var storedLocations = [String]()
+    var storedCoordinates = [Double]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fruits = ["Apple", "Banana", "Grape", "Watermelon", "Lychee"]
         self.title = "CZPicker"
 
         //Style Submit Button
         submitButton.layer.borderColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0).cgColor
         submitButton.layer.borderWidth = 2.0
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        storedLocationNames = self.preferences.value(forKey:"storedLocationNames") as! [String]
+        storedLocations = self.preferences.value(forKey:"storedLocations") as! [String]
+        storedCoordinates = self.preferences.value(forKey: "storedCoordinates") as! [Double]
     }
 
     //MARK:- CNContactPickerDelegate Method
@@ -79,9 +86,12 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     
     // Pick place starts GMSPlacePicker
     @IBAction func pickPlace(_ sender: Any) {
-        let picker = CZPickerView(headerTitle: "Fruits", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+        let picker = CZPickerView(headerTitle: "Strongholds", cancelButtonTitle: "Add New", confirmButtonTitle: "Select")
         picker?.delegate = self
         picker?.dataSource = self
+        picker?.headerBackgroundColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0)
+        picker?.confirmButtonBackgroundColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0)
+        picker?.cancelButtonNormalColor = UIColor.black
         picker?.needFooterView = true
         picker?.show()
     }
@@ -106,88 +116,98 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
      * and returns an adventureID if they are valid.
      */
     @IBAction func submit(_ sender: Any) {
-        if(!(self.destinationAddress == "" || self.destinationLongitude == 0.0 || self.destinationLatitude == 0.0 || self.contactNames.count == 0 || contactNames.isEmpty)) {
-            if(!nightHasStarted) {
-                // Get the global values for username and password
-                let username = self.preferences.string(forKey: "username")!
-                let password = self.preferences.string(forKey: "password")!
-                
-                // Set global values for the service to use
-                _ = self.preferences.set(destinationAddress, forKey: "finalAddress")
-                _ = self.preferences.set(destinationLatitude, forKey: "finalLatitude")
-                _ = self.preferences.set(destinationLongitude, forKey: "finalLongitude")
-                _ = self.preferences.set(contactNames, forKey: "contactNames")
-                _ = self.preferences.set(contactNumbers, forKey: "contactNumbers")
-                
-                print(destinationAddress)
-                print(destinationLatitude)
-                print(destinationLongitude)
-                print(contactNames)
-                print(contactNumbers)
-                
-                let resource = API.startNight
-                let postData = ["username": username, "pwd": password]
-                
-                resource.request(.post, urlEncoded: postData).onSuccess() { data in
+        if(CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways) {
+            if(!(self.destinationAddress == "" || self.destinationLongitude == 0.0 || self.destinationLatitude == 0.0 || self.contactNames.count == 0 || contactNames.isEmpty)) {
+                if(!nightHasStarted) {
+                    // Get the global values for username and password
+                    let username = self.preferences.string(forKey: "username")!
+                    let password = self.preferences.string(forKey: "password")!
                     
-                    var response = data.jsonDict
-                    let startNightAnswer = response["passed"]
+                    // Set global values for the service to use
+                    _ = self.preferences.set(destinationAddress, forKey: "finalAddress")
+                    _ = self.preferences.set(destinationLatitude, forKey: "finalLatitude")
+                    _ = self.preferences.set(destinationLongitude, forKey: "finalLongitude")
+                    _ = self.preferences.set(contactNames, forKey: "contactNames")
+                    _ = self.preferences.set(contactNumbers, forKey: "contactNumbers")
                     
-                    if let startNightAnswer = startNightAnswer as? String, startNightAnswer != "n" {
-                        print(startNightAnswer)
-                        _ = self.preferences.set(startNightAnswer, forKey: "adventureID")
-                
-                        // Let guardians know that user successfully started night
-                        self.preferences.set("0", forKey: "messageType")
-                        self.sendTextToGuardians()
-
-                        self.trackingLocation.performBackgroundTask()
+                    print(destinationAddress)
+                    print(destinationLatitude)
+                    print(destinationLongitude)
+                    print(contactNames)
+                    print(contactNumbers)
+                    
+                    let resource = API.startNight
+                    let postData = ["username": username, "pwd": password]
+                    
+                    resource.request(.post, urlEncoded: postData).onSuccess() { data in
                         
-                        self.submitButton.setTitle("FINISH", for: .normal)
-                        self.submitButton.titleLabel?.textAlignment = NSTextAlignment.center
-                        self.startAdventureLabel.text = "You're On Your Way!"
-                        self.nightHasStarted = true
-                    }
-                    else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
-                        // Display alert to screen to let user know error
-                        let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
-                            print("night has not started")
+                        var response = data.jsonDict
+                        let startNightAnswer = response["passed"]
+                        
+                        if let startNightAnswer = startNightAnswer as? String, startNightAnswer != "n" {
+                            print(startNightAnswer)
+                            _ = self.preferences.set(startNightAnswer, forKey: "adventureID")
+                    
+                            // Let guardians know that user successfully started night
+                            self.preferences.set("0", forKey: "messageType")
+                            self.sendTextToGuardians()
+
+                            self.trackingLocation.performBackgroundTask()
+                            
+                            self.submitButton.setTitle("FINISH", for: .normal)
+                            self.submitButton.titleLabel?.textAlignment = NSTextAlignment.center
+                            self.startAdventureLabel.text = "You're On Your Way!"
+                            self.nightHasStarted = true
                         }
-                        let alert = UIAlertController(title: "Error", message: "There was an error starting your night! Please try again :)", preferredStyle: .alert)
-                        alert.addAction(OKAction)
-                        self.present(alert, animated: true, completion: nil)
+                        else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
+                            // Display alert to screen to let user know error
+                            let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
+                                print("night has not started")
+                            }
+                            let alert = UIAlertController(title: "Error", message: "There was an error starting your night! Please try again :)", preferredStyle: .alert)
+                            alert.addAction(OKAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
                     }
+                } else {
+                    // Flip Bool
+                    self.nightHasStarted = false
+                    
+                    // Clear Labels
+                    self.submitButton.setTitle("SET OFF", for: .normal)
+                    self.submitButton.titleLabel?.textAlignment = NSTextAlignment.center
+                    self.startAdventureLabel.text = "Start Adventure!"
+                    self.placeButton.setTitle("My Strongholds", for: .normal)
+                    self.contactButton.setTitle("My Guardian Angels", for: .normal)
+                    
+                    // Clear Variables
+                    self.destinationAddress = ""
+                    self.destinationLatitude = 0.0
+                    self.destinationLongitude = 0.0
+                    self.contactNames.removeAll()
+                    self.contactNumbers.removeAll()
+                    
+                    stopBackgroundThreads()
+                    
+                    // Let guardians know that user made it back home
+                    self.preferences.set("1", forKey: "messageType")
+                    self.sendTextToGuardians()
                 }
             } else {
-                // Flip Bool
-                self.nightHasStarted = false
-                
-                // Clear Labels
-                self.submitButton.setTitle("SET OFF", for: .normal)
-                self.submitButton.titleLabel?.textAlignment = NSTextAlignment.center
-                self.startAdventureLabel.text = "Start Adventure!"
-                self.placeButton.setTitle("My Strongholds", for: .normal)
-                self.contactButton.setTitle("My Guardian Angels", for: .normal)
-                
-                // Clear Variables
-                self.destinationAddress = ""
-                self.destinationLatitude = 0.0
-                self.destinationLongitude = 0.0
-                self.contactNames.removeAll()
-                self.contactNumbers.removeAll()
-                
-                stopBackgroundThreads()
-                
-                // Let guardians know that user made it back home
-                self.preferences.set("1", forKey: "messageType")
-                self.sendTextToGuardians()
+                // Display alert to screen to let user know error
+                let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
+                    print("night has not started")
+                }
+                let alert = UIAlertController(title: "Warning", message: "You must give all fields before starting your night!", preferredStyle: .alert)
+                alert.addAction(OKAction)
+                self.present(alert, animated: true, completion: nil)
             }
         } else {
             // Display alert to screen to let user know error
             let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
                 print("night has not started")
             }
-            let alert = UIAlertController(title: "Warning", message: "You must give all fields before starting your night!", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Warning", message: "You must give GPS location permission before starting your night!", preferredStyle: .alert)
             alert.addAction(OKAction)
             self.present(alert, animated: true, completion: nil)
         }
@@ -254,16 +274,26 @@ extension GetStartedController: GMSPlacePickerViewControllerDelegate {
         // Dismiss the place picker, as it cannot dismiss itself.
         viewController.dismiss(animated: true, completion: nil)
         
+        // Set Global Variables
         self.destinationAddress = place.formattedAddress!
         self.destinationLatitude = place.coordinate.latitude
         self.destinationLongitude = place.coordinate.longitude
         
         self.placeButton.setTitle(place.name, for: .normal)
         
-        print("Place name \(place.name)")
-        print("Place address \(place.formattedAddress)")
-        print("Place attributions \(place.attributions)")
-        print("Place attributions \(place.coordinate)")
+        // Add to storedLocations and save to sharedprefs
+        storedCoordinates.append(place.coordinate.latitude)
+        storedCoordinates.append(place.coordinate.longitude)
+        storedLocations.append(place.formattedAddress!)
+        storedLocationNames.append(place.name)
+        self.preferences.set(storedLocationNames, forKey: "storedLocationNames")
+        self.preferences.set(storedLocations, forKey: "storedLocations")
+        self.preferences.set(storedCoordinates, forKey: "storedCoordinates")
+        
+//        print("Place name \(place.name)")
+//        print("Place address \(place.formattedAddress)")
+//        print("Place attributions \(place.attributions)")
+//        print("Place attributions \(place.coordinate)")
     }
     
     func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
@@ -280,26 +310,39 @@ extension GetStartedController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func numberOfRows(in pickerView: CZPickerView!) -> Int {
-        return fruits.count
+        return storedLocationNames.count
     }
     
     func czpickerView(_ pickerView: CZPickerView!, titleForRow row: Int) -> String! {
-        return fruits[row]
+        return storedLocationNames[row]
     }
     
     func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
-        print(fruits[row])
+        print(storedLocationNames[row])
+        // Set Global Variables
+        self.destinationAddress = storedLocations[row]
+        self.destinationLatitude = storedCoordinates[row*2]
+        self.destinationLongitude = storedCoordinates[(row*2)+1]
+        
+        print(self.destinationAddress)
+        print(self.destinationLatitude)
+        print(self.destinationLongitude)
+        
+        self.placeButton.setTitle(storedLocationNames[row], for: .normal)
+        
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     func czpickerViewDidClickCancelButton(_ pickerView: CZPickerView!) {
+        // Start Google Place Picker
+        startPlacePicker()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     private func czpickerView(pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
         for row in rows {
             if let row = row as? Int {
-                print(fruits[row])
+                print(storedLocationNames[row])
             }
         }
     }

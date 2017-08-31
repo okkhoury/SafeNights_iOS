@@ -68,7 +68,11 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 
                 _ = self.preferences.set("Logged In", forKey: self.loginKey)
                 
-                _ = self.preferences.set("0", forKey: "messageType")
+                // Set things we will need later
+                self.preferences.set("0", forKey: "messageType")
+                self.preferences.set(["I'm Feeling Lucky ;)"], forKey: "storedLocationNames")
+                self.preferences.set(["I'm Feeling Lucky ;)"], forKey: "storedLocations")
+                self.preferences.set([0.0, 0.0], forKey: "storedCoordinates")
                 
                 //  Save to disk
                 self.preferences.synchronize()
