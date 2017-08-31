@@ -153,15 +153,10 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
         
         let currentAddress = self.preferences.value(forKey: "currentAddress")
         
-//        let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
-//                        "username": username, "password": password, "firstName": firstName,
-//                        "lastName": lastName, "adventureID": adventureID, "finalAddress": finalAddress,
-//                        "currentAddress": currentAddress, "messageType": messageType]
-        
-        let postData = ["contactNumbers": "7034016163", "contactNames": "Zachary",
-                        "username": "zrs", "password": "123456", "firstName": "zach",
-                        "lastName": "zzz", "adventureID": "48a50e06-8401-43ee-99dc-7eee3e3cea76", "finalAddress": "112 Dunova",
-                        "currentAddress": "McDonalds", "messageType": "2"]
+        let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
+                        "username": username, "pwd": password, "fname": firstName,
+                        "lname": lastName, "id": adventureID, "finalAddress": finalAddress,
+                        "currentAddress": currentAddress, "messageType": messageType]
         
         print(postData)
         
