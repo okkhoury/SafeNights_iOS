@@ -47,7 +47,6 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
         }
         // Call API
         callLastNightAPI()
-        
     }
     
     func setUpMap(mapView: GMSMapView!) {
@@ -94,8 +93,6 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
             // Update lastLat and lastLon for camera at end
             lastLat = lat!
             lastLon = lon!
-            
-            
         }
         
         // Color Polyline
@@ -124,7 +121,6 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
         }
     }
     
-    
     func callLastNightAPI() {
         let resource = API.getLastNight
         
@@ -137,15 +133,25 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
                         "pwd": password, "id": adventureID]
         
         resource.request(.post, urlEncoded: postData).onSuccess() { data in
+            
             var response = data.jsonDict
             let answer = response["locationtable"] as! NSArray!
-            
+          
             let arr = Locationtable.modelsFromDictionaryArray(array: answer!)
             
             for item in arr {
                 self.allData.append(item.fields!)
             }
             self.setUpMap(mapView: self.viewMap)
+            
+        }.onFailure { _ in
+            // Display alert to screen to let user know error
+            let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
+                print("Request failed")
+            }
+            let alert = UIAlertController(title: "Warning", message: "Something went wrong :( Make sure you have internet access", preferredStyle: .alert)
+            alert.addAction(OKAction)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }

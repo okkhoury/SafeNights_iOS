@@ -22,8 +22,6 @@ class LocationSafetyChecker {
     // 4 -> app shutdown/crash
     // 5 -> I'm feeling lucky
     
-    //UIDevice.current.isBatteryMonitoringEnabled = true
-    
     let API = MyAPI()
     
     let MESSAGE_TYPE = "messageType";
@@ -193,9 +191,9 @@ class LocationSafetyChecker {
             }
             else {
                 print("failed to send text.")
-                
-                // TODO: give user notification that text did not go through
             }
+        }.onFailure { _ in
+            
         }
     }
 }

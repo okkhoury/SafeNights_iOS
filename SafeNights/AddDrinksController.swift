@@ -169,14 +169,6 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         let username = self.preferences.string(forKey: "username")!
         let password = self.preferences.string(forKey: "password")!
         
-       // print(selectedDate)
-//        print(username + password + " , " + selectedDate)
-//        print(moneyAmount)
-//        print(wineAmount)
-//        print(beerAmount)
-//        print(liquorAmount)
-//        print(shotsAmount)
-        
         // The data to be entered into the database
         // NOTE -- selectedDate comes up in the format above: 2017-05-15, for example
         let postData = ["username":username, "pwd":password, "day": selectedDate,
@@ -205,7 +197,14 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
                 alert.addAction(OKAction)
                 self.present(alert, animated: true, completion: nil)
             }
-            
+        }.onFailure { _ in
+            // Display alert to screen to let user know error
+            let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
+                print("Request failed")
+            }
+            let alert = UIAlertController(title: "Warning", message: "Something went wrong :( Make sure you have internet access", preferredStyle: .alert)
+            alert.addAction(OKAction)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
