@@ -163,6 +163,10 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                 self.contactNumbers.removeAll()
                 
                 stopBackgroundThreads()
+                
+                // Let guardians know that user made it back home
+                self.preferences.set("1", forKey: "messageType")
+                self.sendTextToGuardians()
             }
         } else {
             // Display alert to screen to let user know error
