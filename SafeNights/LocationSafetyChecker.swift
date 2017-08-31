@@ -43,6 +43,10 @@ class LocationSafetyChecker {
         }
     }
     
+    func stopBackgroundTask() {
+        self.timer.invalidate()
+    }
+    
     // Send a text to a guardian if the user did not end up in the right place or 
     // their phone is about to die.
     @objc func sendTextIfInTrouble() {
