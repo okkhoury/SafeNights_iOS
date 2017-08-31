@@ -45,46 +45,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        self.preferences.set("4", forKey: "messageType")
-        
-        let messageType = self.preferences.value(forKey: "messageType")
-        
-        let contactNumbersArray = self.preferences.value(forKey: "contactNumbers") as! [String]
-        let contactNumbers = contactNumbersArray.joined(separator: ",")
-        let contactNamesArray = self.preferences.value(forKey: "contactNames") as! [String]
-        let contactNames = contactNamesArray.joined(separator: ",")
-        
-        let username = self.preferences.value(forKey: "username")
-        let password = self.preferences.value(forKey: "password")
-        let firstName = self.preferences.value(forKey: "fname")
-        let lastName = self.preferences.value(forKey: "lname")
-        
-        let adventureID = self.preferences.value(forKey: "adventureID")
-        let finalAddress = self.preferences.value(forKey: "finalAddress")
-        let currentAddress = self.preferences.value(forKey: "currentAddress")
-        
-        let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
-                        "username": username, "pwd": password, "fname": firstName,
-                        "lname": lastName, "id": adventureID, "finalAddress": finalAddress,
-                        "currentAddress": currentAddress, "messageType": messageType]
-        
-        let API = MyAPI()
-        let resource = API.safetyAlert
-        
-        resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
-            
-            var response = data.jsonDict
-            let loginAnswer = response["passed"]
-            
-            if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
-                print("successfully sent text.")
-            }
-            else {
-                print("failed to send text.")
-                
-                // TODO: give user notification that text did not go through
-            }
-        }
+//        self.preferences.set("4", forKey: "messageType")
+//        
+//        let messageType = self.preferences.value(forKey: "messageType")
+//        
+//        let contactNumbersArray = self.preferences.value(forKey: "contactNumbers") as! [String]
+//        let contactNumbers = contactNumbersArray.joined(separator: ",")
+//        let contactNamesArray = self.preferences.value(forKey: "contactNames") as! [String]
+//        let contactNames = contactNamesArray.joined(separator: ",")
+//        
+//        let username = self.preferences.value(forKey: "username")
+//        let password = self.preferences.value(forKey: "password")
+//        let firstName = self.preferences.value(forKey: "fname")
+//        let lastName = self.preferences.value(forKey: "lname")
+//        
+//        let adventureID = self.preferences.value(forKey: "adventureID")
+//        let finalAddress = self.preferences.value(forKey: "finalAddress")
+//        let currentAddress = self.preferences.value(forKey: "currentAddress")
+//        
+//        let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
+//                        "username": username, "pwd": password, "fname": firstName,
+//                        "lname": lastName, "id": adventureID, "finalAddress": finalAddress,
+//                        "currentAddress": currentAddress, "messageType": messageType]
+//        
+//        let API = MyAPI()
+//        let resource = API.safetyAlert
+//        
+//        resource.request(.post, urlEncoded: postData as! [String : String] ).onSuccess() { data in
+//            
+//            var response = data.jsonDict
+//            let loginAnswer = response["passed"]
+//            
+//            if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
+//                print("successfully sent text.")
+//            }
+//            else {
+//                print("failed to send text.")
+//                
+//                // TODO: give user notification that text did not go through
+//            }
+//        }
         
     }
 

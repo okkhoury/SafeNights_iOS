@@ -39,6 +39,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
      * password. Allow access if response does not equal 'n'.
      */
     @IBAction func Login(_ sender: Any) {
+        
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         

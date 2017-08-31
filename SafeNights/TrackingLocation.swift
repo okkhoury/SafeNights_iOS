@@ -116,7 +116,10 @@ class TrackingLocation {
     // Stop collecting locations and checking for safety
     func stopBackgroundTask() {
         self.coordinateTimer.invalidate()
+        self.coordinateTimer = nil
         self.locationChecker.stopBackgroundTask();
+        
+        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
     }
     
     func getAddress(lat: Double, lon: Double, currentAdd : @escaping ( _ returnAddress :String)->Void){
