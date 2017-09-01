@@ -62,19 +62,27 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
         self.contactNumbers.removeAll()
         var newTitle : String = ""
         contacts.forEach { contact in
+            let contactName = contact.givenName
+            var contactNumber = ""
+            var foundMobile = false
             for number in contact.phoneNumbers {
-                let contactName = contact.givenName
-                let contactNumber = (number.value).stringValue
-                if number.label == CNLabelPhoneNumberMobile {
-                    self.contactNames.append(contactName)
-                    self.contactNumbers.append(contactNumber)
-                    //Build the string to change the label
-                    if( newTitle == "") {
-                        newTitle += contactName
-                    } else {
-                        newTitle += ", " + contactName
-                    }
+                if(!foundMobile) {
+                    contactNumber = (number.value).stringValue
                 }
+                if number.label == CNLabelPhoneNumberMobile {
+                    contactNumber = (number.value).stringValue
+                    foundMobile = true
+                }
+            }
+            if contactNumber != "" {
+                //Build the string to change the label
+                if( newTitle == "") {
+                    newTitle += contactName
+                } else {
+                    newTitle += ", " + contactName
+                }
+                self.contactNames.append(contactName)
+                self.contactNumbers.append(contactNumber)
             }
         }
         self.contactButton.setTitle(newTitle, for: .normal)
@@ -116,7 +124,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
      * and returns an adventureID if they are valid.
      */
     @IBAction func submit(_ sender: Any) {
-        if(CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways) {
+        if(CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedWhenInUse) {
             if(!(self.destinationAddress == "" || self.destinationLongitude == 0.0 || self.destinationLatitude == 0.0 || self.contactNames.count == 0 || contactNames.isEmpty)) {
                 if(!nightHasStarted) {
                     // Get the global values for username and password
