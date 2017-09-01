@@ -58,11 +58,13 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
             var time : String = ""
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
             let index = loc.time!.index(loc.time!.startIndex, offsetBy: (loc.time!.characters.count-5))
             if let checkDate = dateFormatter.date(from: loc.time!.substring(to: index)) {
                 let date = checkDate
                 let newFormat = DateFormatter()
                 newFormat.dateFormat = "HH:mm"
+                dateFormatter.timeZone = TimeZone.current
                 time = newFormat.string(from: date)
             } else {
                 time = "?"

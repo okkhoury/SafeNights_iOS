@@ -27,6 +27,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     
     let API = MyAPI()
     let preferences = UserDefaults.standard
+    let locationManager = CLLocationManager()
     
     // Global Var
     var nightHasStarted : Bool = false
@@ -42,8 +43,6 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = "CZPicker"
 
         //Style Submit Button
         submitButton.layer.borderColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0).cgColor
@@ -219,13 +218,8 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                 self.present(alert, animated: true, completion: nil)
             }
         } else {
-            // Display alert to screen to let user know error
-            let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
-                print("night has not started")
-            }
-            let alert = UIAlertController(title: "Warning", message: "You must give GPS location permission before starting your night!", preferredStyle: .alert)
-            alert.addAction(OKAction)
-            self.present(alert, animated: true, completion: nil)
+            // Request User Location Permissions
+            self.locationManager.requestWhenInUseAuthorization()
         }
     }
     
