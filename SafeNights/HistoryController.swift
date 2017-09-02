@@ -316,8 +316,9 @@ class HistoryController: UIViewController {
         
         //Styling #3 - Axis Scaling and Such
         
-        moneyChartView.autoScaleMinMaxEnabled = true
+        //moneyChartView.autoScaleMinMaxEnabled = true
         moneyChartView.leftAxis.axisMinimum = 0.0
+        moneyChartView.leftAxis.axisMaximum = 200.0
         moneyChartView.leftAxis.valueFormatter = DollarFormatter()
         
         alcoholChartView.leftAxis.axisMinimum = 0.0
