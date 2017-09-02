@@ -165,6 +165,9 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                             self.submitButton.titleLabel?.textAlignment = NSTextAlignment.center
                             self.startAdventureLabel.text = "You're On Your Way!"
                             self.nightHasStarted = true
+                            // Disable button so user can't be stupid
+                            self.contactButton.isEnabled = false
+                            self.placeButton.isEnabled = false
                         }
                         else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
                             // Display alert to screen to let user know error
@@ -187,6 +190,10 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                 } else {
                     // Flip Bool
                     self.nightHasStarted = false
+                    
+                    // Enable buttons
+                    self.contactButton.isEnabled = true
+                    self.placeButton.isEnabled = true
                     
                     // Clear Labels
                     self.submitButton.setTitle("SET OFF", for: .normal)
