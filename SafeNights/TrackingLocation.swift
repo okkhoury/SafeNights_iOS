@@ -8,29 +8,42 @@
 
 import MapKit
 import GoogleMaps
+import CoreLocation
 
-class TrackingLocation {
+class TrackingLocation: UIViewController {
     let API = MyAPI()
     let preferences = UserDefaults.standard
     
-    //For Testing - Zach
     let locationChecker = LocationSafetyChecker()
     
-    let locManager = CLLocationManager()
-    var coordinateTimer: Timer!
+    //let locManager = CLLocationManager()
+    //var coordinateTimer: Timer!
+    
+    let TIME_INTERVAL:TimeInterval = 15.0 // in secs
     
     var latLocations = Array(repeating: 0.0, count: 4)
     var longLocations = Array(repeating: 0.0, count: 4)
     
+    private lazy var locationManager: CLLocationManager = {
+        let manager = CLLocationManager()
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.pausesLocationUpdatesAutomatically = false
+        manager.delegate = self
+        manager.requestAlwaysAuthorization()
+        return manager
+    }()
+    
+    var lastTime = Date()
+    
     // Function get user's current latitude and longitude
     @objc func setCoordinates() {
-        locManager.requestWhenInUseAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         var currentLocation = CLLocation()
         
         if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways) {
             
-            currentLocation = locManager.location!
+            currentLocation = locationManager.location!
             
             // Set the global values for lat and lon
             let latitude = currentLocation.coordinate.latitude
@@ -101,25 +114,19 @@ class TrackingLocation {
     
     // Background task to continually get latitude and longitude every 5 seconds
     func performBackgroundTask() {
-        self.locationChecker.performBackgroundTask()
-        print("I tried")
+        self.setCoordinates()
+        // Set up timing
+        lastTime = Date()
+        print(lastTime)
+        lastTime = Date(timeInterval: TIME_INTERVAL, since: lastTime)
+        print(lastTime)
         
-        DispatchQueue.global(qos: .background).async {
-            
-            DispatchQueue.main.async {
-                self.coordinateTimer = Timer.scheduledTimer(timeInterval: 5, target: self,
-                    selector: #selector(self.setCoordinates), userInfo: nil, repeats: true)
-            }
-        }
+        locationManager.startUpdatingLocation()
     }
     
     // Stop collecting locations and checking for safety
     func stopBackgroundTask() {
-        self.coordinateTimer.invalidate()
-        self.coordinateTimer = nil
-        self.locationChecker.stopBackgroundTask();
-        
-        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        locationManager.stopUpdatingLocation()
     }
     
     func getAddress(lat: Double, lon: Double, currentAdd : @escaping ( _ returnAddress :String)->Void){
@@ -137,4 +144,28 @@ class TrackingLocation {
             }
         }
     }
+}
+
+extension TrackingLocation: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let mostRecentLocation = locations.last else {
+            return
+        }
+        
+        let now = Date()
+        
+        if(now > lastTime) {
+            self.setCoordinates()
+            self.locationChecker.sendTextIfInTrouble()
+            lastTime = Date(timeInterval: TIME_INTERVAL, since: now)
+        }
+        
+        if UIApplication.shared.applicationState == .active {
+            print("App is foreground. New location is %@", mostRecentLocation)
+        } else {
+            print("App is backgrounded. New location is %@", mostRecentLocation)
+        }
+    }
+    
 }

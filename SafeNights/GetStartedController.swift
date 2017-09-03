@@ -123,7 +123,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
      * and returns an adventureID if they are valid.
      */
     @IBAction func submit(_ sender: Any) {
-        if(CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedWhenInUse) {
+        if(CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways) {
             if(!(self.destinationAddress == "" || self.destinationLongitude == 0.0 || self.destinationLatitude == 0.0 || self.contactNames.count == 0 || contactNames.isEmpty)) {
                 if(!nightHasStarted) {
                     // Get the global values for username and password
@@ -157,6 +157,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                     
                             // Let guardians know that user successfully started night
                             self.preferences.set("0", forKey: "messageType")
+                            self.preferences.set("Home", forKey: "currentAddress")
                             self.sendTextToGuardians()
 
                             self.trackingLocation.performBackgroundTask()
@@ -226,7 +227,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
             }
         } else {
             // Request User Location Permissions
-            self.locationManager.requestWhenInUseAuthorization()
+            self.locationManager.requestAlwaysAuthorization()
         }
     }
     
@@ -246,8 +247,6 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
         
         let adventureID = self.preferences.value(forKey: "adventureID")
         let finalAddress = self.preferences.value(forKey: "finalAddress")
-        
-        self.preferences.set("Home", forKey: "currentAddress")
         
         let currentAddress = self.preferences.value(forKey: "currentAddress")
         

@@ -23,7 +23,11 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Location used to inform emergency contacts and track</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Location used to inform emergency contacts and track</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

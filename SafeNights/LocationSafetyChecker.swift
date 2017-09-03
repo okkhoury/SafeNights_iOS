@@ -33,31 +33,6 @@ class LocationSafetyChecker {
     var sentLowBatWarning : Bool = false
     var sentWrongLocWarning : Bool = false
     
-    // Background task to continually get latitude and longitude every 5 seconds.
-    func performBackgroundTask() {
-        print("Did I work")
-        DispatchQueue.global(qos: .background).async {
-            
-            //Check every 10 minutes if something has gone wrong.
-            DispatchQueue.main.async {
-                UIDevice.current.isBatteryMonitoringEnabled = true
-                self.timer = Timer.scheduledTimer(timeInterval: 10,
-                    target: self, selector: #selector(self.sendTextIfInTrouble),
-                    userInfo: nil, repeats: true)
-            }
-        }
-    }
-    
-    func stopBackgroundTask() {
-        //DispatchQueue.cancelPreviousPerformRequests(withTarget: <#T##Any#>, selector: <#T##Selector#>, object: <#T##Any?#>)
-        timer.invalidate()
-        timer = nil
-        self.sentLowBatWarning = false
-        self.sentWrongLocWarning = false
-        
-        print("INSIDE THIS FUNCTION")
-    }
-    
     // Send a text to a guardian if the user did not end up in the right place or 
     // their phone is about to die.
     @objc func sendTextIfInTrouble() {
@@ -70,12 +45,17 @@ class LocationSafetyChecker {
         print("batteryLife:")
         print(batteryIsLow())
         
+        print(endedUpInRightPlace())
+        print(!sentWrongLocWarning)
+        print(!sentLowBatWarning)
+        
+        
         if (self.preferences.value(forKey: "finalAddress") as! String == "I'm Feeling Lucky ;)" && hour > 2 && hour < 7) {
             // Let guardians know that user made it back home
             self.preferences.set("5", forKey: "messageType")
             self.sendTextToGuardians()
         }
-        else if (((endedUpInWrongPlace() && !sentWrongLocWarning) && hour > 2 && hour < 7) || (batteryIsLow() && !sentLowBatWarning)) {
+        else if ((!endedUpInRightPlace() && !sentWrongLocWarning) || (batteryIsLow() && !sentLowBatWarning)) {
             
             print("inside here")
             
@@ -85,7 +65,7 @@ class LocationSafetyChecker {
             }
             
             // Takes priority over low battery message.
-            if (endedUpInWrongPlace() && !sentWrongLocWarning) {
+            if (!endedUpInRightPlace() && !sentWrongLocWarning) {
                 self.preferences.set("2", forKey: MESSAGE_TYPE)
                 self.sentWrongLocWarning = true
             }
@@ -96,7 +76,7 @@ class LocationSafetyChecker {
     }
     
     // Check that the user ended up in their expected ending location.
-    func endedUpInWrongPlace() -> Bool {
+    func endedUpInRightPlace() -> Bool {
         
         // Get these two values from self.preferences.
         let finalLat = self.preferences.value(forKey: "finalLatitude") as! Double
@@ -105,9 +85,6 @@ class LocationSafetyChecker {
         let latLocations = self.preferences.value(forKey: "latLocations") as! [Double]
         let longLocations = self.preferences.value(forKey:"longLocations") as! [Double]
         
-        print(isInSameLocation(latLocations: latLocations, longLocations: longLocations))
-        print(inRangeOfExpectedLocations(myLat: latLocations[0], myLong: longLocations[0], finalLat: finalLat, finalLong: finalLong))
-        
         return (isInSameLocation(latLocations: latLocations, longLocations: longLocations) &&
             inRangeOfExpectedLocations(myLat: latLocations[0], myLong: longLocations[0], finalLat: finalLat, finalLong: finalLong))
     }
@@ -115,9 +92,6 @@ class LocationSafetyChecker {
     // Check if the phone battery is below 5 percent.
     func batteryIsLow() -> Bool {
         UIDevice.current.isBatteryMonitoringEnabled = true
-        
-        print("battery level:")
-        print(UIDevice.current.batteryLevel)
         
         return UIDevice.current.batteryLevel < 0.1
     }
@@ -164,9 +138,6 @@ class LocationSafetyChecker {
         
         let adventureID = self.preferences.value(forKey: "adventureID")
         let finalAddress = self.preferences.value(forKey: "finalAddress")
-        
-        self.preferences.set("Home", forKey: "currentAddress")
-        
         let currentAddress = self.preferences.value(forKey: "currentAddress")
         
         let postData = ["contactNumbers": contactNumbers, "contactNames": contactNames,
