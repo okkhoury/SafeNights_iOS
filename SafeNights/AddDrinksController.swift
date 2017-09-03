@@ -14,6 +14,8 @@ protocol VcDelegate {
 
 class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextFieldDelegate {
     
+    let verticalConstraint: NSLayoutConstraint = NSLayoutConstraint()
+    
    // @IBOutlet var DatePick: UIDatePicker!
     @IBOutlet var submitButton: UIButton!
     @IBOutlet var moneySlider: UISlider!
@@ -52,7 +54,7 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
     // or use different UI element. 
     
     // This function is putting the circularSeekers on the interface
-    override func viewDidLoad() {
+    override func viewDidAppear(_ animated: Bool) {
         //Date Logic
         let today = Date()
         selectedDate = dateToString(day: today)!
@@ -61,9 +63,15 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         //Send View To Be Background for Calendar Pic
         view.sendSubview(toBack: calendarBackgroundView)
         
+        if(UIDevice.current.userInterfaceIdiom == .phone && (UIScreen.main.bounds.size.height) <= 570.0) {
+            print("This is the single dumbest thing I have ever done")
+            liquorLabel.center.x = 80
+            mixedLabel.center.x = 260
+        }
+        
         //Beer
-        seekBar1.frame = CGRect(x: (self.view.frame.size.width) * 0.1,
-                                y: (self.view.frame.size.height) * 0.4,
+        seekBar1.frame = CGRect(x: (self.beerLabel.frame.midX) - 60,
+                                y: (self.beerLabel.frame.midY) - 50,
                                 width: (self.view.frame.size.width) * 0.3,
                                 height: (self.view.frame.size.width) * 0.3)
         seekBar1.startAngle = 120
@@ -72,9 +80,12 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         seekBar1.delegate = self
         self.view.addSubview(seekBar1)
         
+//        seekBar1.centerXAnchor.constraint(equalTo: beerLabel.superview!.centerXAnchor).isActive = true
+//        seekBar1.topAnchor.constraint(equalTo: beerLabel.superview!.bottomAnchor).isActive = true;
+        
         //Wine
-        seekBar2.frame = CGRect(x: (self.view.frame.size.width) * 0.6,
-                                y: (self.view.frame.size.height) * 0.4,
+        seekBar2.frame = CGRect(x: (self.wineLabel.frame.midX) - 60,
+                                y: (self.wineLabel.frame.midY) - 50,
                                 width: (self.view.frame.size.width) * 0.3,
                                 height: (self.view.frame.size.width) * 0.3)
         seekBar2.startAngle = 120
@@ -84,8 +95,8 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         self.view.addSubview(seekBar2)
         
         //Liquor
-        seekBar3.frame = CGRect(x: (self.view.frame.size.width) * 0.1,
-                                y: (self.view.frame.size.height) * 0.6,
+        seekBar3.frame = CGRect(x: (self.liquorLabel.frame.midX) - 60,
+                                y: (self.liquorLabel.frame.midY) - 50,
                                 width: (self.view.frame.size.width) * 0.3,
                                 height: (self.view.frame.size.width) * 0.3)
         seekBar3.startAngle = 120
@@ -95,8 +106,8 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         self.view.addSubview(seekBar3)
         
         //Mixed Drinks
-        seekBar4.frame = CGRect(x: (self.view.frame.size.width) * 0.6,
-                                y: (self.view.frame.size.height) * 0.6,
+        seekBar4.frame = CGRect(x: (self.mixedLabel.frame.midX) - 60,
+                                y: (self.mixedLabel.frame.midY) - 50,
                                 width: (self.view.frame.size.width) * 0.3,
                                 height: (self.view.frame.size.width) * 0.3)
         seekBar4.startAngle = 120
