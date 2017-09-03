@@ -126,6 +126,9 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
         if(CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == .authorizedAlways) {
             if(!(self.destinationAddress == "" || self.destinationLongitude == 0.0 || self.destinationLatitude == 0.0 || self.contactNames.count == 0 || contactNames.isEmpty)) {
                 if(!nightHasStarted) {
+                    // Disable button so they can't spam nights
+                    self.submitButton.isEnabled = false
+                    
                     // Get the global values for username and password
                     let username = self.preferences.string(forKey: "username")!
                     let password = self.preferences.string(forKey: "password")!
@@ -169,6 +172,9 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                             // Disable button so user can't be stupid
                             self.contactButton.isEnabled = false
                             self.placeButton.isEnabled = false
+                            
+                            // Re-enable button so they can end/restart night
+                            self.submitButton.isEnabled = true
                         }
                         else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
                             // Display alert to screen to let user know error
@@ -178,6 +184,9 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                             let alert = UIAlertController(title: "Error", message: "There was an error starting your night! Please try again :)", preferredStyle: .alert)
                             alert.addAction(OKAction)
                             self.present(alert, animated: true, completion: nil)
+                            
+                            // Re-enable button so they can end/restart night
+                            self.submitButton.isEnabled = true
                         }
                     }.onFailure { _ in
                             // Display alert to screen to let user know error
@@ -187,6 +196,9 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                             let alert = UIAlertController(title: "Warning", message: "Something went wrong! :( Make sure you have internet access", preferredStyle: .alert)
                             alert.addAction(OKAction)
                             self.present(alert, animated: true, completion: nil)
+                        
+                            // Re-enable button so they can end/restart night
+                            self.submitButton.isEnabled = true
                     }
                 } else {
                     // Flip Bool

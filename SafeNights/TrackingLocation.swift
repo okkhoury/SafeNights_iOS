@@ -24,11 +24,12 @@ class TrackingLocation: UIViewController {
     var latLocations = Array(repeating: 0.0, count: 4)
     var longLocations = Array(repeating: 0.0, count: 4)
     
-    private lazy var locationManager: CLLocationManager = {
+    public lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.pausesLocationUpdatesAutomatically = false
-        manager.delegate = self
+        manager.allowsBackgroundLocationUpdates = true
+        manager.delegate = self as CLLocationManagerDelegate
         manager.requestAlwaysAuthorization()
         return manager
     }()
@@ -43,7 +44,7 @@ class TrackingLocation: UIViewController {
         if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways) {
             
-            currentLocation = locationManager.location!
+            currentLocation = locationManager.location ?? CLLocation()
             
             // Set the global values for lat and lon
             let latitude = currentLocation.coordinate.latitude
@@ -156,9 +157,12 @@ extension TrackingLocation: CLLocationManagerDelegate {
         let now = Date()
         
         if(now > lastTime) {
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
             self.setCoordinates()
             self.locationChecker.sendTextIfInTrouble()
             lastTime = Date(timeInterval: TIME_INTERVAL, since: now)
+        } else {
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
         }
         
         if UIApplication.shared.applicationState == .active {
