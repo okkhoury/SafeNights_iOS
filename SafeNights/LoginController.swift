@@ -56,8 +56,6 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 let fname = names[0]
                 let lname = names[1]
                 
-                mainInstance.username = usernameStr!
-                mainInstance.password = passwordStr!
                 _ = self.preferences.set(usernameStr, forKey: "username")
                 _ = self.preferences.set(passwordStr, forKey: "password")
                 _ = self.preferences.set(fname, forKey: "fname")
@@ -82,7 +80,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 //print("Permission Denied")
                 // Display alert to screen to let user know error
                 let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
-                    print("Login request failed")
+                    //print("Login request failed")
                 }
                 let alert = UIAlertController(title: "Warning", message: "Invalid username or password", preferredStyle: .alert)
                 alert.addAction(OKAction)
@@ -94,7 +92,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         }.onFailure { _ in
             // Display alert to screen to let user know error
             let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
-                print("Request failed")
+                //print("Request failed")
             }
             let alert = UIAlertController(title: "Warning", message: "Something went wrong! :( Make sure you have internet access", preferredStyle: .alert)
             alert.addAction(OKAction)

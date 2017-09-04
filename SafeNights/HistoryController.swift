@@ -128,7 +128,7 @@ class HistoryController: UIViewController {
         }.onFailure { _ in
             // Display alert to screen to let user know error
             let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
-                print("Request failed")
+                //print("Request failed")
             }
             let alert = UIAlertController(title: "Warning", message: "Something went wrong :( Make sure you have internet access", preferredStyle: .alert)
             alert.addAction(OKAction)

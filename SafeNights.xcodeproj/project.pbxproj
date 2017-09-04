@@ -30,7 +30,6 @@
 		C54FC9211E95E75C00C34D3D /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54FC9201E95E75C00C34D3D /* RegisterController.swift */; };
 		C54FC9231E95F16D00C34D3D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54FC9221E95F16D00C34D3D /* LoginController.swift */; };
 		C574244E1E9809F6006C6E77 /* AddDrinksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C574244D1E9809F6006C6E77 /* AddDrinksController.swift */; };
-		C57424501E9AA4C2006C6E77 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = C574244F1E9AA4C2006C6E77 /* Global.swift */; };
 		C57424541E9ACEFC006C6E77 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C57424531E9ACEFC006C6E77 /* MapKit.framework */; };
 		C5B91DAC1F4DD3BB00CF8067 /* TrackingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B91DAB1F4DD3BB00CF8067 /* TrackingLocation.swift */; };
 		C5B91DAE1F4DD9EF00CF8067 /* LocationSafetyChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B91DAD1F4DD9EF00CF8067 /* LocationSafetyChecker.swift */; };
@@ -68,7 +67,6 @@
 		C54FC9201E95E75C00C34D3D /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		C54FC9221E95F16D00C34D3D /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		C574244D1E9809F6006C6E77 /* AddDrinksController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDrinksController.swift; sourceTree = "<group>"; };
-		C574244F1E9AA4C2006C6E77 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		C57424531E9ACEFC006C6E77 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C5B91DAB1F4DD3BB00CF8067 /* TrackingLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingLocation.swift; sourceTree = "<group>"; };
 		C5B91DAD1F4DD9EF00CF8067 /* LocationSafetyChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSafetyChecker.swift; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 				C5F86ACA1EC6F4D200386404 /* HistoryController.swift */,
 				7353CFA61F451CFA006AAA92 /* LastNightController.swift */,
 				C54D52591E95FBC600F3EF41 /* MyAPI.swift */,
-				C574244F1E9AA4C2006C6E77 /* Global.swift */,
 				C5B91DAB1F4DD3BB00CF8067 /* TrackingLocation.swift */,
 				C5B91DAD1F4DD9EF00CF8067 /* LocationSafetyChecker.swift */,
 				C54FC9181E95DCD900C34D3D /* Info.plist */,
@@ -333,7 +330,6 @@
 				C54FC9211E95E75C00C34D3D /* RegisterController.swift in Sources */,
 				73D671E31F4D1D7E00C9AEB0 /* LocFields.swift in Sources */,
 				73A691C11F3E0DF200348D16 /* SplashScreenController.swift in Sources */,
-				C57424501E9AA4C2006C6E77 /* Global.swift in Sources */,
 				73D671E11F4D1D7E00C9AEB0 /* Fields.swift in Sources */,
 				73A691C71F3E0FF200348D16 /* TutorialController.swift in Sources */,
 			);

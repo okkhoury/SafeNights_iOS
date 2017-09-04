@@ -88,7 +88,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     }
     
     func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
-        print("Cancel Contact Picker")
+        //print("Cancel Contact Picker")
     }
     
     // Pick place starts GMSPlacePicker
@@ -140,11 +140,11 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                     _ = self.preferences.set(contactNames, forKey: "contactNames")
                     _ = self.preferences.set(contactNumbers, forKey: "contactNumbers")
                     
-                    print(destinationAddress)
-                    print(destinationLatitude)
-                    print(destinationLongitude)
-                    print(contactNames)
-                    print(contactNumbers)
+//                    print(destinationAddress)
+//                    print(destinationLatitude)
+//                    print(destinationLongitude)
+//                    print(contactNames)
+//                    print(contactNumbers)
                     
                     let resource = API.startNight
                     let postData = ["username": username, "pwd": password]
@@ -155,7 +155,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                         let startNightAnswer = response["passed"]
                         
                         if let startNightAnswer = startNightAnswer as? String, startNightAnswer != "n" {
-                            print(startNightAnswer)
+                            //print(startNightAnswer)
                             _ = self.preferences.set(startNightAnswer, forKey: "adventureID")
                     
                             // Let guardians know that user successfully started night
@@ -179,7 +179,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                         else if let startNightAnswer = startNightAnswer as? String, startNightAnswer == "n" {
                             // Display alert to screen to let user know error
                             let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
-                                print("night has not started")
+                                //print("night has not started")
                             }
                             let alert = UIAlertController(title: "Error", message: "There was an error starting your night! Please try again :)", preferredStyle: .alert)
                             alert.addAction(OKAction)
@@ -191,7 +191,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                     }.onFailure { _ in
                             // Display alert to screen to let user know error
                             let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
-                                print("Request failed")
+                                //print("Request failed")
                             }
                             let alert = UIAlertController(title: "Warning", message: "Something went wrong! :( Make sure you have internet access", preferredStyle: .alert)
                             alert.addAction(OKAction)
@@ -231,7 +231,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
             } else {
                 // Display alert to screen to let user know error
                 let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
-                    print("night has not started")
+                    //print("night has not started")
                 }
                 let alert = UIAlertController(title: "Warning", message: "You must give all fields before starting your night!", preferredStyle: .alert)
                 alert.addAction(OKAction)
@@ -267,7 +267,7 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
                         "lname": lastName, "id": adventureID, "finalAddress": finalAddress,
                         "currentAddress": currentAddress, "messageType": messageType]
         
-        print(postData)
+        //print(postData)
         
         let resource = API.safetyAlert
         
@@ -276,14 +276,14 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
             var response = data.jsonDict
             let loginAnswer = response["passed"]
             
-            print("Response")
-            print(response)
+            //print("Response")
+            //print(response)
             
             if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
-                print("successfully sent text.")
+                //print("successfully sent text.")
             }
             else {
-                print("failed to send text.")
+                //print("failed to send text.")
                 
                 // TODO: give user notification that text did not go through
             }
@@ -330,7 +330,7 @@ extension GetStartedController: GMSPlacePickerViewControllerDelegate {
         // Dismiss the place picker, as it cannot dismiss itself.
         viewController.dismiss(animated: true, completion: nil)
         
-        print("No place selected")
+        //print("No place selected")
     }
 }
 
@@ -348,15 +348,15 @@ extension GetStartedController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
-        print(storedLocationNames[row])
+        //print(storedLocationNames[row])
         // Set Global Variables
         self.destinationAddress = storedLocations[row]
         self.destinationLatitude = storedCoordinates[row*2]
         self.destinationLongitude = storedCoordinates[(row*2)+1]
         
-        print(self.destinationAddress)
-        print(self.destinationLatitude)
-        print(self.destinationLongitude)
+//        print(self.destinationAddress)
+//        print(self.destinationLatitude)
+//        print(self.destinationLongitude)
         
         self.placeButton.setTitle(storedLocationNames[row], for: .normal)
         
@@ -370,10 +370,10 @@ extension GetStartedController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     private func czpickerView(pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
-        for row in rows {
-            if let row = row as? Int {
-                print(storedLocationNames[row])
-            }
-        }
+//        for row in rows {
+//            if let row = row as? Int {
+//                //print(storedLocationNames[row])
+//            }
+//        }
     }
 }

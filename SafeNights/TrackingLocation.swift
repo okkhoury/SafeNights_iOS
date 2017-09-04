@@ -66,11 +66,11 @@ class TrackingLocation: UIViewController {
             longLocations[1] = longLocations[0]
             longLocations[0] = longitude
             
-            print("Latitudes:")
-            print(latLocations)
-            
-            print("Longitudes")
-            print(longLocations)
+//            print("Latitudes:")
+//            print(latLocations)
+//            
+//            print("Longitudes")
+//            print(longLocations)
             
             _ = self.preferences.set(latLocations, forKey: "latLocations")
             _ = self.preferences.set(longLocations, forKey: "longLocations")
@@ -88,7 +88,7 @@ class TrackingLocation: UIViewController {
                         "id": adventureID, "xcord": String(latitude),
                         "ycord": String(longitude)]
             
-            print(postData)
+            //print(postData)
             
             resource.request(.post, urlEncoded: postData ).onSuccess() { data in
                 
@@ -98,17 +98,17 @@ class TrackingLocation: UIViewController {
                 
                 // If the response is a yes, allow access to the next page, otherwise deny access and give message to user
                 if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
-                    print("succesfully added location")
+                    //print("succesfully added location")
                 }
                 else if let loginAnswer = loginAnswer as? String, loginAnswer == "n" {
-                    print("Did not add location")
+                    //print("Did not add location")
                 }
                 else {
-                    print(data.jsonDict)
+                    //print(data.jsonDict)
                 }
                 
                 }.onFailure{_ in
-                    print("failed")
+                    //print("failed")
             }
         }
     }
@@ -118,9 +118,9 @@ class TrackingLocation: UIViewController {
         self.setCoordinates()
         // Set up timing
         lastTime = Date()
-        print(lastTime)
+        //print(lastTime)
         lastTime = Date(timeInterval: TIME_INTERVAL, since: lastTime)
-        print(lastTime)
+        //print(lastTime)
         
         locationManager.startUpdatingLocation()
     }
@@ -150,9 +150,12 @@ class TrackingLocation: UIViewController {
 extension TrackingLocation: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let mostRecentLocation = locations.last else {
-            return
-        }
+        
+        // mostRecentLocation isn't being used
+        
+//        guard let mostRecentLocation = locations.last else {
+//            return
+//        }
         
         let now = Date()
         
@@ -166,9 +169,9 @@ extension TrackingLocation: CLLocationManagerDelegate {
         }
         
         if UIApplication.shared.applicationState == .active {
-            print("App is foreground. New location is %@", mostRecentLocation)
+            //print("App is foreground. New location is %@", mostRecentLocation)
         } else {
-            print("App is backgrounded. New location is %@", mostRecentLocation)
+            //print("App is backgrounded. New location is %@", mostRecentLocation)
         }
     }
     

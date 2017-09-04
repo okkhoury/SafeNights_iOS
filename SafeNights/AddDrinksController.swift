@@ -64,7 +64,7 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         view.sendSubview(toBack: calendarBackgroundView)
         
         if(UIDevice.current.userInterfaceIdiom == .phone && (UIScreen.main.bounds.size.height) <= 570.0) {
-            print("This is the single dumbest thing I have ever done")
+            //print("This is the single dumbest thing I have ever done")
             liquorLabel.center.x = 80
             mixedLabel.center.x = 260
         }
@@ -195,14 +195,14 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
             
             // check if the data was correctly added
             if let responseAnswer = responseAnswer as? String, responseAnswer == "y" {
-                print("Drinks added")
+                //print("Drinks added")
                 // Send them to history
                 self.tabBarController?.selectedIndex = 2
             } else {
-                print("Drinks not added")
+                //print("Drinks not added")
                 //Display Error
                 let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
-                    print("There was an error. User recognized")
+                    //print("There was an error. User recognized")
                 }
                 let alert = UIAlertController(title: "Error", message: "There was a problem uploading your drink recording. Please make sure you have internet access", preferredStyle: .alert)
                 alert.addAction(OKAction)
@@ -211,7 +211,7 @@ class AddDrinksController: UIViewController, CircularSeekerDelegate, UITextField
         }.onFailure { _ in
             // Display alert to screen to let user know error
             let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
-                print("Request failed")
+                //print("Request failed")
             }
             let alert = UIAlertController(title: "Warning", message: "Something went wrong :( Make sure you have internet access", preferredStyle: .alert)
             alert.addAction(OKAction)

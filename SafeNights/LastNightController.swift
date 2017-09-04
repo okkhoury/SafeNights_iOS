@@ -68,7 +68,7 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
                 time = newFormat.string(from: date)
             } else {
                 time = "?"
-                print("Could not parse")
+                //print("Could not parse")
             }
             
             let lat = Double(loc.xcord!)

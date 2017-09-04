@@ -39,15 +39,15 @@ class LocationSafetyChecker {
         
         let hour = Calendar.current.component(.hour, from: Date())
         
-        print("hour:")
-        print(hour)
-        
-        print("batteryLife:")
-        print(batteryIsLow())
-        
-        print(endedUpInRightPlace())
-        print(!sentWrongLocWarning)
-        print(!sentLowBatWarning)
+//        print("hour:")
+//        print(hour)
+//        
+//        print("batteryLife:")
+//        print(batteryIsLow())
+//        
+//        print(endedUpInRightPlace())
+//        print(!sentWrongLocWarning)
+//        print(!sentLowBatWarning)
         
         
         if (self.preferences.value(forKey: "finalAddress") as! String == "I'm Feeling Lucky ;)" && hour > 2 && hour < 7) {
@@ -57,7 +57,7 @@ class LocationSafetyChecker {
         }
         else if ((!endedUpInRightPlace() && !sentWrongLocWarning) || (batteryIsLow() && !sentLowBatWarning)) {
             
-            print("inside here")
+            //print("inside here")
             
             if (batteryIsLow()) {
                 self.preferences.set("3", forKey: MESSAGE_TYPE)
@@ -145,7 +145,7 @@ class LocationSafetyChecker {
                         "lname": lastName, "id": adventureID, "finalAddress": finalAddress,
                         "currentAddress": currentAddress, "messageType": messageType]
         
-        print(postData)
+        //print(postData)
         
         let resource = API.safetyAlert
         
@@ -154,14 +154,14 @@ class LocationSafetyChecker {
             var response = data.jsonDict
             let loginAnswer = response["passed"]
             
-            print("Response")
-            print(response)
+//            print("Response")
+//            print(response)
             
             if let loginAnswer = loginAnswer as? String, loginAnswer == "y" {
-                print("successfully sent text.")
+                //print("successfully sent text.")
             }
             else {
-                print("failed to send text.")
+                //print("failed to send text.")
             }
         }.onFailure { _ in
             

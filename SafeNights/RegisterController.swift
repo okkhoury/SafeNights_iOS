@@ -46,7 +46,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
         let resource = API.signup
         
         let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
-            print("I pressed Ok button and worked")
+            //print("I pressed Ok button and worked")
         }
         
         // Validate the text fields
@@ -123,7 +123,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
             }.onFailure { _ in
                 // Display alert to screen to let user know error
                 let OKAction = UIAlertAction(title: "Ok", style: .default){ (action:UIAlertAction) in
-                    print("Request failed")
+                    //print("Request failed")
                 }
                 let alert = UIAlertController(title: "Warning", message: "Something went wrong! :( Make sure you have internet access", preferredStyle: .alert)
                 alert.addAction(OKAction)
