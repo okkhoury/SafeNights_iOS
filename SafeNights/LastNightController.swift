@@ -45,6 +45,12 @@ class LastNightController: UIViewController, GMSMapViewDelegate {
         } catch {
             NSLog("One or more of the map styles failed to load. \(error)")
         }
+        
+        markersArray.removeAll()
+        allData.removeAll()
+        timesArray.removeAll()
+        self.viewMap.clear();
+        
         // Call API
         callLastNightAPI()
     }
