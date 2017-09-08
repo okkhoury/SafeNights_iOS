@@ -43,6 +43,8 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.locationManager.requestAlwaysAuthorization()
 
         //Style Submit Button
         submitButton.layer.borderColor = UIColor(red: 86/225, green: 197/225, blue: 239/255, alpha: 1.0).cgColor
@@ -239,7 +241,14 @@ class GetStartedController: UIViewController, CNContactPickerDelegate {
             }
         } else {
             // Request User Location Permissions
-            self.locationManager.requestAlwaysAuthorization()
+            let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
+                // Take them directly to settings
+                let settingsUrl = NSURL(string:UIApplicationOpenSettingsURLString)! as URL
+                UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+            }
+            let alert = UIAlertController(title: "Warning", message: "You must enable Always allow location to start your night!", preferredStyle: .alert)
+            alert.addAction(OKAction)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

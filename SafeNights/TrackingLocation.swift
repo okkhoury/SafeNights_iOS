@@ -19,7 +19,7 @@ class TrackingLocation: UIViewController {
     //let locManager = CLLocationManager()
     //var coordinateTimer: Timer!
     
-    let TIME_INTERVAL:TimeInterval = 15.0 // in secs
+    let TIME_INTERVAL:TimeInterval = 15.0*60 // in secs
     
     var latLocations = Array(repeating: 0.0, count: 4)
     var longLocations = Array(repeating: 0.0, count: 4)
@@ -118,9 +118,7 @@ class TrackingLocation: UIViewController {
         self.setCoordinates()
         // Set up timing
         lastTime = Date()
-        //print(lastTime)
         lastTime = Date(timeInterval: TIME_INTERVAL, since: lastTime)
-        //print(lastTime)
         
         locationManager.startUpdatingLocation()
     }
@@ -150,12 +148,6 @@ class TrackingLocation: UIViewController {
 extension TrackingLocation: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        // mostRecentLocation isn't being used
-        
-//        guard let mostRecentLocation = locations.last else {
-//            return
-//        }
         
         let now = Date()
         
