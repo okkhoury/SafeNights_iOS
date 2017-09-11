@@ -373,9 +373,27 @@ extension GetStartedController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func czpickerViewDidClickCancelButton(_ pickerView: CZPickerView!) {
-        // Start Google Place Picker
-        startPlacePicker()
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        if (!CLLocationManager.locationServicesEnabled() || (CLLocationManager.authorizationStatus() != .authorizedAlways
+            && CLLocationManager.authorizationStatus() != .authorizedWhenInUse))
+        {
+            // Request User Location Permissions
+            let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
+                // Take them directly to settings
+                let settingsUrl = NSURL(string:UIApplicationOpenSettingsURLString)! as URL
+                UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+            }
+            let alert = UIAlertController(title: "Warning", message: "You must enable location to select your final stronghold!", preferredStyle: .alert)
+            alert.addAction(OKAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+        else
+        {
+            // Start Google Place Picker
+            startPlacePicker()
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+        
     }
     
     private func czpickerView(pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {

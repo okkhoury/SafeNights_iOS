@@ -55,7 +55,7 @@ class LocationSafetyChecker {
             self.preferences.set("5", forKey: "messageType")
             self.sendTextToGuardians()
         }
-        else if ((!endedUpInRightPlace() && !sentWrongLocWarning) || (batteryIsLow() && !sentLowBatWarning)) {
+        else if ((hour > 2 && hour < 7 && !endedUpInRightPlace() && !sentWrongLocWarning) || (batteryIsLow() && !sentLowBatWarning)) {
             
             //print("inside here")
             
